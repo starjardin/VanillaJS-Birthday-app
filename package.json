@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "date-fns": "^2.16.1",
+    "regenerator-runtime": "^0.13.7"
+  },
+  "name": "birthday-app",
+  "description": "Hey team! So the final project here will be a birthday list.",
+  "version": "1.0.0",
+  "main": "script.js",
+  "devDependencies": {},
+  "scripts": {
+    "serve": "node ./script.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/starjardin/birthday-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/starjardin/birthday-app/issues"
+  },
+  "homepage": "https://github.com/starjardin/birthday-app#readme"
+}
