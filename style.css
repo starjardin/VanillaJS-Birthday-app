@@ -29,3 +29,25 @@
   background: var(--grey);
 	pointer-events: all;
 }
+
+
+.div {
+  background: hsla(0, 0%, 30%, 0.5);
+	position: absolute;
+	height: 5rem;
+	width: 4rem;
+	transition: all 0.25s;
+	top: 0;
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	pointer-events: none;
+	--opacity: 0;
+	opacity: var(--opacity);
+}
+
+.div.open {
+  	--opacity: 1;
+  background: var(--grey);
+	pointer-events: all;
+}
