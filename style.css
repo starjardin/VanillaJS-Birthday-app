@@ -1,0 +1,31 @@
+.form {
+	background: hsla(0, 0%, 30%, 0.5);
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	transition: all 0.25s;
+	top: 0;
+	display: grid;
+	justify-content: center;
+	align-items: center;
+	pointer-events: none;
+	--opacity: 0;
+	opacity: var(--opacity);
+}
+
+.form {
+	background: var(--grey);
+	padding: 2rem;
+	border: 3px solid var(--pink);
+	border-radius: 5px;
+	box-shadow: var(--box-shadow);
+	transition: all 0.2s;
+	/* --scale: 0.3; */
+	transform: scale(var(--scale));
+}
+
+.form.open {
+	--opacity: 1;
+  background: var(--grey);
+	pointer-events: all;
+}
