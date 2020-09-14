@@ -30,7 +30,7 @@ function displayPeopleList (people) {
         <button type="button" value="${person.id}" data-id="${person.id}" class="edit">edit</button>
       </div>
       <div class="col">
-        <button type="button" value="${person.id}" data-id="${person.id}">delete</button>
+        <button type="button" value="${person.id}" class="delete" data-id="${person.id}">delete</button>
       </div>
     </div>`
   });
@@ -97,9 +97,50 @@ async function editPersonPopup(id) {
       editedPerson.birthday = newPerson.birthday;
       displayPeopleList (people)
       formEl.classList.remove("open");
-    })
+    }, {once: true});
   })
 }
 
+function deletePerson (e) {
+  const deleteBtn = e.target.matches(".delete");
+  if (deleteBtn) {
+    const idOfPeopleToDelete = e.target.closest('.delete').dataset.id;
+    deletePersonPupup(idOfPeopleToDelete);
+  }
+}
+
+
+async function deletePersonPupup (idOfPeopleToDelete) {
+  let people = await fetchpeople();
+  const yesBtn = document.createElement("button");
+  yesBtn.type = "button";
+  yesBtn.textContent = "Yes";
+  const noBtn = document.createElement("button");
+  noBtn.type = "button";
+  noBtn.textContent = "No";
+  const btnPopup = document.createElement('div');
+  btnPopup.classList.add('div');
+  btnPopup.appendChild(yesBtn);
+  btnPopup.appendChild(noBtn);
+  document.body.appendChild(btnPopup);
+  btnPopup.classList.add("open");
+
+  function deletePopup () {
+    btnPopup.classList.remove("open")
+  }
+
+  noBtn.addEventListener("click", e => {
+    deletePopup()
+  })
+
+  yesBtn.addEventListener("click", e => {
+    const hi = people.filter(person => person.id !== idOfPeopleToDelete);
+    people = hi;
+    deletePopup()
+    console.log(people);
+  }, {once: true});
+}
+
 container.addEventListener("click", editPerson);
+container.addEventListener("click", deletePerson);
 fetchPeopleObjects();
