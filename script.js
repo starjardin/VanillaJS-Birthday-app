@@ -1,6 +1,8 @@
-// import { format, formatDistance, formatRelative, subDays } from "date-fns";
+// import { format, compareAsc } from 'date-fns';
 //I need to fetch but how : create a function to fetch the data from person.json
 //put the data in the local storage
+/* *********************************** */
+//delete a person
 const container = document.querySelector(".container");
 
 const fetchpeople = async () => {
@@ -9,14 +11,15 @@ const fetchpeople = async () => {
     return data;
 };
 
-const fetchPeopleObjects = async () => {
-  const people = await fetchpeople();
-  displayPeopleList (people)
-}
-
+// const fetchPeopleObjects = async () => {
+//   const people = await fetchpeople();
+// }
 
 function displayPeopleList (people) {
   const html = people.map(person => {
+    const dateOfBirth = new Date(person.birthday).getTime();
+    const dateNow = new Date(Date.now()).getTime();
+    const age = new Date(dateNow - dateOfBirth).toLocaleDateString();
     return `
     <div class="row mt-3" data-id="${person.id}">
       <div class="col">
@@ -25,7 +28,7 @@ function displayPeopleList (people) {
       <div class="col">
         <span>${person.firstName} ${person.lastName}</span>
       </div>
-      <div class="col">${person.birthday}</div>
+      <div class="col">${age}</div>
       <div class="col">
         <button type="button" value="${person.id}" data-id="${person.id}" class="edit">edit</button>
       </div>
@@ -37,16 +40,20 @@ function displayPeopleList (people) {
   container.innerHTML = html.join("");
 }
 
-function initlocalStorage(people) {
+async function initlocalStorage() {
+  const people = await fetchpeople();
   localStorage.setItem("people", JSON.stringify(people));
+  displayPeopleList(people);
 }
 
-function restoreFromLocalStorage (people) {
+async function restoreFromLocalStorage () {
+  const people = await fetchpeople();
   const listOfPeople = JSON.parse(localStorage.getItem('people'));
   if (listOfPeople.length) {
     people.push(listOfPeople);
   }
 }
+
 
 function editPerson (e, people) {
   const editButton = e.target.matches(".edit");
@@ -91,7 +98,6 @@ async function editPersonPopup(id) {
         picture : personToEdit.picture,
       }
       const editedPerson = people.find(person => person.id === newPerson.id);
-      console.log(personToEdit);
       editedPerson.firstName = newPerson.firstName;
       editedPerson.lastName = newPerson.lastName;
       editedPerson.birthday = newPerson.birthday;
@@ -127,20 +133,22 @@ async function deletePersonPupup (idOfPeopleToDelete) {
 
   function deletePopup () {
     btnPopup.classList.remove("open")
-  }
+  };
 
   noBtn.addEventListener("click", e => {
     deletePopup()
-  })
+  });
 
   yesBtn.addEventListener("click", e => {
     const hi = people.filter(person => person.id !== idOfPeopleToDelete);
     people = hi;
-    deletePopup()
+    deletePopup();
+    displayPeopleList(people)
     console.log(people);
-  }, {once: true});
-}
+  }, {once: true})
+};
 
 container.addEventListener("click", editPerson);
 container.addEventListener("click", deletePerson);
-fetchPeopleObjects();
+// fetchPeopleObjects();
+initlocalStorage();
