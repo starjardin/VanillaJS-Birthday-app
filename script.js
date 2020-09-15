@@ -41,71 +41,69 @@ function displayPeopleList (people) {
 }
 
 async function initlocalStorage() {
-  const people = await fetchpeople();
+  let people = await fetchpeople();
   localStorage.setItem("people", JSON.stringify(people));
-  displayPeopleList(people);
 }
 
 async function restoreFromLocalStorage () {
-  const people = await fetchpeople();
-  const listOfPeople = JSON.parse(localStorage.getItem('people'));
-  if (listOfPeople.length) {
-    people.push(listOfPeople);
-  }
+  let people = await fetchpeople();
+  const storedPeople = JSON.parse(localStorage.getItem('people'));
+  displayPeopleList(storedPeople);
+
 }
 
 
-function editPerson (e, people) {
-  const editButton = e.target.matches(".edit");
-  if (editButton) {
-    const button = e.target.closest(".edit");
-    const id = button.dataset.id;
-    editPersonPopup(id);
-  }
-}
+// function editPerson (e, people) {
+//   const editButton = e.target.matches(".edit");
+//   if (editButton) {
+//     const button = e.target.closest(".edit");
+//     const id = button.dataset.id;
+//     editPersonPopup(id);
+//   }
+// }
 
-async function editPersonPopup(id) {
-  const people = await fetchpeople();
-  const personToEdit = people.find(person => person.id === id);
-  return new Promise(async function(resolve) {
-    const formEl = document.createElement('form');
-    formEl.classList.add("form");
-    formEl.insertAdjacentHTML("afterbegin", `
-      <div class="form-group">
-        <label for="lastName">${personToEdit.lastName}</label>
-        <input type="text" class="form-control" id="${personToEdit.id}" name="lastName" value="${personToEdit.lastName}"> 
-      </div>
-      <div class="form-group">
-        <label for="firstName">${personToEdit.firstName}</label>
-        <input type="text" class="form-control" name="firstName" id="${personToEdit.id}" value="${personToEdit.firstName}">
-      </div>
-      <div class="form-group">
-        <label for="birthday">Birthday</label>
-        <input type="text" id="birthday" class="form-control" name="birthday" id="${personToEdit.birthday}" value="${personToEdit.birthday}">
-      </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
-    `);
-    document.body.appendChild(formEl);
-    formEl.classList.add("open");
-    formEl.addEventListener("submit", e => {
-      e.preventDefault();
-      const form = e.currentTarget;
-      const newPerson = {
-        id: id,
-        lastName: form.lastName.value,
-        firstName : form.firstName.value,
-        birthday : form.birthday.value,
-        picture : personToEdit.picture,
-      }
-      const editedPerson = people.find(person => person.id === newPerson.id);
-      editedPerson.firstName = newPerson.firstName;
-      editedPerson.lastName = newPerson.lastName;
-      editedPerson.birthday = newPerson.birthday;
-      displayPeopleList (people)
-      formEl.classList.remove("open");
-    }, {once: true});
-  })
-}
+// async function editPersonPopup(id) {
+//   const people = await fetchpeople();
+//   const personToEdit = people.find(person => person.id === id);
+//   return new Promise(async function(resolve) {
+//     const formEl = document.createElement('form');
+//     formEl.classList.add("form");
+//     formEl.insertAdjacentHTML("afterbegin", `
+//       <div class="form-group">
+//         <label for="lastName">${personToEdit.lastName}</label>
+//         <input type="text" class="form-control" id="${personToEdit.id}" name="lastName" value="${personToEdit.lastName}"> 
+//       </div>
+//       <div class="form-group">
+//         <label for="firstName">${personToEdit.firstName}</label>
+//         <input type="text" class="form-control" name="firstName" id="${personToEdit.id}" value="${personToEdit.firstName}">
+//       </div>
+//       <div class="form-group">
+//         <label for="birthday">Birthday</label>
+//         <input type="text" id="birthday" class="form-control" name="birthday" id="${personToEdit.birthday}" value="${personToEdit.birthday}">
+//       </div>
+//       <button type="submit" class="btn btn-primary">Submit</button>
+//     `);
+//     document.body.appendChild(formEl);
+//     formEl.classList.add("open");
+//     formEl.addEventListener("submit", e => {
+//       e.preventDefault();
+//       const form = e.currentTarget;
+//       const newPerson = {
+//         id: id,
+//         lastName: form.lastName.value,
+//         firstName : form.firstName.value,
+//         birthday : form.birthday.value,
+//         picture : personToEdit.picture,
+//       }
+//       const editedPerson = people.find(person => person.id === newPerson.id);
+//       editedPerson.firstName = newPerson.firstName;
+//       editedPerson.lastName = newPerson.lastName;
+//       editedPerson.birthday = newPerson.birthday;
+//       displayPeopleList (people)
+//       formEl.classList.remove("open");
+//     }, {once: true});
+//   })
+// }
 
 function deletePerson (e) {
   const deleteBtn = e.target.matches(".delete");
@@ -117,7 +115,6 @@ function deletePerson (e) {
 
 
 async function deletePersonPupup (idOfPeopleToDelete) {
-  let people = await fetchpeople();
   const yesBtn = document.createElement("button");
   yesBtn.type = "button";
   yesBtn.textContent = "Yes";
@@ -148,7 +145,8 @@ async function deletePersonPupup (idOfPeopleToDelete) {
   }, {once: true})
 };
 
-container.addEventListener("click", editPerson);
+// container.addEventListener("click", editPerson);
 container.addEventListener("click", deletePerson);
 // fetchPeopleObjects();
 initlocalStorage();
+restoreFromLocalStorage()
