@@ -40,16 +40,14 @@ function displayPeopleList (people) {
   container.innerHTML = html.join("");
 }
 
-async function initlocalStorage() {
-  let people = await fetchpeople();
-  localStorage.setItem("people", JSON.stringify(people));
-}
+// async function initlocalStorage() {
+//   let people = await fetchpeople();
+//   localStorage.setItem("people", JSON.stringify(people));
+// }
 
 async function restoreFromLocalStorage () {
-  let people = await fetchpeople();
   const storedPeople = JSON.parse(localStorage.getItem('people'));
   displayPeopleList(storedPeople);
-
 }
 
 
@@ -148,5 +146,5 @@ async function deletePersonPupup (idOfPeopleToDelete) {
 // container.addEventListener("click", editPerson);
 container.addEventListener("click", deletePerson);
 // fetchPeopleObjects();
-initlocalStorage();
+// initlocalStorage();
 restoreFromLocalStorage()
