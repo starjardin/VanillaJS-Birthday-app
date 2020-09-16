@@ -1,4 +1,4 @@
-.form {
+.form, .div {
 	background: hsla(0, 0%, 30%, 0.5);
 	position: absolute;
 	height: 100vh;
@@ -13,7 +13,7 @@
 	opacity: var(--opacity);
 }
 
-.form {
+.form, .div {
 	background: var(--grey);
 	padding: 2rem;
 	border: 3px solid var(--pink);
@@ -24,20 +24,32 @@
 	transform: scale(var(--scale));
 }
 
-.form.open {
-	--opacity: 1;
-  background: var(--grey);
+.form.open,
+.div.open {
+	--opacity: 0.8;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 	pointer-events: all;
+  background-color: #dddddd;
+}
+
+.div.open {
+  width: 15rem;
+  max-height: 50vh;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
 }
 
 
-.div {
+/* .div {
   background: hsla(0, 0%, 30%, 0.5);
-	position: absolute;
 	height: 5rem;
 	width: 4rem;
 	transition: all 0.25s;
-	top: 0;
 	display: grid;
 	justify-content: center;
 	align-items: center;
@@ -47,7 +59,12 @@
 }
 
 .div.open {
-  	--opacity: 1;
-  background: var(--grey);
+  --opacity: 0.8;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 	pointer-events: all;
-}
+  background-color: #dddddd;
+} */

@@ -2,9 +2,13 @@
 //I need to fetch but how : create a function to fetch the data from person.json
 //put the data in the local storage
 /* *********************************** */
+
 //delete a person
 const container = document.querySelector(".container");
+const addBtn = document.querySelector(".add");
+const formEl = document.querySelector(".formSubmit");
 
+let persons = [];
 const fetchpeople = async () => {
     const peopleUrl = await fetch(`people.json`)
     const data = await peopleUrl.json();
@@ -14,8 +18,6 @@ const fetchpeople = async () => {
 const fetchPeopleObjects = async () => {
   const people = await fetchpeople();
 }
-
-let persons = [];
 
 async function initlocalStorage() {
   //fetching the data at the first time.
@@ -33,9 +35,6 @@ async function restoreFromLocalStorage () {
 
 function displayPeopleList () {
   const html = persons.map(person => {
-    const dateOfBirth = new Date(person.birthday).getTime();
-    const dateNow = new Date(Date.now()).getTime();
-    const age = new Date(dateNow - dateOfBirth).toLocaleDateString();
     return `
     <div class="row mt-3" data-id="${person.id}">
       <div class="col">
@@ -44,7 +43,7 @@ function displayPeopleList () {
       <div class="col">
         <span>${person.firstName} ${person.lastName}</span>
       </div>
-      <div class="col">${age}</div>
+      <div class="col">${person.birthday}</div>
       <div class="col">
         <button type="button" value="${person.id}" data-id="${person.id}" class="edit">edit</button>
       </div>
@@ -66,8 +65,7 @@ function editPerson (e) {
 }
 
 async function editPersonPopup(id) {
-  const people = await fetchpeople();
-  const personToEdit = people.find(person => person.id === id);
+  const personToEdit = persons.find(person => person.id === id);
   return new Promise(async function(resolve) {
     const formEl = document.createElement('form');
     formEl.classList.add("form");
@@ -117,8 +115,8 @@ function deletePerson (e) {
   }
 };
 
-
 async function deletePersonPupup (idOfPeopleToDelete) {
+  const peopleToDelete = persons.find(per => per.id === idOfPeopleToDelete);
   const yesBtn = document.createElement("button");
   yesBtn.type = "button";
   yesBtn.textContent = "Yes";
@@ -127,6 +125,7 @@ async function deletePersonPupup (idOfPeopleToDelete) {
   noBtn.textContent = "No";
   const btnPopup = document.createElement('div');
   btnPopup.classList.add('div');
+  btnPopup.textContent = `Are you sure you want to delete ${peopleToDelete.firstName} ${peopleToDelete.lastName}`
   btnPopup.appendChild(yesBtn);
   btnPopup.appendChild(noBtn);
   document.body.appendChild(btnPopup);
@@ -145,7 +144,6 @@ async function deletePersonPupup (idOfPeopleToDelete) {
     persons = peopleRest;
     container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
     deletePopup();
-    console.log(persons);
   }, {once: true})
 };
 
@@ -154,3 +152,46 @@ container.addEventListener("click", deletePerson);
 container.addEventListener("listOfPeopleUpdated", displayPeopleList);
 container.addEventListener("listOfPeopleUpdated", initlocalStorage)
 restoreFromLocalStorage();
+
+/******************************************************************** */
+//add new person
+function showForm() {
+  formEl.removeAttribute("hidden");
+}
+
+function submitForm (e) {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const newPerson = {
+    firstName : form.firstName.value,
+    lastName : form.lastName.value,
+    id : form.id.value,
+    picture : form.picture.value,
+  }
+  persons.push(newPerson);
+  console.log(persons);
+  container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
+  formEl.hidden = true;
+  form.reset();
+}
+
+addBtn.addEventListener("click", showForm);
+formEl.addEventListener("submit", submitForm);
+
+function findAge () {
+  const currentYear = new Date().getFullYear();
+  const dateNow = Date.now();
+  const array = persons.map(per => {
+    const month = new Date(per.birthday).getMonth();
+    const day = new Date(per.birthday).getDay();
+    const date = `${day + 1}/${(month + 1)}/${currentYear}`;
+    const dateTime = new Date(`${date}`)
+    const dateMilis = dateTime.getTime();
+    const dateDiff = dateNow - dateMilis;
+    const numbersOfDays = Math.floor(dateDiff / 86400000);
+    per.birthday = numbersOfDays;
+    return per;
+  })
+  // console.log(array);
+}
+findAge();
