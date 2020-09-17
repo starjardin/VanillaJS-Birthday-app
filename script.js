@@ -15,35 +15,70 @@ const fetchpeople = async () => {
     return data;
 };
 
-const fetchPeopleObjects = async () => {
-  const people = await fetchpeople();
-}
-
-async function initlocalStorage() {
-  //fetching the data at the first time.
-  // const persons = await fetchpeople();
-  localStorage.setItem("persons", JSON.stringify(persons));
-}
-
 async function restoreFromLocalStorage () {
   const listOfOeople = JSON.parse(localStorage.getItem('persons'));
-  if (listOfOeople.length) {
-    persons.push(...listOfOeople);
-  }
+  if (listOfOeople) {
+    persons = listOfOeople;
+  } 
+  displayPeopleList(persons);
   container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
 };
+restoreFromLocalStorage();
+
+async function initlocalStorage() {
+  // persons = await fetchpeople();
+  localStorage.setItem("persons", JSON.stringify(persons));
+}
+initlocalStorage();
 
 function displayPeopleList () {
-  const html = persons.map(person => {
+  let currentYear = new Date().getFullYear();
+  console.log(currentYear);
+  const dateNow = Date.now();
+  const array = persons.map(per => {
+    const birthMonth = new Date(per.birthday).getMonth();
+    const birthDateDay = new Date(per.birthday).getDay();
+    const date = `${(birthMonth + 1)}/${birthDateDay + 1}/${currentYear}`;
+    const dateTime = new Date(`${date}`)
+    const dateMilis = dateTime.getTime();
+    const dateDiff = dateMilis - dateNow;
+    const numbersOfDays = Math.floor(dateDiff / (1000 * 60 * 60 * 24));
+    const daysToGo = numbersOfDays;
+    const birthday = per.birthday;
+    const d = new Date(birthday);
+    const dat = d.toLocaleDateString();
+    const arr = dat.split("/");
+    const monthIndex =  parseInt(arr[0],10) - 1;
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+    ];
+    const birthMonths = monthNames[monthIndex];
+    const diff = (Math.floor((dateNow - birthday) / (1000 * 60 * 60 * 24 * 365)));
+    const person = {
+      firstName : per.firstName,
+      lastName : per.lastName,
+      id : per.id,
+      birthday : per.birthday,
+      days : daysToGo,
+      picture : per.picture,
+      year : diff,
+      month : birthMonths,
+      daysOfbirth : arr[1],
+    }
+    return person
+  })
+  const peopleSorted = array.sort(function(a, b) {
+    return a.days - b.days;
+  });
+  const html = peopleSorted.map(person => {
     return `
     <div class="row mt-3" data-id="${person.id}">
       <div class="col">
         <img src="${person.picture}" class="rounded-circle">
       </div>
       <div class="col">
-        <span>${person.firstName} ${person.lastName}</span>
+        <span>${person.firstName} ${person.lastName} is turning <b>${person.year}</b> on <b>${person.month}</b> the <b>${person.daysOfbirth}th</b></span>
       </div>
-      <div class="col">${person.birthday}</div>
+      <div class="col">${person.days} days</div>
       <div class="col">
         <button type="button" value="${person.id}" data-id="${person.id}" class="edit">edit</button>
       </div>
@@ -150,8 +185,7 @@ async function deletePersonPupup (idOfPeopleToDelete) {
 container.addEventListener("click", editPerson);
 container.addEventListener("click", deletePerson);
 container.addEventListener("listOfPeopleUpdated", displayPeopleList);
-container.addEventListener("listOfPeopleUpdated", initlocalStorage)
-restoreFromLocalStorage();
+container.addEventListener("listOfPeopleUpdated", initlocalStorage);
 
 /******************************************************************** */
 //add new person
@@ -169,7 +203,6 @@ function submitForm (e) {
     picture : form.picture.value,
   }
   persons.push(newPerson);
-  console.log(persons);
   container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
   formEl.hidden = true;
   form.reset();
@@ -177,21 +210,3 @@ function submitForm (e) {
 
 addBtn.addEventListener("click", showForm);
 formEl.addEventListener("submit", submitForm);
-
-function findAge () {
-  const currentYear = new Date().getFullYear();
-  const dateNow = Date.now();
-  const array = persons.map(per => {
-    const month = new Date(per.birthday).getMonth();
-    const day = new Date(per.birthday).getDay();
-    const date = `${day + 1}/${(month + 1)}/${currentYear}`;
-    const dateTime = new Date(`${date}`)
-    const dateMilis = dateTime.getTime();
-    const dateDiff = dateNow - dateMilis;
-    const numbersOfDays = Math.floor(dateDiff / 86400000);
-    per.birthday = numbersOfDays;
-    return per;
-  })
-  // console.log(array);
-}
-findAge();
