@@ -45,26 +45,18 @@
 }
 
 
-/* .div {
-  background: hsla(0, 0%, 30%, 0.5);
-	height: 5rem;
-	width: 4rem;
-	transition: all 0.25s;
-	display: grid;
-	justify-content: center;
-	align-items: center;
-	pointer-events: none;
-	--opacity: 0;
-	opacity: var(--opacity);
+label {
+  display: block;
 }
 
-.div.open {
-  --opacity: 0.8;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-	pointer-events: all;
-  background-color: #dddddd;
-} */
+.formSubmit {
+  text-align: center;
+}
+
+.add {
+  color: white;
+  background-color: blue;
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+}

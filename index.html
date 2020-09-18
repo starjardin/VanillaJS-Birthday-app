@@ -4,11 +4,11 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>TEST</title>
-    <link rel="stylesheet" href="./style.css">
     <link
 			rel="stylesheet"
 			href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 		/>
+    <link rel="stylesheet" href="./style.css">
 	</head>
 	<body>
     <header class="header">
@@ -30,20 +30,30 @@
       </header>
       <form action="#" hidden class="formSubmit">
         <fieldset>
-          <label for="img">Image</label>
-          <input type="url" name="picture" id="img" value="https://picsum.photos/150/150"> 
-          <label for="firstName">first Name</label>
-          <input type="text" name="firstName" id="firstName">  
-          <label for="lastName">las tName</label>
-          <input type="text" name="lastName" id="lastName">  
-          <label for="birthday">Birthday</label>
-          <input type="date" name="birthday" id="birthday">
-          <label for="id">Id</label> 
-          <input type="number" name="id" id="id">
+          <div class="form-group">
+            <label for="img">Image</label>
+            <input type="url" name="picture" id="img" value="https://picsum.photos/150/150/">
+          </div>
+          <div class="form-group">
+            <label for="firstName">first Name</label>
+            <input type="text" name="firstName" id="firstName">  
+          </div>
+          <div class="form-group">
+            <label for="lastName">las tName</label>
+            <input type="text" name="lastName" id="lastName">  
+          </div>
+          <div class="form-group">
+            <label for="birthday">Birthday</label>
+            <input type="date" name="birthday" id="birthday">
+          </div>
+          <div class="form-group">
+            <label for="id">Id</label> 
+            <input type="number" name="id" id="id">
+          </div>
           <button type="submit">submit</button>
         </fieldset>
       </form>
-      <button type="submit" class="add">Add People</button>
+      <button type="button" class="add">Add People</button>
 
       <div class="container">
       
