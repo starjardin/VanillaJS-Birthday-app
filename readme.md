@@ -53,6 +53,6 @@ Good Luck
 
 1. Well, this one was not that easy but the most challenging part was dealing with the dates, tranforming time stamps into a real readable human date and then sorting it from to the nearest date, nightmare, although I like it. Playing puzzle.
 
-1. Yes, I have a lot to say here. If you wouldn't mind explaining about the date-fns. Then, I am not sure if we can reassing a variable from a module files in another file.
+1. Yes, I have a lot to say here. If you wouldn't mind explaining about the date-fns. Then, I am not sure if we can reassing a variable from a module files in another file. One thing I would like you to give a bit of explanation is this `parseInt()` method. I saw it on a website and what it said was it gives a string to a radical numeric number but I not sure if I fully understood it.
 
 1. Nothing much to say, the project was challenging which is pretty nice training, I liked it.
