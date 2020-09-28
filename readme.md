@@ -45,7 +45,7 @@ Good Luck
 
 # Readme update : Birthday app.
 
-1. In this project, It does not really work properly, although some of the features are working but the truth to be told, not all of them are working.
+1. In this project, It does not really work properly, although some of the features are working but the truth to be told, not all of them are working. With the delete person for instance, it deletes the person but not display the list unless you refersh the page then it's deleted. Similar problem with the edit.
 
 1. If you had more time, I would probably work on the filter and cleaning up the code. At the moment, there is still no style, so styling it is what I would at the end of the day, it has bad looking. It seems as if the local storage did not work properly when I split the functions in different files, I worked on in the whole days but did not come with the best idea.
 
