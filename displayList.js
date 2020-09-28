@@ -12,7 +12,7 @@ export function displayPeopleList () {
     const dateMiliseconds = dateTime.getTime();
     const dateDiff = dateMiliseconds - dateNow;
     let daysToGo = Math.round(dateDiff / (1000 * 60 * 60 * 24));
-    //if the birthday has gone, plus it to 356 days.
+    //if the birthday has gone, plus the numbers of the days rest to 356 days.
     if (daysToGo < 0) {
       daysToGo = daysToGo + 365;
     }
@@ -39,15 +39,24 @@ export function displayPeopleList () {
     const birthMonths = monthNames[monthIndex];
     //here is to distinguish how many old years old the person is.
     const diff = (Math.round((dateNow - birthday) / (1000 * 60 * 60 * 24 * 365)));
+    //if days are ending with 1, add "st" at the end
     if (arr[1].endsWith("1")) {
       arr[1] = `${arr[1]}st`
-    } else if (arr[1].endsWith("2")) {
+    }
+    //if days are ending with 2, add "nd" at the end 
+    else if (arr[1].endsWith("2")) {
       arr[1] = `${arr[1]}nd`
-    } else if (arr[1].endsWith("3")) {
+    }
+    //if days are ending with 3, add "rd" at the end  
+    else if (arr[1].endsWith("3")) {
       arr[1] = `${arr[1]}rd`
-    } else if (arr[1] == "11" || arr[1] == "12" || arr[1] == "13") {
+    }
+    //exception 11, 12, 13 just stay with "th" at the end. 
+    else if (arr[1] == "11" || arr[1] == "12" || arr[1] == "13") {
       arr[1] = `${arr[1]}th`
-    } else {
+    }
+    //the rest, just add th at the end. 
+    else {
       arr[1] = `${arr[1]}th`
     }
     //here I added some entries to a persons in order to make it easier to display on html
