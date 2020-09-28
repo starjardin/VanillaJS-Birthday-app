@@ -5,12 +5,17 @@ export function displayPeopleList () {
   let currentYear = new Date().getFullYear();
   const dateNow = Date.now();
   const array = persons.map(per => {
+    //get the month of the birthday
     const birthDateMonth = new Date(per.birthday).getMonth();
+    //get the day of the birthday
     const birthDateDay = new Date(per.birthday).getDay();
+    //here is creating a date mmm/ddd/yyy
     const date = `${(birthDateMonth + 1)}/${birthDateDay + 1}/${currentYear}`;
-    const dateTime = new Date(`${date}`);
-    const dateMiliseconds = dateTime.getTime();
+    //get the time stamp of the date above; ex: 03/05/2020 = 381374912739123;
+    const dateMiliseconds = new Date(`${date}`).getTime();
+    //here is how far the birthday is (in milliseconds)
     const dateDiff = dateMiliseconds - dateNow;
+    //here is how far the birthday is (in days)
     let daysToGo = Math.round(dateDiff / (1000 * 60 * 60 * 24));
     //if the birthday has gone, plus the numbers of the days rest to 356 days.
     if (daysToGo < 0) {
