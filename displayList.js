@@ -1,5 +1,5 @@
-import { persons } from "./variables.js";
-import { container } from "./variables.js";
+import persons, { container } from "./variables.js";
+export const search = document.querySelector('[name="search"]');
 
 //function display list of people
 export function displayPeopleList () {

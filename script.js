@@ -4,26 +4,13 @@
 //put the data in the local storage
 /* *********************************** */
 
-import { persons } from "./variables.js";
-import { container } from "./variables.js";
-import { addBtn } from "./variables.js";
-import { formEl } from "./variables.js";
-import { initlocalStorage } from "./localStorage.js";
-import { restoreFromLocalStorage } from "./localStorage.js";
-import { displayPeopleList } from "./displayList.js";
+// let persons = [];
+
+import persons, { container, addBtn, formEl, initlocalStorage, restoreFromLocalStorage } from "./variables.js";
 import { deletePerson } from "./utility/delete.js";
 import { editPerson } from "./utility/edit.js";
-import { submitForm } from "./utility/addPeople.js";
-import { showForm } from "./utility/addPeople.js";
-
-//fetch people
-const fetchpeople = async () => {
-    const peopleUrl = await fetch(`people.json`)
-    const data = await peopleUrl.json();
-    persons = [...data];
-    container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
-    return data;
-};
+import { submitForm, showForm } from "./utility/addPeople.js";
+import { displayPeopleList } from "./displayList.js";
 
 //listeners
 container.addEventListener("click", editPerson);

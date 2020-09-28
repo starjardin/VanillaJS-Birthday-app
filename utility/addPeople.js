@@ -1,3 +1,5 @@
+import persons, { formEl, container, initlocalStorage } from "../variables.js";
+import { displayPeopleList } from "../displayList.js";
 //add new person
 export function showForm() {
   formEl.removeAttribute("hidden");
@@ -9,7 +11,6 @@ export function submitForm (e) {
   const form = e.currentTarget;
   const birthDate = form.birthday.value;
   const dateTime = Date.parse(birthDate);
-  console.log(dateTime);
   //create an obj for the new pers
   const newPerson = {
     firstName : form.firstName.value,
@@ -23,4 +24,6 @@ export function submitForm (e) {
   container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
   formEl.hidden = true;
   form.reset();
-}
+};
+container.addEventListener("listOfPeopleUpdated", displayPeopleList);
+container.addEventListener("listOfPeopleUpdated", initlocalStorage);
