@@ -77,8 +77,5 @@ restoreFromLocalStorage();
     deletePopup();
   }, {once: true})
 };
-
-container.addEventListener("listOfPeopleUpdated", displayPeopleList);
-container.addEventListener("listOfPeopleUpdated", initlocalStorage);
 //export persons variable, default export
 export default persons;

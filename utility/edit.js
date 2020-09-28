@@ -1,5 +1,4 @@
-import persons, { container, initlocalStorage, restoreFromLocalStorage } from "../variables.js"
-import { displayPeopleList } from "../displayList.js"
+import persons, { container, restoreFromLocalStorage } from "../variables.js"
 //edit person function
 export function editPerson (e) {
   const editButton = e.target.matches(".edit");
@@ -61,8 +60,4 @@ async function editPersonPopup(id) {
     }, {once: true});
   })
 }
-
-
-container.addEventListener("listOfPeopleUpdated", displayPeopleList);
-container.addEventListener("listOfPeopleUpdated", initlocalStorage);
 restoreFromLocalStorage();

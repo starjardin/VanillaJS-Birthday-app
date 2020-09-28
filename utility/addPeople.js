@@ -1,5 +1,4 @@
-import persons, { formEl, container, initlocalStorage } from "../variables.js";
-import { displayPeopleList } from "../displayList.js";
+import persons, { formEl, container } from "../variables.js";
 //add new person
 export function showForm() {
   formEl.removeAttribute("hidden");
@@ -25,5 +24,3 @@ export function submitForm (e) {
   formEl.hidden = true;
   form.reset();
 };
-container.addEventListener("listOfPeopleUpdated", displayPeopleList);
-container.addEventListener("listOfPeopleUpdated", initlocalStorage);
