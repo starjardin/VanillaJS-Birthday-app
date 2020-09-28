@@ -3,6 +3,7 @@ import { displayPeopleList } from "./displayList.js"
 export const container = document.querySelector(".container");
 export const addBtn = document.querySelector(".add");
 export const formEl = document.querySelector(".formSubmit");
+export const search = document.querySelector('[name="search"]');
 
 //state 
 let persons = [];

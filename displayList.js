@@ -1,5 +1,4 @@
 import persons, { container } from "./variables.js";
-export const search = document.querySelector('[name="search"]');
 
 //function display list of people
 export function displayPeopleList () {
@@ -18,12 +17,27 @@ export function displayPeopleList () {
       daysToGo = daysToGo + 365;
     }
     const birthday = per.birthday;
+    //split the date in order to get in which month the index is.
     const arr = date.split("/");
     const monthIndex =  parseInt(arr[0],10) - 1;
     //list of months
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
     //Month that are matches the index.
     const birthMonths = monthNames[monthIndex];
+    //here is to distinguish how many old years old the person is.
     const diff = (Math.round((dateNow - birthday) / (1000 * 60 * 60 * 24 * 365)));
     if (arr[1].endsWith("1")) {
       arr[1] = `${arr[1]}st`
@@ -36,6 +50,7 @@ export function displayPeopleList () {
     } else {
       arr[1] = `${arr[1]}th`
     }
+    //here I added some entries to a persons in order to make it easier to display on html
     const person = {
       firstName : per.firstName,
       lastName : per.lastName,
@@ -47,7 +62,7 @@ export function displayPeopleList () {
       month : birthMonths,
       daysOfbirth : arr[1],
     }
-    return person
+    return person;
   });
   //sort the people by the days to go of their birthdays
   const peopleSorted = array.sort(function(a, b) {
