@@ -156,10 +156,19 @@ function displayPeopleList (e, filterName, filterByMonth) {
         person.days = person.days +" " + "days"}
       </div>
       <div class="col">
-        <button type="button" value="${person.id}" data-id="${person.id}" class="edit">edit</button>
+        <button 
+          type="button" 
+          value="${person.id}" 
+          data-id="${person.id}" 
+          class="edit">
+        </button>
       </div>
       <div class="col">
-        <button type="button" value="${person.id}" class="delete" data-id="${person.id}">delete</button>
+        <button 
+          type="button" 
+          value="${person.id}" 
+          class="delete" data-id="${person.id}">
+        </button>
       </div>
     </div>`
   });
