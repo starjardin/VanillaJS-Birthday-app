@@ -1,7 +1,7 @@
-import { persons, container } from "./variables.js";
+import { persons, container, searchFilter } from "./variables.js";
 
 //function display list of people
-export function displayPeopleList () {
+export function displayPeopleList (e, filterName, filterByMonth) {
   let currentYear = new Date().getFullYear();
   const dateNow = Date.now();
   const array = persons.map(per => {
@@ -79,9 +79,26 @@ export function displayPeopleList () {
     return person;
   });
   //sort the people by the days to go of their birthdays
-  const peopleSorted = array.sort(function(a, b) {
+  let peopleSorted = array.sort(function(a, b) {
     return a.days - b.days;
   });
+  if (filterName) {
+    peopleSorted = peopleSorted.filter(person => {
+      let lowerCaseFirstName = person.firstName.toLowerCase();
+      let lowerCaseLaststName = person.lastName.toLowerCase();
+      let lowerCaseFilter = filterName.toLowerCase();
+      if (
+        lowerCaseFirstName.includes(lowerCaseFilter) ||
+        lowerCaseLaststName.includes(lowerCaseFilter)
+        ) {
+        return true;
+      }
+    });
+  };
+
+  if (filterByMonth) {
+    peopleSorted = peopleSorted.filter(person => person.month.toLocaleLowerCase() === filterByMonth.toLowerCase())
+  };
   //html for the people sorted.
   const html = peopleSorted.map(person => {
     return `

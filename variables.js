@@ -3,7 +3,15 @@ import { displayPeopleList } from "./displayList.js"
 export const container = document.querySelector(".container");
 export const addBtn = document.querySelector(".add");
 export const formEl = document.querySelector(".formSubmit");
-export const search = document.querySelector('[name="search"]');
+export const searchByName = document.querySelector('[name="search"]');
+export const searchByMonth = document.querySelector('[name="month"]');
+
+export function searchFilter (e)  {
+  displayPeopleList(e, searchByName.value, searchByMonth.value);
+}
+
+searchByName.addEventListener("keyup", searchFilter)
+searchByMonth.addEventListener("change", searchFilter)
 
 //state 
 export let persons = [];
