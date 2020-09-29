@@ -82,22 +82,24 @@ export function displayPeopleList (e, filterName, filterByMonth) {
   let peopleSorted = array.sort(function(a, b) {
     return a.days - b.days;
   });
+  //filter by name
   if (filterName) {
     peopleSorted = peopleSorted.filter(person => {
       let lowerCaseFirstName = person.firstName.toLowerCase();
       let lowerCaseLaststName = person.lastName.toLowerCase();
       let lowerCaseFilter = filterName.toLowerCase();
       if (
-        lowerCaseFirstName.includes(lowerCaseFilter) ||
+        lowerCaseFirstName.includes(lowerCaseFilter) || 
         lowerCaseLaststName.includes(lowerCaseFilter)
         ) {
         return true;
       }
     });
   };
-
+  //filter by month
   if (filterByMonth) {
-    peopleSorted = peopleSorted.filter(person => person.month.toLocaleLowerCase() === filterByMonth.toLowerCase())
+    peopleSorted = peopleSorted.filter(person => 
+    person.month.toLocaleLowerCase() === filterByMonth.toLowerCase())
   };
   //html for the people sorted.
   const html = peopleSorted.map(person => {
@@ -109,7 +111,10 @@ export function displayPeopleList (e, filterName, filterByMonth) {
       <div class="col">
         <span>${person.firstName} ${person.lastName} is turning <b>${person.year + 1}</b> on <b>${person.month}</b> the <b>${person.daysOfbirth}</b></span>
       </div>
-      <div class="col">${person.days} days</div>
+      <div class="col">${person.days <= 1 ? 
+        person.days = person.days + "day" : 
+        person.days = person.days +" " + "days"}
+      </div>
       <div class="col">
         <button type="button" value="${person.id}" data-id="${person.id}" class="edit">edit</button>
       </div>
