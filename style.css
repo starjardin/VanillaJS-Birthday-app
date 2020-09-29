@@ -1,5 +1,34 @@
+body {
+  background-color: #e3f6f5;
+}
+
+h2 {
+  margin-block: 2rem;
+  color: #272343;
+}
+
+h2::before,
+h3::before,
+h2::after, 
+h3::after {
+  content: " ";
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  margin-inline: 1rem;
+}
+
+h2::before,
+h2::after {
+  background-image: url(./icons/cake.svg);
+}
+
+h3::after,
+h3::before {
+  background-image: url(./icons/heart.svg);
+}
+
 .form, .div {
-	background: hsla(0, 0%, 30%, 0.5);
 	position: absolute;
 	height: 100vh;
 	width: 100vw;
@@ -57,15 +86,15 @@ label {
 
 button {
   color: #111111;
-  background-color: #cccccc;
   margin-inline: 1rem;
   padding: .5rem;
   border-radius: 5px;
   transition: .3s;
+  background-color: #fffffe;
 }
 
-button:hover {
-  background-color: #1166ff;
+.add:hover {
+  background-color: #272343;
   color: #ffffff;
   cursor: pointer;
   transform: scale(1.1);
@@ -86,4 +115,41 @@ button:hover {
 
 [for="search"] {
   font-size: 21px;
+}
+
+.delete,
+.edit {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+  padding: 1rem;
+  transition: .3s;
+}
+
+.delete {
+  background-image: url("./icons/trash.svg");
+}
+
+.delete:hover,
+.edit:hover {
+  transform: scale(1.1);
+}
+
+.edit {
+  background-image: url("./icons/edit.svg");
+}
+
+.row {
+  background-color: #fffffe;
+  border-radius: 5px;
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+.col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
