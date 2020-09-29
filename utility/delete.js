@@ -9,4 +9,3 @@ export function deletePerson (e) {
     deletePersonPupup(idOfPeopleToDelete);
   }
 };
-restoreFromLocalStorage();

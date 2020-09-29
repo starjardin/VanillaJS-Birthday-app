@@ -6,7 +6,7 @@ export const formEl = document.querySelector(".formSubmit");
 export const search = document.querySelector('[name="search"]');
 
 //state 
-let persons = [];
+export let persons = [];
 // import { displayPeopleList } from "./displayList.js";
 //fetch people
 export const fetchpeople = async () => {
@@ -33,7 +33,6 @@ export async function restoreFromLocalStorage() {
   }
   container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
 };
-restoreFromLocalStorage();
 
 //delete person popup
  export async function deletePersonPupup (idOfPeopleToDelete) {
@@ -77,5 +76,6 @@ restoreFromLocalStorage();
     deletePopup();
   }, {once: true})
 };
+restoreFromLocalStorage();
 //export persons variable, default export
-export default persons;
+// export default persons;

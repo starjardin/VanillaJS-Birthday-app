@@ -1,4 +1,4 @@
-import persons, { container, restoreFromLocalStorage } from "../variables.js"
+import { persons, container, restoreFromLocalStorage } from "../variables.js"
 //edit person function
 export function editPerson (e) {
   const editButton = e.target.matches(".edit");
@@ -55,9 +55,8 @@ async function editPersonPopup(id) {
       editedPerson.birthday = newPerson.birthday;
       editedPerson.id = editedPerson.id;
       //uptdate the lsit
-      container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
+    container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
       formEl.classList.remove("open");
     }, {once: true});
   })
-}
-restoreFromLocalStorage();
+};

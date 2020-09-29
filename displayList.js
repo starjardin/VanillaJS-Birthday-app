@@ -1,4 +1,4 @@
-import persons, { container } from "./variables.js";
+import { persons, container } from "./variables.js";
 
 //function display list of people
 export function displayPeopleList () {

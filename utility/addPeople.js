@@ -1,4 +1,4 @@
-import persons, { formEl, container } from "../variables.js";
+import { persons, formEl, container } from "../variables.js";
 //add new person
 export function showForm() {
   formEl.removeAttribute("hidden");
