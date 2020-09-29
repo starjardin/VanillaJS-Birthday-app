@@ -85,5 +85,3 @@ export async function restoreFromLocalStorage() {
   }, {once: true})
 };
 restoreFromLocalStorage();
-//export persons variable, default export
-// export default persons;

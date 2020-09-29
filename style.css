@@ -30,8 +30,6 @@ h3::before {
 
 .form, .div {
 	position: absolute;
-	height: 100vh;
-	width: 100vw;
 	transition: all 0.25s;
 	top: 0;
 	display: grid;
@@ -55,22 +53,12 @@ h3::before {
 .div.open {
 	--opacity: 0.8;
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
 	pointer-events: all;
   background-color: #dddddd;
 }
-
-.div.open {
-  width: 15rem;
-  max-height: 50vh;
-  top: 50vh;
-  left: 50vw;
-  transform: translate(-50%, -50%);
-}
-
 
 label {
   display: block;
@@ -124,7 +112,6 @@ button {
   background-size: contain;
   border: none;
   cursor: pointer;
-  padding: 1rem;
   transition: .3s;
 }
 
@@ -152,4 +139,14 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.col-wrapper {
+  margin: 2rem;
+  align-items: flex-end;
+  justify-content: space-around;
+}
+
+button span {
+  visibility: hidden;
 }
