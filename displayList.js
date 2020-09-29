@@ -109,17 +109,27 @@ export function displayPeopleList (e, filterName, filterByMonth) {
         <img src="${person.picture}" class="rounded-circle">
       </div>
       <div class="col">
-        <span>${person.firstName} ${person.lastName} is turning <b>${person.year + 1}</b> on <b>${person.month}</b> the <b>${person.daysOfbirth}</b></span>
+        <div>
+          ${person.firstName} ${person.lastName} 
+          is turning 
+          <b>${person.year + 1}</b> 
+          on <b>${person.month}</b> 
+          the <b>${person.daysOfbirth}</b>
+        </div>
       </div>
       <div class="col">${person.days <= 1 ? 
         person.days = person.days + "day" : 
         person.days = person.days +" " + "days"}
       </div>
       <div class="col">
-        <button type="button" value="${person.id}" data-id="${person.id}" class="edit">edit</button>
+        <button type="button" value="${person.id}" data-id="${person.id}" class="edit">
+          <span>edit</span>
+        </button>
       </div>
       <div class="col">
-        <button type="button" value="${person.id}" class="delete" data-id="${person.id}">delete</button>
+        <button type="button" value="${person.id}" class="delete" data-id="${person.id}">
+          <span>delete</span>
+        </button>
       </div>
     </div>`
   });
