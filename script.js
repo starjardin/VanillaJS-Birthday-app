@@ -2,6 +2,8 @@ const container = document.querySelector(".container");
 const addBtn = document.querySelector(".add");
 const formEl = document.querySelector(".formSubmit");
 const search = document.querySelector('[name="search"]');
+const searchByName = document.querySelector('[name="search"]');
+const searchByMonth = document.querySelector('[name="month"]');
 
 //state 
 let persons = [];
@@ -33,8 +35,12 @@ let persons = [];
   container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
 };
 
+function searchFilter (e)  {
+  displayPeopleList(e, searchByName.value, searchByMonth.value);
+}
+
 //function display list of people
-function displayPeopleList () {
+function displayPeopleList (e, filterName, filterByMonth) {
   let currentYear = new Date().getFullYear();
   const dateNow = Date.now();
   const array = persons.map(per => {
@@ -96,7 +102,8 @@ function displayPeopleList () {
     //the rest, just add th at the end. 
     else {
       arr[1] = `${arr[1]}th`
-    }
+    };
+
     //here I added some entries to a persons in order to make it easier to display on html
     const person = {
       firstName : per.firstName,
@@ -112,9 +119,28 @@ function displayPeopleList () {
     return person;
   });
   //sort the people by the days to go of their birthdays
-  const peopleSorted = array.sort(function(a, b) {
+  let peopleSorted = array.sort(function(a, b) {
     return a.days - b.days;
   });
+  //search by name
+  if (filterName) {
+    peopleSorted = peopleSorted.filter(person => {
+      let lowerCaseFirstName = person.firstName.toLowerCase();
+      let lowerCaseLaststName = person.lastName.toLowerCase();
+      let lowerCaseFilter = filterName.toLowerCase();
+      if (
+          lowerCaseFirstName.includes(lowerCaseFilter) || 
+          lowerCaseLaststName.includes(lowerCaseFilter)
+        ) {
+        return true;
+      }
+    });
+  };
+  //search by month
+  if (filterByMonth) {
+    peopleSorted = peopleSorted.filter(person => 
+    person.month.toLocaleLowerCase() === filterByMonth.toLowerCase())
+  };
   //html for the people sorted.
   const html = peopleSorted.map(person => {
     return `
@@ -125,7 +151,10 @@ function displayPeopleList () {
       <div class="col">
         <span>${person.firstName} ${person.lastName} is turning <b>${person.year + 1}</b> on <b>${person.month}</b> the <b>${person.daysOfbirth}</b></span>
       </div>
-      <div class="col">${person.days} days</div>
+      <div class="col">${person.days <= 1 ? 
+        person.days = person.days + "day" : 
+        person.days = person.days +" " + "days"}
+      </div>
       <div class="col">
         <button type="button" value="${person.id}" data-id="${person.id}" class="edit">edit</button>
       </div>
@@ -284,3 +313,5 @@ container.addEventListener("listOfPeopleUpdated", initlocalStorage);
 restoreFromLocalStorage();
 addBtn.addEventListener("click", showForm);
 formEl.addEventListener("submit", submitForm);
+searchByName.addEventListener("keyup", searchFilter);
+searchByMonth.addEventListener("change", searchFilter);
