@@ -95,9 +95,9 @@ export function displayPeopleList (e, filterName, filterByMonth) {
         return true;
       }
     });
-  };
+  }
   //filter by month
-  if (filterByMonth) {
+  else if (filterByMonth) {
     peopleSorted = peopleSorted.filter(person => 
     person.month.toLocaleLowerCase() === filterByMonth.toLowerCase())
   };

@@ -25,7 +25,6 @@ let persons = [];
 //restore form local storage
  async function restoreFromLocalStorage() {
   let listOfOeople = JSON.parse(localStorage.getItem('persons'));
-  console.log(listOfOeople);
   if (persons) {
     persons = listOfOeople;
   }
@@ -35,7 +34,7 @@ let persons = [];
   container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
 };
 
-function searchFilter (e)  {
+function searchFilterFunc (e)  {
   displayPeopleList(e, searchByName.value, searchByMonth.value);
 }
 
@@ -135,11 +134,12 @@ function displayPeopleList (e, filterName, filterByMonth) {
         return true;
       }
     });
-  };
+  }
   //search by month
-  if (filterByMonth) {
+  else if (filterByMonth) {
+    console.log("Say hi");
     peopleSorted = peopleSorted.filter(person => 
-    person.month.toLocaleLowerCase() === filterByMonth.toLowerCase())
+    person.month.toLowerCase() === filterByMonth.toLowerCase());
   };
   //html for the people sorted.
   const html = peopleSorted.map(person => {
@@ -332,5 +332,5 @@ container.addEventListener("listOfPeopleUpdated", initlocalStorage);
 restoreFromLocalStorage();
 addBtn.addEventListener("click", showForm);
 formEl.addEventListener("submit", submitForm);
-searchByName.addEventListener("keyup", searchFilter);
-searchByMonth.addEventListener("change", searchFilter);
+searchByName.addEventListener("keyup", searchFilterFunc);
+searchByMonth.addEventListener("change", searchFilterFunc);
