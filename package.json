@@ -21,5 +21,12 @@
   "bugs": {
     "url": "https://github.com/starjardin/birthday-app/issues"
   },
-  "homepage": "https://github.com/starjardin/birthday-app#readme"
+  "homepage": "https://github.com/starjardin/birthday-app#readme",
+  "browserslist": [
+  "last 3 and_chr versions",
+  "last 3 chrome versions",
+  "last 3 opera versions",
+  "last 3 ios_saf versions",
+  "last 3 safari versions"
+]
 }
