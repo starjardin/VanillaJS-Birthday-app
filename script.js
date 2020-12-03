@@ -122,7 +122,7 @@ function displayPeopleList (e, filterName, filterByMonth) {
     return a.days - b.days;
   });
   //search by name
-  if (filterName) {
+  if (filterName !== " ") {
     peopleSorted = peopleSorted.filter(person => {
       let lowerCaseFirstName = person.firstName.toLowerCase();
       let lowerCaseLaststName = person.lastName.toLowerCase();
@@ -136,7 +136,7 @@ function displayPeopleList (e, filterName, filterByMonth) {
     });
   }
   //search by month
-  else if (filterByMonth) {
+  if (filterByMonth !== " ") {
     console.log("Say hi");
     peopleSorted = peopleSorted.filter(person => 
     person.month.toLowerCase() === filterByMonth.toLowerCase());
