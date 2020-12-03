@@ -118,209 +118,284 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"script.js":[function(require,module,exports) {
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+const container = document.querySelector(".container");
+const addBtn = document.querySelector(".add");
+const formEl = document.querySelector(".formSubmit");
+const search = document.querySelector('[name="search"]');
+const searchByName = document.querySelector('[name="search"]');
+const searchByMonth = document.querySelector('[name="month"]'); //state 
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+let persons = []; // import { displayPeopleList } from "./displayList.js";
+//fetch people
 
-// import { format, compareAsc } from 'date-fns';
-//I need to fetch but how : create a function to fetch the data from person.json
-//put the data in the local storage
+const fetchpeople = async () => {
+  const peopleUrl = await fetch("people.json");
+  const data = await peopleUrl.json();
+  persons = [...data];
+  displayPeopleList(persons);
+  return data;
+};
 
-/* *********************************** */
-//delete a person
-var container = document.querySelector(".container");
+fetchpeople(); //add to local storage
 
-var fetchpeople = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-    var peopleUrl, data;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.next = 2;
-            return fetch("people.json");
-
-          case 2:
-            peopleUrl = _context.sent;
-            _context.next = 5;
-            return peopleUrl.json();
-
-          case 5:
-            data = _context.sent;
-            return _context.abrupt("return", data);
-
-          case 7:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee);
-  }));
-
-  return function fetchpeople() {
-    return _ref.apply(this, arguments);
-  };
-}(); // const fetchPeopleObjects = async () => {
-//   const people = await fetchpeople();
-// }
+async function initlocalStorage() {
+  localStorage.setItem("persons", JSON.stringify(persons));
+} //restore form local storage
 
 
-function displayPeopleList(people) {
-  var html = people.map(function (person) {
-    var dateOfBirth = new Date(person.birthday).getTime();
-    var dateNow = new Date(Date.now()).getTime();
-    var age = new Date(dateNow - dateOfBirth).toLocaleDateString();
-    return "\n    <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n      <div class=\"col\">\n        <img src=\"").concat(person.picture, "\" class=\"rounded-circle\">\n      </div>\n      <div class=\"col\">\n        <span>").concat(person.firstName, " ").concat(person.lastName, "</span>\n      </div>\n      <div class=\"col\">").concat(age, "</div>\n      <div class=\"col\">\n        <button type=\"button\" value=\"").concat(person.id, "\" data-id=\"").concat(person.id, "\" class=\"edit\">edit</button>\n      </div>\n      <div class=\"col\">\n        <button type=\"button\" value=\"").concat(person.id, "\" class=\"delete\" data-id=\"").concat(person.id, "\">delete</button>\n      </div>\n    </div>");
-  });
-  container.innerHTML = html.join("");
-} // async function initlocalStorage() {
-//   let people = await fetchpeople();
-//   localStorage.setItem("people", JSON.stringify(people));
-// }
+async function restoreFromLocalStorage() {
+  let listOfOeople = JSON.parse(localStorage.getItem('persons'));
 
+  if (persons) {
+    persons = listOfOeople;
+    fetchpeople();
+  }
 
-function restoreFromLocalStorage() {
-  return _restoreFromLocalStorage.apply(this, arguments);
-} // function editPerson (e, people) {
-//   const editButton = e.target.matches(".edit");
-//   if (editButton) {
-//     const button = e.target.closest(".edit");
-//     const id = button.dataset.id;
-//     editPersonPopup(id);
-//   }
-// }
-// async function editPersonPopup(id) {
-//   const people = await fetchpeople();
-//   const personToEdit = people.find(person => person.id === id);
-//   return new Promise(async function(resolve) {
-//     const formEl = document.createElement('form');
-//     formEl.classList.add("form");
-//     formEl.insertAdjacentHTML("afterbegin", `
-//       <div class="form-group">
-//         <label for="lastName">${personToEdit.lastName}</label>
-//         <input type="text" class="form-control" id="${personToEdit.id}" name="lastName" value="${personToEdit.lastName}"> 
-//       </div>
-//       <div class="form-group">
-//         <label for="firstName">${personToEdit.firstName}</label>
-//         <input type="text" class="form-control" name="firstName" id="${personToEdit.id}" value="${personToEdit.firstName}">
-//       </div>
-//       <div class="form-group">
-//         <label for="birthday">Birthday</label>
-//         <input type="text" id="birthday" class="form-control" name="birthday" id="${personToEdit.birthday}" value="${personToEdit.birthday}">
-//       </div>
-//       <button type="submit" class="btn btn-primary">Submit</button>
-//     `);
-//     document.body.appendChild(formEl);
-//     formEl.classList.add("open");
-//     formEl.addEventListener("submit", e => {
-//       e.preventDefault();
-//       const form = e.currentTarget;
-//       const newPerson = {
-//         id: id,
-//         lastName: form.lastName.value,
-//         firstName : form.firstName.value,
-//         birthday : form.birthday.value,
-//         picture : personToEdit.picture,
-//       }
-//       const editedPerson = people.find(person => person.id === newPerson.id);
-//       editedPerson.firstName = newPerson.firstName;
-//       editedPerson.lastName = newPerson.lastName;
-//       editedPerson.birthday = newPerson.birthday;
-//       displayPeopleList (people)
-//       formEl.classList.remove("open");
-//     }, {once: true});
-//   })
-// }
-
-
-function _restoreFromLocalStorage() {
-  _restoreFromLocalStorage = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-    var storedPeople;
-    return regeneratorRuntime.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            storedPeople = JSON.parse(localStorage.getItem('people'));
-            displayPeopleList(storedPeople);
-
-          case 2:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2);
-  }));
-  return _restoreFromLocalStorage.apply(this, arguments);
+  container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
 }
 
+;
+
+function searchFilterFunc(e) {
+  displayPeopleList(e, searchByName.value, searchByMonth.value);
+} //function display list of people
+
+
+function displayPeopleList(persons, filterName, filterByMonth) {
+  let currentYear = new Date().getFullYear();
+  const dateNow = Date.now();
+  const array = persons.map(per => {
+    //get the month of the birthday
+    const birthDateMonth = new Date(per.birthday).getMonth(); //get the day of the birthday
+
+    const birthDateDay = new Date(per.birthday).getDay(); //here is creating a date mmm/ddd/yyy
+
+    const date = "".concat(birthDateMonth + 1, "/").concat(birthDateDay + 1, "/").concat(currentYear); //get the time stamp of the date above; ex: 03/05/2020 = 381374912739123;
+
+    const dateMiliseconds = new Date("".concat(date)).getTime(); //here is how far the birthday is (in milliseconds)
+
+    const dateDiff = dateMiliseconds - dateNow; //here is how far the birthday is (in days)
+
+    let daysToGo = Math.round(dateDiff / (1000 * 60 * 60 * 24)); //if the birthday has gone, plus the numbers of the days rest to 356 days.
+
+    if (daysToGo < 0) {
+      daysToGo = daysToGo + 365;
+    }
+
+    const birthday = per.birthday; //split the date in order to get in which month the index is.
+
+    const arr = date.split("/");
+    const monthIndex = parseInt(arr[0], 10) - 1; //list of months
+
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]; //Month that are matches the index.
+
+    const birthMonths = monthNames[monthIndex]; //here is to distinguish how many old years old the person is.
+
+    const diff = Math.round((dateNow - birthday) / (1000 * 60 * 60 * 24 * 365)); //if days are ending with 1, add "st" at the end
+
+    if (arr[1].endsWith("1")) {
+      arr[1] = "".concat(arr[1], "st");
+    } //if days are ending with 2, add "nd" at the end 
+    else if (arr[1].endsWith("2")) {
+        arr[1] = "".concat(arr[1], "nd");
+      } //if days are ending with 3, add "rd" at the end  
+      else if (arr[1].endsWith("3")) {
+          arr[1] = "".concat(arr[1], "rd");
+        } //exception 11, 12, 13 just stay with "th" at the end. 
+        else if (arr[1] == "11" || arr[1] == "12" || arr[1] == "13") {
+            arr[1] = "".concat(arr[1], "th");
+          } //the rest, just add th at the end. 
+          else {
+              arr[1] = "".concat(arr[1], "th");
+            }
+
+    ; //here I added some entries to a persons in order to make it easier to display on html
+
+    const person = {
+      firstName: per.firstName,
+      lastName: per.lastName,
+      id: per.id,
+      birthday: per.birthday,
+      days: daysToGo,
+      picture: per.picture,
+      year: diff,
+      month: birthMonths,
+      daysOfbirth: arr[1]
+    };
+    return person;
+  }); //sort the people by the days to go of their birthdays
+
+  let peopleSorted = array.sort(function (a, b) {
+    return a.days - b.days;
+  }); //search by name
+
+  if (filterName !== " ") {
+    peopleSorted = peopleSorted.filter(person => {
+      let lowerCaseFirstName = person.firstName.toLowerCase();
+      let lowerCaseLaststName = person.lastName.toLowerCase();
+      let lowerCaseFilter = filterName;
+
+      if (lowerCaseFirstName.includes(lowerCaseFilter) || lowerCaseLaststName.includes(lowerCaseFilter)) {
+        return true;
+      }
+    });
+  } //search by month
+
+
+  if (filterByMonth !== " ") {
+    peopleSorted = peopleSorted.filter(person => person.month.toLowerCase() === filterByMonth.toLowerCase());
+  }
+
+  ; //html for the people sorted.
+
+  const html = peopleSorted.map(person => {
+    return "\n    <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n      <div class=\"col\">\n        <img src=\"").concat(person.picture, "\" class=\"rounded-circle\">\n      </div>\n      <div class=\"col\">\n        <div>\n          ").concat(person.firstName, " ").concat(person.lastName, " \n          is turning \n          <b>").concat(person.year + 1, "</b> \n          on \n          <b>").concat(person.month, "</b> \n          the \n          <b>").concat(person.daysOfbirth, "</b>\n        </div>\n      </div>\n      <div class=\"col\">").concat(person.days <= 1 ? person.days = person.days + "day" : person.days = person.days + " " + "days", "\n      </div>\n      <div class=\"col\">\n        <button \n          type=\"button\" \n          value=\"").concat(person.id, "\" \n          data-id=\"").concat(person.id, "\" \n          class=\"edit\">\n          <span>edit</span>\n        </button>\n      </div>\n      <div class=\"col\">\n        <button \n          type=\"button\" \n          value=\"").concat(person.id, "\" \n          class=\"delete\" data-id=\"").concat(person.id, "\">\n          <span>delete</span>\n        </button>\n      </div>\n    </div>");
+  });
+  container.innerHTML = html.join("");
+} //delete person function
+
+
 function deletePerson(e) {
-  var deleteBtn = e.target.matches(".delete");
+  const deleteBtn = e.target.matches(".delete");
 
   if (deleteBtn) {
-    var idOfPeopleToDelete = e.target.closest('.delete').dataset.id;
+    //find the id of the pers to delete
+    const idOfPeopleToDelete = e.target.closest('.delete').dataset.id;
     deletePersonPupup(idOfPeopleToDelete);
   }
 }
 
-function deletePersonPupup(_x) {
-  return _deletePersonPupup.apply(this, arguments);
+; //delete person popup
+
+async function deletePersonPupup(idOfPeopleToDelete) {
+  //find the id of the pers to delete
+  const peopleToDelete = persons.find(per => per.id === idOfPeopleToDelete); //create buttons "yes"
+
+  const yesBtn = document.createElement("button");
+  yesBtn.type = "button";
+  yesBtn.textContent = "Yes"; //create "no" button
+
+  const noBtn = document.createElement("button");
+  noBtn.type = "button";
+  noBtn.textContent = "No";
+  const btnPopup = document.createElement('div');
+  btnPopup.classList.add('div');
+  btnPopup.textContent = "Are you sure you want to delete ".concat(peopleToDelete.firstName, " ").concat(peopleToDelete.lastName); //add both "yes" and "no" button to the container
+
+  btnPopup.appendChild(yesBtn);
+  btnPopup.appendChild(noBtn); //add the container to the DOM
+
+  document.body.appendChild(btnPopup); //open the popup by adding classlist of "open"
+
+  btnPopup.classList.add("open"); //function to delete popup 
+
+  function deletePopup() {
+    btnPopup.classList.remove("open");
+  } //if no gets clicked delete the popup
+
+
+  noBtn.addEventListener("click", e => {
+    deletePopup();
+  }); //if yes button gets clicked delete the pers and ddestroy the popup
+
+  yesBtn.addEventListener("click", e => {
+    const peopleRest = persons.filter(person => person.id !== idOfPeopleToDelete);
+    persons = peopleRest;
+    console.log(persons);
+    container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
+    deletePopup();
+  }, {
+    once: true
+  });
 }
 
-function _deletePersonPupup() {
-  _deletePersonPupup = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(idOfPeopleToDelete) {
-    var yesBtn, noBtn, btnPopup, deletePopup;
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            deletePopup = function _deletePopup() {
-              btnPopup.classList.remove("open");
-            };
+;
 
-            yesBtn = document.createElement("button");
-            yesBtn.type = "button";
-            yesBtn.textContent = "Yes";
-            noBtn = document.createElement("button");
-            noBtn.type = "button";
-            noBtn.textContent = "No";
-            btnPopup = document.createElement('div');
-            btnPopup.classList.add('div');
-            btnPopup.appendChild(yesBtn);
-            btnPopup.appendChild(noBtn);
-            document.body.appendChild(btnPopup);
-            btnPopup.classList.add("open");
-            ;
-            noBtn.addEventListener("click", function (e) {
-              deletePopup();
-            });
-            yesBtn.addEventListener("click", function (e) {
-              var hi = people.filter(function (person) {
-                return person.id !== idOfPeopleToDelete;
-              });
-              people = hi;
-              deletePopup();
-              displayPeopleList(people);
-              console.log(people);
-            }, {
-              once: true
-            });
+function editPerson(e) {
+  const editButton = e.target.matches(".edit");
 
-          case 16:
-          case "end":
-            return _context3.stop();
-        }
-      }
-    }, _callee3);
-  }));
-  return _deletePersonPupup.apply(this, arguments);
+  if (editButton) {
+    const button = e.target.closest(".edit");
+    const id = button.dataset.id;
+    editPersonPopup(id);
+  }
+} //edit person popup
+
+
+async function editPersonPopup(id) {
+  const personToEdit = persons.find(person => person.id === id);
+  return new Promise(async function (resolve) {
+    //create a new form elem
+    const formEl = document.createElement('form');
+    formEl.classList.add("form");
+    formEl.insertAdjacentHTML("afterbegin", "\n      <div class=\"form-group\">\n        <label for=\"lastName\">".concat(personToEdit.lastName, "</label>\n        <input type=\"text\" class=\"form-control\" id=\"").concat(personToEdit.id, "\" name=\"lastName\" value=\"").concat(personToEdit.lastName, "\"> \n      </div>\n      <div class=\"form-group\">\n        <label for=\"firstName\">").concat(personToEdit.firstName, "</label>\n        <input type=\"text\" class=\"form-control\" name=\"firstName\" id=\"").concat(personToEdit.id, "\" value=\"").concat(personToEdit.firstName, "\">\n      </div>\n      <div class=\"form-group\">\n        <label for=\"birthday\">Birthday</label>\n        <input type=\"date\" id=\"birthday\" class=\"form-control\" name=\"birthday\" id=\"").concat(personToEdit.birthday, "\">\n      </div>\n      <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n    "));
+    document.body.appendChild(formEl);
+    formEl.classList.add("open"); //listeners for the for elem
+
+    formEl.addEventListener("submit", e => {
+      e.preventDefault();
+      const form = e.currentTarget;
+      const birthDate = new Date(form.birthday.value);
+      const birthDateMiliseconds = birthDate.getTime(); //create an obj for the edited pers
+
+      const newPerson = {
+        id: id,
+        lastName: form.lastName.value,
+        firstName: form.firstName.value,
+        birthday: birthDateMiliseconds,
+        picture: personToEdit.picture
+      }; //reasign the value of the pers to the value of the new pers
+
+      const editedPerson = persons.find(person => person.id === newPerson.id);
+      editedPerson.firstName = newPerson.firstName;
+      editedPerson.lastName = newPerson.lastName;
+      editedPerson.birthday = newPerson.birthday;
+      editedPerson.id = editedPerson.id; //uptdate the lsit
+
+      container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
+      formEl.classList.remove("open");
+    }, {
+      once: true
+    });
+  });
 }
 
-; // container.addEventListener("click", editPerson);
+function showForm() {
+  formEl.removeAttribute("hidden");
+} //submit the form for the new person
 
-container.addEventListener("click", deletePerson); // fetchPeopleObjects();
-// initlocalStorage();
 
+function submitForm(e) {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const birthDate = form.birthday.value;
+  const dateTime = Date.parse(birthDate); //create an obj for the new pers
+
+  const newPerson = {
+    firstName: form.firstName.value,
+    lastName: form.lastName.value,
+    id: form.id.value,
+    picture: form.picture.value,
+    birthday: dateTime
+  }; //push the new pers to the persons array.
+
+  persons.push(newPerson);
+  container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
+  formEl.hidden = true;
+  form.reset();
+}
+
+; //listeners
+
+container.addEventListener("click", editPerson);
+container.addEventListener("click", deletePerson);
+container.addEventListener("listOfPeopleUpdated", displayPeopleList);
+container.addEventListener("listOfPeopleUpdated", initlocalStorage);
 restoreFromLocalStorage();
+addBtn.addEventListener("click", showForm);
+formEl.addEventListener("submit", submitForm);
+searchByName.addEventListener("keyup", searchFilterFunc);
+searchByMonth.addEventListener("change", searchFilterFunc);
 },{}],"../../AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -349,7 +424,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61143" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53029" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

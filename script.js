@@ -28,10 +28,8 @@ let persons = [];
   if (persons) {
     persons = listOfOeople;
   }
-  if (!persons) {
     fetchpeople();
-  }
-  container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
+   container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
 };
 
 function searchFilterFunc (e)  {
@@ -42,6 +40,7 @@ function searchFilterFunc (e)  {
 function displayPeopleList (e, filterName, filterByMonth) {
   let currentYear = new Date().getFullYear();
   const dateNow = Date.now();
+  if (!persons) return null
   const array = persons.map(per => {
     //get the month of the birthday
     const birthDateMonth = new Date(per.birthday).getMonth();
@@ -62,7 +61,8 @@ function displayPeopleList (e, filterName, filterByMonth) {
     const birthday = per.birthday;
     //split the date in order to get in which month the index is.
     const arr = date.split("/");
-    const monthIndex =  parseInt(arr[0],10) - 1;
+    const monthIndex = parseInt(arr[0], 10) - 1;
+
     //list of months
     const monthNames = [
         "January",
@@ -122,11 +122,11 @@ function displayPeopleList (e, filterName, filterByMonth) {
     return a.days - b.days;
   });
   //search by name
-  if (filterName !== " ") {
+  if (filterName === "") {
     peopleSorted = peopleSorted.filter(person => {
       let lowerCaseFirstName = person.firstName.toLowerCase();
       let lowerCaseLaststName = person.lastName.toLowerCase();
-      let lowerCaseFilter = filterName.toLowerCase();
+      let lowerCaseFilter = filterName;
       if (
           lowerCaseFirstName.includes(lowerCaseFilter) || 
           lowerCaseLaststName.includes(lowerCaseFilter)
@@ -136,12 +136,12 @@ function displayPeopleList (e, filterName, filterByMonth) {
     });
   }
   //search by month
-  if (filterByMonth !== " ") {
-    console.log("Say hi");
+  if (filterByMonth === "") {
     peopleSorted = peopleSorted.filter(person => 
     person.month.toLowerCase() === filterByMonth.toLowerCase());
   };
   //html for the people sorted.
+  console.log(peopleSorted);
   const html = peopleSorted.map(person => {
     return `
     <div class="row mt-3" data-id="${person.id}">
