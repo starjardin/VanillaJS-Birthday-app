@@ -1,15 +1,13 @@
-import { persons, formEl, container } from "../variables.js";
-//add new person
-export function showForm() {
-  formEl.removeAttribute("hidden");
-}
+import people from '../variables'
 
-//submit the form for the new person
-export function submitForm (e) {
+export function addNewPerson(e) {
   e.preventDefault();
   const form = e.currentTarget;
   const birthDate = form.birthday.value;
   const dateTime = Date.parse(birthDate);
+  if (!birthDate || !form.firstName.value || form.lastName.value || form.id.value || form.picture.value) {
+    alert("Please fill all of the fields")
+  }
   //create an obj for the new pers
   const newPerson = {
     firstName : form.firstName.value,
@@ -19,7 +17,7 @@ export function submitForm (e) {
     birthday : dateTime,
   }
   //push the new pers to the persons array.
-  persons.push(newPerson);
+  people = [...people, newPerson]
   container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
   formEl.hidden = true;
   form.reset();

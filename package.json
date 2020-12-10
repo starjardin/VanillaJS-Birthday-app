@@ -7,7 +7,9 @@
   "description": "Hey team! So the final project here will be a birthday list.",
   "version": "1.0.0",
   "main": "script.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "sass": "^1.30.0"
+  },
   "scripts": {
     "test": "echo \"Error : no test specified\" && exit 1"
   },
@@ -23,10 +25,10 @@
   },
   "homepage": "https://github.com/starjardin/birthday-app#readme",
   "browserslist": [
-  "last 3 and_chr versions",
-  "last 3 chrome versions",
-  "last 3 opera versions",
-  "last 3 ios_saf versions",
-  "last 3 safari versions"
-]
+    "last 3 and_chr versions",
+    "last 3 chrome versions",
+    "last 3 opera versions",
+    "last 3 ios_saf versions",
+    "last 3 safari versions"
+  ]
 }

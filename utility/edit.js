@@ -1,6 +1,6 @@
-import { persons, container, restoreFromLocalStorage } from "../variables.js"
-//edit person function
-export function editPerson (e) {
+import people, { container } from '../variables'
+
+export function editPerson(e) {
   const editButton = e.target.matches(".edit");
   if (editButton) {
     const button = e.target.closest(".edit");
@@ -11,7 +11,7 @@ export function editPerson (e) {
 
 //edit person popup
 async function editPersonPopup(id) {
-  const personToEdit = persons.find(person => person.id === id);
+  const personToEdit = people.find(person => person.id === id);
   return new Promise(async function(resolve) {
     //create a new form elem
     const formEl = document.createElement('form');
@@ -37,6 +37,9 @@ async function editPersonPopup(id) {
     formEl.addEventListener("submit", e => {
       e.preventDefault();
       const form = e.currentTarget;
+      if (!form.birthday.value) {
+        alert("Hey, what's your birthday")
+      }
       const birthDate = new Date(form.birthday.value);
       const birthDateMiliseconds = birthDate.getTime();
       //create an obj for the edited pers
@@ -49,14 +52,14 @@ async function editPersonPopup(id) {
       }
 
       //reasign the value of the pers to the value of the new pers
-      const editedPerson = persons.find(person => person.id === newPerson.id);
+      const editedPerson = people.find(person => person.id === newPerson.id);
       editedPerson.firstName = newPerson.firstName;
       editedPerson.lastName = newPerson.lastName;
       editedPerson.birthday = newPerson.birthday;
       editedPerson.id = editedPerson.id;
       //uptdate the lsit
-    container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
+      container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
       formEl.classList.remove("open");
     }, {once: true});
   })
-};
+}

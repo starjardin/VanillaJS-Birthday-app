@@ -20,12 +20,12 @@ h3::after {
 
 h2::before,
 h2::after {
-  background-image: url(/cake.399ba338.svg);
+  background-image: url(./icons/cake.svg);
 }
 
 h3::after,
 h3::before {
-  background-image: url(/heart.978b954c.svg);
+  background-image: url(./icons/heart.svg);
 }
 
 .form, .div {
@@ -49,8 +49,16 @@ h3::before {
 	transition: all 0.2s;
 }
 
-.form.open,
 .div.open {
+  color: #272343;
+  font-size: large;
+  font-weight: bold;
+  line-height: 23px;
+}
+
+.form.open,
+.div.open,
+.formSubmit {
 	--opacity: 0.8;
   position: fixed;
   top: 50%;
@@ -58,6 +66,11 @@ h3::before {
   transform: translateY(-50%) translateX(-50%);
 	pointer-events: all;
   background-color: #dddddd;
+  button {
+    margin: .5rem 0;
+    background-color: #272343;
+    color: #ffffff;
+  }
 }
 
 label {
@@ -67,18 +80,19 @@ label {
 .formSubmit {
   text-align: center;
   padding: 2rem 5rem;
-  position: fixed;
-  background-color: #cccccc;
-  min-width: 400px;
   z-index: 5;
-  transform: translate(50%);
-  margin-top: -10%;
   box-shadow: 1px 1px 3px 3px #333333;
   border-radius: 5px;
-}
-
-.add {
-  margin-inline-start: 1rem;
+  input {
+    padding : 0.5rem;
+    border: none;
+    box-shadow: 1px 1px 1px 1px #333333;
+    border-radius: 5px;
+  }
+  button {
+    padding: .75rem 2rem;
+    text-transform: capitalize;
+  }
 }
 
 button {
@@ -125,7 +139,7 @@ button {
 }
 
 .delete {
-  background-image: url("/trash.e2762dec.svg");
+  background-image: url("./icons/trash.svg");
 }
 
 .delete:hover,
@@ -134,7 +148,7 @@ button {
 }
 
 .edit {
-  background-image: url("/edit.77a00f45.svg");
+  background-image: url("./icons/edit.svg");
 }
 
 .row {
@@ -163,5 +177,3 @@ button span {
 button {
   cursor: pointer;
 }
-
-/*# sourceMappingURL=/style.e308ff8e.css.map */

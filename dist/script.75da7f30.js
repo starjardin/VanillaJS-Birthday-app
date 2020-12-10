@@ -719,56 +719,40 @@ module.exports = [{
   "picture": "http://placeimg.com/100/100/people",
   "birthday": 1372161498194
 }];
-},{}],"script.js":[function(require,module,exports) {
+},{}],"variables.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.wait = wait;
-exports.destroyPopup = destroyPopup;
+exports.searchByMonth = exports.searchByName = exports.search = exports.formEl = exports.addBtn = exports.container = exports.default = void 0;
 
 var _people = _interopRequireDefault(require("./people.json"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-let people = _people.default;
-
-function wait(ms = 0) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function destroyPopup(popup) {
-  popup.classList.remove('open');
-  await wait(500);
-  popup.remove();
-  popup = null;
-}
-
+var people = _people.default;
+var _default = people;
+exports.default = _default;
 const container = document.querySelector(".container");
+exports.container = container;
 const addBtn = document.querySelector(".add");
+exports.addBtn = addBtn;
 const formEl = document.querySelector(".formSubmit");
+exports.formEl = formEl;
 const search = document.querySelector('[name="search"]');
+exports.search = search;
 const searchByName = document.querySelector('[name="search"]');
-const searchByMonth = document.querySelector('[name="month"]'); //add to local storage
+exports.searchByName = searchByName;
+const searchByMonth = document.querySelector('[name="month"]');
+exports.searchByMonth = searchByMonth;
+},{"./people.json":"people.json"}],"utility/generatePeopleList.js":[function(require,module,exports) {
+"use strict";
 
-function initlocalStorage() {
-  localStorage.setItem("persons", JSON.stringify(people));
-} //restore form local storage
-
-
-function restoreFromLocalStorage() {
-  let listOfOeople = JSON.parse(localStorage.getItem('persons'));
-
-  if (!people.length) {
-    people = listOfOeople;
-  }
-
-  people;
-  container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
-}
-
-; //function display list of people
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.generatePeopleList = generatePeopleList;
 
 function generatePeopleList(people) {
   return people.sort((a, b) => new Date(a.birthday).getMonth() - new Date(b.birthday).getMonth()).map(person => {
@@ -809,67 +793,19 @@ function generatePeopleList(people) {
     }), "<sup>").concat(nthDate(currentDay), "</sup>\n              </time> \n            </b>\n          </div>\n        </div>\n        <div class=\"col\">\n          ").concat(dayLeft < 0 ? dayLeft * -1 + " " + "days ago" : dayLeft <= 1 ? dayLeft + " " + "day" : dayLeft + 'days', "\n        </div>\n        <div class=\"col\">\n          <button \n            type=\"button\" \n            value=\"").concat(person.id, "\" \n            data-id=\"").concat(person.id, "\" \n            class=\"edit\">\n            <span>edit</span>\n          </button>\n        </div>\n        <div class=\"col\">\n          <button \n            type=\"button\" \n            value=\"").concat(person.id, "\" \n            class=\"delete\" data-id=\"").concat(person.id, "\">\n            <span>delete</span>\n          </button>\n        </div>\n      </div>");
   }).join('');
 }
+},{}],"utility/edit.js":[function(require,module,exports) {
+"use strict";
 
-const displayPeopleList = () => {
-  const html = generatePeopleList(people);
-  container.innerHTML = html;
-};
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.editPerson = editPerson;
 
-displayPeopleList(); //delete person function
+var _variables = _interopRequireWildcard(require("../variables"));
 
-function deletePerson(e) {
-  const deleteBtn = e.target.matches(".delete");
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
-  if (deleteBtn) {
-    //find the id of the pers to delete
-    const idOfPeopleToDelete = e.target.closest('.delete').dataset.id;
-    deletePersonPupup(idOfPeopleToDelete);
-  }
-}
-
-; //delete person popup
-
-async function deletePersonPupup(idOfPeopleToDelete) {
-  //find the id of the pers to delete
-  const peopleToDelete = people.find(person => person.id === idOfPeopleToDelete);
-  console.log(peopleToDelete); //create buttons "yes"
-
-  const yesBtn = document.createElement("button");
-  yesBtn.type = "button";
-  yesBtn.textContent = "Yes"; //create "no" button
-
-  const noBtn = document.createElement("button");
-  noBtn.type = "button";
-  noBtn.textContent = "No";
-  const btnPopup = document.createElement('div');
-  btnPopup.classList.add('div');
-  btnPopup.textContent = "Are you sure you want to delete ".concat(peopleToDelete.firstName, " ").concat(peopleToDelete.lastName); //add both "yes" and "no" button to the container
-
-  btnPopup.appendChild(yesBtn);
-  btnPopup.appendChild(noBtn); //add the container to the DOM
-
-  document.body.appendChild(btnPopup); //open the popup by adding classlist of "open"
-
-  btnPopup.classList.add("open"); //function to delete popup 
-
-  function deletePopup() {
-    btnPopup.classList.remove("open");
-  } //if no gets clicked delete the popup
-
-
-  noBtn.addEventListener("click", async e => await deletePopup()); //if yes button gets clicked delete the pers and ddestroy the popup
-
-  yesBtn.addEventListener("click", e => {
-    people = people.filter(person => person.id !== idOfPeopleToDelete); // persons = peopleRest;
-
-    container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
-    deletePopup();
-  }, {
-    once: true
-  });
-}
-
-;
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function editPerson(e) {
   const editButton = e.target.matches(".edit");
@@ -883,7 +819,8 @@ function editPerson(e) {
 
 
 async function editPersonPopup(id) {
-  const personToEdit = people.find(person => person.id === id);
+  const personToEdit = _variables.default.find(person => person.id === id);
+
   return new Promise(async function (resolve) {
     //create a new form elem
     const formEl = document.createElement('form');
@@ -911,26 +848,105 @@ async function editPersonPopup(id) {
         picture: personToEdit.picture
       }; //reasign the value of the pers to the value of the new pers
 
-      const editedPerson = people.find(person => person.id === newPerson.id);
+      const editedPerson = _variables.default.find(person => person.id === newPerson.id);
+
       editedPerson.firstName = newPerson.firstName;
       editedPerson.lastName = newPerson.lastName;
       editedPerson.birthday = newPerson.birthday;
       editedPerson.id = editedPerson.id; //uptdate the lsit
 
-      container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
+      _variables.container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
+
       formEl.classList.remove("open");
     }, {
       once: true
     });
   });
 }
+},{"../variables":"variables.js"}],"utility/delete.js":[function(require,module,exports) {
+"use strict";
 
-function showForm() {
-  formEl.removeAttribute("hidden");
-} //submit the form for the new person
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.deletePerson = deletePerson;
+
+var _variables = _interopRequireWildcard(require("../variables"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+//delete person function
+function deletePerson(e) {
+  const deleteBtn = e.target.matches(".delete");
+
+  if (deleteBtn) {
+    //find the id of the pers to delete
+    const idOfPeopleToDelete = e.target.closest('.delete').dataset.id;
+    deletePersonPupup(idOfPeopleToDelete);
+  }
+}
+
+; //delete person popup
+
+async function deletePersonPupup(idOfPeopleToDelete) {
+  //find the id of the pers to delete
+  const peopleToDelete = _variables.default.find(person => person.id === idOfPeopleToDelete); //create buttons "yes"
 
 
-function submitForm(e) {
+  const yesBtn = document.createElement("button");
+  yesBtn.type = "button";
+  yesBtn.textContent = "Yes"; //create "no" button
+
+  const noBtn = document.createElement("button");
+  noBtn.type = "button";
+  noBtn.textContent = "No";
+  const btnPopup = document.createElement('div');
+  btnPopup.classList.add('div');
+  btnPopup.textContent = "Are you sure you want to delete ".concat(peopleToDelete.firstName, " ").concat(peopleToDelete.lastName); //add both "yes" and "no" button to the container
+
+  btnPopup.appendChild(yesBtn);
+  btnPopup.appendChild(noBtn); //add the container to the DOM
+
+  document.body.appendChild(btnPopup); //open the popup by adding classlist of "open"
+
+  btnPopup.classList.add("open"); //function to delete popup 
+
+  function deletePopup() {
+    btnPopup.classList.remove("open");
+  } //if no gets clicked delete the popup
+
+
+  noBtn.addEventListener("click", async e => await deletePopup()); //if yes button gets clicked delete the pers and ddestroy the popup
+
+  yesBtn.addEventListener("click", e => {
+    _variables.default = (_variables.default.filter(person => person.id !== idOfPeopleToDelete), function () {
+      throw new Error('"' + "people" + '" is read-only.');
+    }());
+
+    _variables.container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
+
+    deletePopup();
+  }, {
+    once: true
+  });
+}
+
+;
+},{"../variables":"variables.js"}],"utility/addPeople.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addNewPerson = addNewPerson;
+
+var _variables = _interopRequireDefault(require("../variables"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function addNewPerson(e) {
   e.preventDefault();
   const form = e.currentTarget;
   const birthDate = form.birthday.value;
@@ -949,27 +965,44 @@ function submitForm(e) {
     birthday: dateTime
   }; //push the new pers to the persons array.
 
-  people = [...people, newPerson];
+  _variables.default = ([..._variables.default, newPerson], function () {
+    throw new Error('"' + "people" + '" is read-only.');
+  }());
   container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
   formEl.hidden = true;
   form.reset();
 }
 
 ;
+},{"../variables":"variables.js"}],"utility/search.js":[function(require,module,exports) {
+"use strict";
 
-function searchPeopleByName() {
-  const input = searchByName.value;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.filterPersonMonth = exports.searchPeopleByName = void 0;
+
+var _variables = require("../variables");
+
+var _generatePeopleList = require("./generatePeopleList");
+
+const searchPeopleByName = e => {
+  const input = _variables.searchByName.value;
   const inputSearch = input.toLowerCase().trim(); // Filter the list by the firstname or lastname
 
-  const searchPerson = people.filter(person => person.lastName.toLowerCase().trim().includes(inputSearch) || person.firstName.toLowerCase().trim().includes(inputSearch));
-  const myHTML = generatePeopleList(searchPerson);
-  container.innerHTML = myHTML;
-}
+  const searchPerson = _variables.people.filter(person => person.lastName.toLowerCase().trim().includes(inputSearch) || person.firstName.toLowerCase().trim().includes(inputSearch));
+
+  const myHTML = (0, _generatePeopleList.generatePeopleList)(searchPerson);
+  _variables.container.innerHTML = myHTML;
+};
+
+exports.searchPeopleByName = searchPeopleByName;
 
 const filterPersonMonth = e => {
   // Get the value of the select input
-  const select = searchByMonth.value;
-  const filterPerson = people.filter(person => {
+  const select = _variables.searchByMonth.value;
+
+  const filterPerson = _variables.people.filter(person => {
     // Change the month of birth into string
     const getMonthOfBirth = new Date(person.birthday).toLocaleString("en-US", {
       month: "long"
@@ -977,9 +1010,80 @@ const filterPersonMonth = e => {
 
     return getMonthOfBirth.toLowerCase().includes(select.toLowerCase());
   });
-  const myHTML = generatePeopleList(filterPerson);
-  container.innerHTML = myHTML;
-}; // Reset the list
+
+  const myHTML = (0, _generatePeopleList.generatePeopleList)(filterPerson);
+  _variables.container.innerHTML = myHTML;
+};
+
+exports.filterPersonMonth = filterPersonMonth;
+},{"../variables":"variables.js","./generatePeopleList":"utility/generatePeopleList.js"}],"script.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.wait = wait;
+exports.destroyPopup = destroyPopup;
+
+var _variables = _interopRequireWildcard(require("./variables"));
+
+var _generatePeopleList = require("./utility/generatePeopleList");
+
+var _edit = require("./utility/edit");
+
+var _delete = require("./utility/delete");
+
+var _addPeople = require("./utility/addPeople");
+
+var _search = require("./utility/search");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function wait(ms = 0) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function destroyPopup(popup) {
+  popup.classList.remove('open');
+  await wait(500);
+  popup.remove();
+  popup = null;
+} //add to local storage
+
+
+function initlocalStorage() {
+  localStorage.setItem("persons", JSON.stringify(_variables.default));
+} //restore form local storage
+
+
+function restoreFromLocalStorage() {
+  let listOfOeople = JSON.parse(localStorage.getItem('people'));
+
+  if (!_variables.default.length) {
+    _variables.default = (listOfOeople, function () {
+      throw new Error('"' + "people" + '" is read-only.');
+    }());
+  }
+
+  _variables.default;
+
+  _variables.container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
+}
+
+; //function display list of people
+
+const displayPeopleList = () => {
+  const html = (0, _generatePeopleList.generatePeopleList)(_variables.default);
+  _variables.container.innerHTML = html;
+};
+
+displayPeopleList();
+
+function showForm() {
+  _variables.formEl.removeAttribute("hidden");
+} // Reset the list
 
 
 const resteInputSearch = e => {
@@ -988,16 +1092,24 @@ const resteInputSearch = e => {
 }; //listeners
 
 
-container.addEventListener("click", editPerson);
-container.addEventListener("click", deletePerson);
-container.addEventListener("listOfPeopleUpdated", displayPeopleList);
-container.addEventListener("listOfPeopleUpdated", initlocalStorage);
+_variables.container.addEventListener("click", _edit.editPerson);
+
+_variables.container.addEventListener("click", _delete.deletePerson);
+
+_variables.container.addEventListener("listOfPeopleUpdated", displayPeopleList);
+
+_variables.container.addEventListener("listOfPeopleUpdated", initlocalStorage);
+
 restoreFromLocalStorage();
-addBtn.addEventListener("click", showForm);
-formEl.addEventListener("submit", submitForm);
-searchByName.addEventListener("keyup", searchPeopleByName);
-searchByMonth.addEventListener("change", filterPersonMonth);
-},{"./people.json":"people.json"}],"../../AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+_variables.addBtn.addEventListener("click", showForm);
+
+_variables.formEl.addEventListener("submit", _addPeople.addNewPerson);
+
+_variables.searchByName.addEventListener("keyup", _search.searchPeopleByName);
+
+_variables.searchByMonth.addEventListener("change", _search.filterPersonMonth);
+},{"./variables":"variables.js","./utility/generatePeopleList":"utility/generatePeopleList.js","./utility/edit":"utility/edit.js","./utility/delete":"utility/delete.js","./utility/addPeople":"utility/addPeople.js","./utility/search":"utility/search.js"}],"../../AppData/Roaming/npm/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
