@@ -1087,8 +1087,7 @@ function showForm() {
 
 
 const resteInputSearch = e => {
-  formSearch.reset();
-  displayList();
+  formSearch.reset(); // displayList();
 }; //listeners
 
 

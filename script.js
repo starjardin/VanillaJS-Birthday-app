@@ -45,7 +45,7 @@ function showForm() {
 // Reset the list
 const resteInputSearch = e => {
   formSearch.reset();
-  displayList();
+  // displayList();
 }
 
 //listeners
