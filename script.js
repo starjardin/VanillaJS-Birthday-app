@@ -33,10 +33,6 @@ function restoreFromLocalStorage() {
    container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
 };
 
-function searchFilterFunc (e)  {
-  // generatePeopleList(e, searchByName.value, searchByMonth.value);
-}
-
 //function display list of people
 function generatePeopleList(people) {
   return people
@@ -242,6 +238,9 @@ function submitForm (e) {
   const form = e.currentTarget;
   const birthDate = form.birthday.value;
   const dateTime = Date.parse(birthDate);
+  if (!birthDate || !form.firstName.value || form.lastName.value || form.id.value || form.picture.value) {
+    alert("Please fill all of the fields")
+  }
   //create an obj for the new pers
   const newPerson = {
     firstName : form.firstName.value,
@@ -257,6 +256,38 @@ function submitForm (e) {
   form.reset();
 };
 
+function searchPeopleByName ()  {
+  const input = searchByName.value;
+  const inputSearch = input.toLowerCase().trim();
+  // Filter the list by the firstname or lastname
+  const searchPerson = people.filter(person => person.lastName.toLowerCase().trim().includes(inputSearch) || 
+    person.firstName.toLowerCase().trim().includes(inputSearch));
+  const myHTML = generatePeopleList(searchPerson);
+  container.innerHTML = myHTML;
+}
+
+const filterPersonMonth = e => {
+  // Get the value of the select input
+  const select = searchByMonth.value;
+  const filterPerson = people.filter(person => {
+    // Change the month of birth into string
+    const getMonthOfBirth = new Date(person.birthday)
+    .toLocaleString("en-US", 
+    { month: "long" }); 
+
+    // Filter the list by the month of birth
+    return getMonthOfBirth.toLowerCase().includes(select.toLowerCase());
+  });
+  const myHTML = generatePeopleList(filterPerson);
+  container.innerHTML = myHTML;
+}
+
+// Reset the list
+const resteInputSearch = e => {
+  formSearch.reset();
+  displayList();
+}
+
 //listeners
 container.addEventListener("click", editPerson);
 container.addEventListener("click", deletePerson);
@@ -265,6 +296,5 @@ container.addEventListener("listOfPeopleUpdated", initlocalStorage);
 restoreFromLocalStorage();
 addBtn.addEventListener("click", showForm);
 formEl.addEventListener("submit", submitForm);
-searchByName.addEventListener("keyup", searchFilterFunc);
-searchByMonth.addEventListener("change", searchFilterFunc);
-// generatePeopleList()
+searchByName.addEventListener("keyup", searchPeopleByName);
+searchByMonth.addEventListener("change", filterPersonMonth);
