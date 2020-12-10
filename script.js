@@ -1,3 +1,5 @@
+import persons from './people.json'
+
 const container = document.querySelector(".container");
 const addBtn = document.querySelector(".add");
 const formEl = document.querySelector(".formSubmit");
@@ -5,30 +7,18 @@ const search = document.querySelector('[name="search"]');
 const searchByName = document.querySelector('[name="search"]');
 const searchByMonth = document.querySelector('[name="month"]');
 
-//state 
-let persons = [];
-// import { displayPeopleList } from "./displayList.js";
-//fetch people
- const fetchpeople = async () => {
-    const peopleUrl = await fetch(`people.json`)
-    const data = await peopleUrl.json();
-    persons = [...data];
-    displayPeopleList(persons);
-    return data;
-};
-
 //add to local storage
- async function initlocalStorage() {
+function initlocalStorage() {
   localStorage.setItem("persons", JSON.stringify(persons));
 }
 
 //restore form local storage
- async function restoreFromLocalStorage() {
+function restoreFromLocalStorage() {
   let listOfOeople = JSON.parse(localStorage.getItem('persons'));
-  if (persons) {
+  if (!persons.length) {
     persons = listOfOeople;
   }
-    fetchpeople();
+   persons
    container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
 };
 
@@ -334,3 +324,4 @@ addBtn.addEventListener("click", showForm);
 formEl.addEventListener("submit", submitForm);
 searchByName.addEventListener("keyup", searchFilterFunc);
 searchByMonth.addEventListener("change", searchFilterFunc);
+displayPeopleList()
