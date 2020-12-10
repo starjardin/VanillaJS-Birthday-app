@@ -1,4 +1,6 @@
-import persons from './people.json'
+import { async } from 'regenerator-runtime';
+import peopleJson from './people.json'
+let people = peopleJson
 
 const container = document.querySelector(".container");
 const addBtn = document.querySelector(".add");
@@ -9,171 +11,102 @@ const searchByMonth = document.querySelector('[name="month"]');
 
 //add to local storage
 function initlocalStorage() {
-  localStorage.setItem("persons", JSON.stringify(persons));
+  localStorage.setItem("persons", JSON.stringify(people));
 }
 
 //restore form local storage
 function restoreFromLocalStorage() {
   let listOfOeople = JSON.parse(localStorage.getItem('persons'));
-  if (!persons.length) {
-    persons = listOfOeople;
+  if (!people.length) {
+    people = listOfOeople;
   }
-   persons
+   people
    container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
 };
 
 function searchFilterFunc (e)  {
-  displayPeopleList(e, searchByName.value, searchByMonth.value);
+  // generatePeopleList(e, searchByName.value, searchByMonth.value);
 }
 
 //function display list of people
-function displayPeopleList (e, filterName, filterByMonth) {
-  let currentYear = new Date().getFullYear();
-  const dateNow = Date.now();
-  if (!persons) return null
-  const array = persons.map(per => {
-    //get the month of the birthday
-    const birthDateMonth = new Date(per.birthday).getMonth();
-    //get the day of the birthday
-    const birthDateDay = new Date(per.birthday).getDay();
-    //here is creating a date mmm/ddd/yyy
-    const date = `${(birthDateMonth + 1)}/${birthDateDay + 1}/${currentYear}`;
-    //get the time stamp of the date above; ex: 03/05/2020 = 381374912739123;
-    const dateMiliseconds = new Date(`${date}`).getTime();
-    //here is how far the birthday is (in milliseconds)
-    const dateDiff = dateMiliseconds - dateNow;
-    //here is how far the birthday is (in days)
-    let daysToGo = Math.round(dateDiff / (1000 * 60 * 60 * 24));
-    //if the birthday has gone, plus the numbers of the days rest to 356 days.
-    if (daysToGo < 0) {
-      daysToGo = daysToGo + 365;
-    }
-    const birthday = per.birthday;
-    //split the date in order to get in which month the index is.
-    const arr = date.split("/");
-    const monthIndex = parseInt(arr[0], 10) - 1;
-
-    //list of months
-    const monthNames = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
-      ];
-    //Month that are matches the index.
-    const birthMonths = monthNames[monthIndex];
-    //here is to distinguish how many old years old the person is.
-    const diff = (Math.round((dateNow - birthday) / (1000 * 60 * 60 * 24 * 365)));
-    //if days are ending with 1, add "st" at the end
-    if (arr[1].endsWith("1")) {
-      arr[1] = `${arr[1]}st`
-    }
-    //if days are ending with 2, add "nd" at the end 
-    else if (arr[1].endsWith("2")) {
-      arr[1] = `${arr[1]}nd`
-    }
-    //if days are ending with 3, add "rd" at the end  
-    else if (arr[1].endsWith("3")) {
-      arr[1] = `${arr[1]}rd`
-    }
-    //exception 11, 12, 13 just stay with "th" at the end. 
-    else if (arr[1] == "11" || arr[1] == "12" || arr[1] == "13") {
-      arr[1] = `${arr[1]}th`
-    }
-    //the rest, just add th at the end. 
-    else {
-      arr[1] = `${arr[1]}th`
-    };
-
-    //here I added some entries to a persons in order to make it easier to display on html
-    const person = {
-      firstName : per.firstName,
-      lastName : per.lastName,
-      id : per.id,
-      birthday : per.birthday,
-      days : daysToGo,
-      picture : per.picture,
-      year : diff,
-      month : birthMonths,
-      daysOfbirth : arr[1],
-    }
-    return person;
-  });
-  //sort the people by the days to go of their birthdays
-  let peopleSorted = array.sort(function(a, b) {
-    return a.days - b.days;
-  });
-  //search by name
-  if (filterName === "") {
-    peopleSorted = peopleSorted.filter(person => {
-      let lowerCaseFirstName = person.firstName.toLowerCase();
-      let lowerCaseLaststName = person.lastName.toLowerCase();
-      let lowerCaseFilter = filterName;
-      if (
-          lowerCaseFirstName.includes(lowerCaseFilter) || 
-          lowerCaseLaststName.includes(lowerCaseFilter)
-        ) {
-        return true;
+function generatePeopleList(people) {
+  return people
+    .sort((a, b) => new Date(a.birthday).getMonth() - new Date(b.birthday).getMonth())
+    .map(person => {
+      function nthDate(day) {
+        if (day > 3 && day < 21) return "th";
+        switch (day % 10) {
+          case 1: return "st";
+          case 2: return "nd";
+          case 3: return "rd";
+          default: return "th"; 
+        }
       }
-    });
-  }
-  //search by month
-  if (filterByMonth === "") {
-    peopleSorted = peopleSorted.filter(person => 
-    person.month.toLowerCase() === filterByMonth.toLowerCase());
-  };
-  //html for the people sorted.
-  console.log(peopleSorted);
-  const html = peopleSorted.map(person => {
-    return `
-    <div class="row mt-3" data-id="${person.id}">
-      <div class="col">
-        <img src="${person.picture}" class="rounded-circle">
-      </div>
-      <div class="col">
-        <div>
-          ${person.firstName} ${person.lastName} 
-          is turning 
-          <b>${person.year + 1}</b> 
-          on 
-          <b>${person.month}</b> 
-          the 
-          <b>${person.daysOfbirth}</b>
+      const today = new Date()
+      const currentDate = new Date(person.birthday);
+      const currentDay = currentDate.getDate();
+      const month = currentDate.getMonth();
+      const year = currentDate.getFullYear();
+      const fullDate = `${currentDay}${nthDate(currentDay)} / ${month + 1} / ${year}`;
+      const futureAge = today.getFullYear() - year;
+      const momentYear = today.getFullYear();
+      const birthDayDate = new Date(momentYear, month, currentDay );
+      let oneDay = 1000 * 60 * 60 * 24;
+      const getTheDate = birthDayDate.getTime() - today.getTime();
+      const dayLeft = Math.ceil(getTheDate / oneDay);
+      return `
+      <div class="row mt-3" data-id="${person.id}">
+        <div class="col">
+          <img src="${person.picture}" class="rounded-circle">
         </div>
-      </div>
-      <div class="col">${person.days <= 1 ? 
-        person.days = person.days + "day" : 
-        person.days = person.days +" " + "days"}
-      </div>
-      <div class="col">
-        <button 
-          type="button" 
-          value="${person.id}" 
-          data-id="${person.id}" 
-          class="edit">
-          <span>edit</span>
-        </button>
-      </div>
-      <div class="col">
-        <button 
-          type="button" 
-          value="${person.id}" 
-          class="delete" data-id="${person.id}">
-          <span>delete</span>
-        </button>
-      </div>
-    </div>`
-  });
-  container.innerHTML = html.join("");
+        <div class="col">
+          <div>
+            ${person.firstName} ${person.lastName} 
+            is turning 
+            <b>${futureAge <= 1 ? futureAge + ` year` : futureAge + ` years`}</b> 
+            on
+            <b>${new Date(person.birthday).toLocaleString("en-US", { month : "long"})}</b> 
+            the 
+            <b>
+              <time datetime="${fullDate}">
+                ${new Date(person.birthday)
+                .toLocaleString("en-US", 
+                { day: "numeric" })}<sup>${nthDate(currentDay)}</sup>
+              </time> 
+            </b>
+          </div>
+        </div>
+        <div class="col">
+          ${dayLeft < 0 ? dayLeft * -1 + " " + "days ago" :
+            dayLeft <= 1 ? dayLeft + " " + "day" :
+            dayLeft + 'days'}
+        </div>
+        <div class="col">
+          <button 
+            type="button" 
+            value="${person.id}" 
+            data-id="${person.id}" 
+            class="edit">
+            <span>edit</span>
+          </button>
+        </div>
+        <div class="col">
+          <button 
+            type="button" 
+            value="${person.id}" 
+            class="delete" data-id="${person.id}">
+            <span>delete</span>
+          </button>
+        </div>
+      </div>`
+    }).join('');
 }
+
+const displayPeopleList = () => {
+  const html = generatePeopleList(people)
+  container.innerHTML = html
+}
+displayPeopleList()
 
 //delete person function
 function deletePerson (e) {
@@ -188,7 +121,8 @@ function deletePerson (e) {
 //delete person popup
   async function deletePersonPupup (idOfPeopleToDelete) {
   //find the id of the pers to delete
-  const peopleToDelete = persons.find(per => per.id === idOfPeopleToDelete);
+    const peopleToDelete = people.find(person => person.id === idOfPeopleToDelete);
+    console.log(peopleToDelete);
   //create buttons "yes"
   const yesBtn = document.createElement("button");
   yesBtn.type = "button";
@@ -214,15 +148,12 @@ function deletePerson (e) {
   }
 
   //if no gets clicked delete the popup
-  noBtn.addEventListener("click", e => {
-    deletePopup()
-  });
+  noBtn.addEventListener("click", async (e) => await deletePopup());
 
   //if yes button gets clicked delete the pers and ddestroy the popup
   yesBtn.addEventListener("click", e => {
-    const peopleRest = persons.filter(person => person.id !== idOfPeopleToDelete);
-    persons = peopleRest;
-    console.log(persons);
+    people = people.filter(person => person.id !== idOfPeopleToDelete);
+    // persons = peopleRest;
     container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
     deletePopup();
   }, {once: true})
@@ -324,4 +255,4 @@ addBtn.addEventListener("click", showForm);
 formEl.addEventListener("submit", submitForm);
 searchByName.addEventListener("keyup", searchFilterFunc);
 searchByMonth.addEventListener("change", searchFilterFunc);
-displayPeopleList()
+// generatePeopleList()
