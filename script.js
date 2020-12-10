@@ -1,6 +1,15 @@
-import { async } from 'regenerator-runtime';
 import peopleJson from './people.json'
 let people = peopleJson
+
+export function wait(ms = 0) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+export async function destroyPopup(popup) {
+  popup.classList.remove('open'); 
+  await wait(500);
+  popup.remove();
+  popup = null;
+}
 
 const container = document.querySelector(".container");
 const addBtn = document.querySelector(".add");
@@ -170,7 +179,7 @@ function editPerson (e) {
 
 //edit person popup
 async function editPersonPopup(id) {
-  const personToEdit = persons.find(person => person.id === id);
+  const personToEdit = people.find(person => person.id === id);
   return new Promise(async function(resolve) {
     //create a new form elem
     const formEl = document.createElement('form');
@@ -196,6 +205,9 @@ async function editPersonPopup(id) {
     formEl.addEventListener("submit", e => {
       e.preventDefault();
       const form = e.currentTarget;
+      if (!form.birthday.value) {
+        alert("Hey, what's your birthday")
+      }
       const birthDate = new Date(form.birthday.value);
       const birthDateMiliseconds = birthDate.getTime();
       //create an obj for the edited pers
@@ -208,7 +220,7 @@ async function editPersonPopup(id) {
       }
 
       //reasign the value of the pers to the value of the new pers
-      const editedPerson = persons.find(person => person.id === newPerson.id);
+      const editedPerson = people.find(person => person.id === newPerson.id);
       editedPerson.firstName = newPerson.firstName;
       editedPerson.lastName = newPerson.lastName;
       editedPerson.birthday = newPerson.birthday;
@@ -239,7 +251,7 @@ function submitForm (e) {
     birthday : dateTime,
   }
   //push the new pers to the persons array.
-  persons.push(newPerson);
+  people = [...people, newPerson]
   container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
   formEl.hidden = true;
   form.reset();
