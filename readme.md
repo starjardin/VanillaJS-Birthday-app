@@ -72,7 +72,7 @@ $ npm start
 
 # Birthday app description
 
-1. This is a **CRUD**(Create Read Update and Delete) app pracice in vanilla javascript.
+1. This is a **CRUD**(Create Read Update and Delete) app practice in vanilla javascript.
 
 1. One major point of doing this app was to endure and familiarize myself with array methodes such as `map` `filter` and `find`
 
