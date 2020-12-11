@@ -70,7 +70,7 @@ const fetchPeople = async () => {
               <div class="col">
                 <div>
                   ${person.firstName} ${person.lastName} 
-                  is turning 
+                  ${dayLeft < 0 ? "was" : "is"} turning 
                   <b>${futureAge <= 1 ? futureAge + ` year` : futureAge + ` years`}</b> 
                   on
                   <b>${new Date(person.birthday).toLocaleString("en-US", { month : "long"})}</b> 
@@ -84,27 +84,28 @@ const fetchPeople = async () => {
                   </b>
                 </div>
               </div>
-              <div class="col">
-                ${dayLeft < 0 ? dayLeft * -1 + " " + "days ago" :
-                  dayLeft <= 1 ? dayLeft + " " + "day" :
-                  dayLeft + 'days'}
-              </div>
-              <div class="col">
-                <button 
-                  type="button" 
-                  value="${person.id}" 
-                  data-id="${person.id}" 
-                  class="edit">
-                  <span>edit</span>
-                </button>
-              </div>
-              <div class="col">
-                <button 
-                  type="button" 
-                  value="${person.id}" 
-                  class="delete" data-id="${person.id}">
-                  <span>delete</span>
-                </button>
+              <div class="col buttons-container">
+                <div>
+                  ${dayLeft < 0 ? dayLeft * -1 + " " + "days ago" :
+                  dayLeft === 0 ? "today" :
+                  dayLeft === 1 ? dayLeft + " " + "day" :
+                  dayLeft + " " + 'days'}
+                </div>
+                <div>
+                  <button 
+                    type="button" 
+                    value="${person.id}" 
+                    data-id="${person.id}" 
+                    class="edit">
+                    <span>edit</span>
+                  </button>
+                  <button 
+                    type="button" 
+                    value="${person.id}" 
+                    class="delete" data-id="${person.id}">
+                    <span>delete</span>
+                  </button>
+                </div>
               </div>
             </div>`
           }
