@@ -23,12 +23,12 @@ const fetchPeople = async () => {
     .then(response => {
       let people = response.data
       //add to local storage
-      function initlocalStorage() {
+      const initlocalStorage = () => {
         localStorage.setItem("persons", JSON.stringify(people));
       }
 
       //restore form local storage
-      function restoreFromLocalStorage() {
+      const restoreFromLocalStorage = () => {
         let listOfOeople = JSON.parse(localStorage.getItem('people'));
         if (!people.length) {
           people = listOfOeople;
@@ -37,7 +37,7 @@ const fetchPeople = async () => {
           container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
       };
 
-      function generatePeopleList(people) {
+      const generatePeopleList = (people) => {
         return people
           .sort((a, b) => new Date(a.birthday).getMonth() - new Date(b.birthday).getMonth())
           .map(person => {
@@ -111,7 +111,7 @@ const fetchPeople = async () => {
         ).join('');
       }
 
-      function addNewPerson(e) {
+      const addNewPerson = (e) => {
         e.preventDefault();
         const form = e.currentTarget;
         const birthDate = form.birthday.value;
@@ -140,7 +140,7 @@ const fetchPeople = async () => {
         container.innerHTML = html
       }
 
-      function showForm() {
+      const showForm = () => {
         formEl.removeAttribute("hidden");
       }
 
@@ -150,7 +150,7 @@ const fetchPeople = async () => {
         // displayList();
       }
 
-      function editPerson(e) {
+      const editPerson = (e) => {
         const editButton = e.target.matches(".edit");
         if (editButton) {
           const button = e.target.closest(".edit");
@@ -160,7 +160,7 @@ const fetchPeople = async () => {
       }
 
       //edit person popup
-      async function editPersonPopup(id) {
+      const editPersonPopup = async (id) => {
         const personToEdit = people.find(person => person.id === id);
         return new Promise(async function(resolve) {
           //create a new form elem
@@ -215,7 +215,7 @@ const fetchPeople = async () => {
       }
 
       //delete person function
-      function deletePerson (e) {
+      const deletePerson = (e) => {
         const deleteBtn = e.target.matches(".delete");
         if (deleteBtn) {
           //find the id of the pers to delete
@@ -225,7 +225,7 @@ const fetchPeople = async () => {
       };
 
       //delete person popup
-        async function deletePersonPupup (idOfPeopleToDelete) {
+        const deletePersonPupup = async (idOfPeopleToDelete) => {
         //find the id of the pers to delete
           const peopleToDelete = people.find(person => person.id === idOfPeopleToDelete);
         //create buttons "yes"
@@ -248,7 +248,7 @@ const fetchPeople = async () => {
         btnPopup.classList.add("open");
 
         //function to delete popup 
-        function deletePopup () {
+        const deletePopup = () => {
           btnPopup.classList.remove("open");
         }
 
@@ -263,7 +263,7 @@ const fetchPeople = async () => {
         }, {once: true})
       };
 
-      const searchPeopleByName = (e) => {
+      const searchPeopleByName = () => {
         const input = searchByName.value;
         const inputSearch = input.toLowerCase().trim();
         // Filter the list by the firstname or lastname
@@ -273,7 +273,7 @@ const fetchPeople = async () => {
         container.innerHTML = myHTML;
       }
 
-      const filterPersonMonth = e => {
+      const filterPersonMonth = () => {
         // Get the value of the select input
         const select = searchByMonth.value;
         const filterPerson = people.filter(person => {
@@ -299,7 +299,6 @@ const fetchPeople = async () => {
       formEl.addEventListener("submit", addNewPerson);
       searchByName.addEventListener("keyup", searchPeopleByName);
       searchByMonth.addEventListener("change", filterPersonMonth);
-
   })
 }
 

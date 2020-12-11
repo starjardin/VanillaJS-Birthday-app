@@ -1930,12 +1930,12 @@ const fetchPeople = async () => {
   _axios.default.get(endPoint).then(response => {
     let people = response.data; //add to local storage
 
-    function initlocalStorage() {
+    const initlocalStorage = () => {
       localStorage.setItem("persons", JSON.stringify(people));
-    } //restore form local storage
+    }; //restore form local storage
 
 
-    function restoreFromLocalStorage() {
+    const restoreFromLocalStorage = () => {
       let listOfOeople = JSON.parse(localStorage.getItem('people'));
 
       if (!people.length) {
@@ -1944,11 +1944,9 @@ const fetchPeople = async () => {
 
       people = response.data;
       container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
-    }
+    };
 
-    ;
-
-    function generatePeopleList(people) {
+    const generatePeopleList = people => {
       return people.sort((a, b) => new Date(a.birthday).getMonth() - new Date(b.birthday).getMonth()).map(person => {
         function nthDate(day) {
           if (day > 3 && day < 21) return "th";
@@ -1986,9 +1984,9 @@ const fetchPeople = async () => {
           day: "numeric"
         }), "<sup>").concat(nthDate(currentDay), "</sup>\n                    </time> \n                  </b>\n                </div>\n              </div>\n              <div class=\"col\">\n                ").concat(dayLeft < 0 ? dayLeft * -1 + " " + "days ago" : dayLeft <= 1 ? dayLeft + " " + "day" : dayLeft + 'days', "\n              </div>\n              <div class=\"col\">\n                <button \n                  type=\"button\" \n                  value=\"").concat(person.id, "\" \n                  data-id=\"").concat(person.id, "\" \n                  class=\"edit\">\n                  <span>edit</span>\n                </button>\n              </div>\n              <div class=\"col\">\n                <button \n                  type=\"button\" \n                  value=\"").concat(person.id, "\" \n                  class=\"delete\" data-id=\"").concat(person.id, "\">\n                  <span>delete</span>\n                </button>\n              </div>\n            </div>");
       }).join('');
-    }
+    };
 
-    function addNewPerson(e) {
+    const addNewPerson = e => {
       e.preventDefault();
       const form = e.currentTarget;
       const birthDate = form.birthday.value;
@@ -2011,25 +2009,24 @@ const fetchPeople = async () => {
       container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
       formEl.hidden = true;
       form.reset();
-    }
+    }; //function display list of people
 
-    ; //function display list of people
 
     const displayPeopleList = () => {
       const html = generatePeopleList(people);
       container.innerHTML = html;
     };
 
-    function showForm() {
+    const showForm = () => {
       formEl.removeAttribute("hidden");
-    } // Reset the list
+    }; // Reset the list
 
 
     const resteInputSearch = e => {
       formSearch.reset(); // displayList();
     };
 
-    function editPerson(e) {
+    const editPerson = e => {
       const editButton = e.target.matches(".edit");
 
       if (editButton) {
@@ -2037,10 +2034,10 @@ const fetchPeople = async () => {
         const id = button.dataset.id;
         editPersonPopup(id);
       }
-    } //edit person popup
+    }; //edit person popup
 
 
-    async function editPersonPopup(id) {
+    const editPersonPopup = async id => {
       const personToEdit = people.find(person => person.id === id);
       return new Promise(async function (resolve) {
         //create a new form elem
@@ -2081,10 +2078,10 @@ const fetchPeople = async () => {
           once: true
         });
       });
-    } //delete person function
+    }; //delete person function
 
 
-    function deletePerson(e) {
+    const deletePerson = e => {
       const deleteBtn = e.target.matches(".delete");
 
       if (deleteBtn) {
@@ -2092,11 +2089,10 @@ const fetchPeople = async () => {
         const idOfPeopleToDelete = e.target.closest('.delete').dataset.id;
         deletePersonPupup(idOfPeopleToDelete);
       }
-    }
+    }; //delete person popup
 
-    ; //delete person popup
 
-    async function deletePersonPupup(idOfPeopleToDelete) {
+    const deletePersonPupup = async idOfPeopleToDelete => {
       //find the id of the pers to delete
       const peopleToDelete = people.find(person => person.id === idOfPeopleToDelete); //create buttons "yes"
 
@@ -2118,9 +2114,9 @@ const fetchPeople = async () => {
 
       btnPopup.classList.add("open"); //function to delete popup 
 
-      function deletePopup() {
+      const deletePopup = () => {
         btnPopup.classList.remove("open");
-      } //if no gets clicked delete the popup
+      }; //if no gets clicked delete the popup
 
 
       noBtn.addEventListener("click", async e => await deletePopup()); //if yes button gets clicked delete the pers and ddestroy the popup
@@ -2132,11 +2128,9 @@ const fetchPeople = async () => {
       }, {
         once: true
       });
-    }
+    };
 
-    ;
-
-    const searchPeopleByName = e => {
+    const searchPeopleByName = () => {
       const input = searchByName.value;
       const inputSearch = input.toLowerCase().trim(); // Filter the list by the firstname or lastname
 
@@ -2145,7 +2139,7 @@ const fetchPeople = async () => {
       container.innerHTML = myHTML;
     };
 
-    const filterPersonMonth = e => {
+    const filterPersonMonth = () => {
       // Get the value of the select input
       const select = searchByMonth.value;
       const filterPerson = people.filter(person => {
