@@ -1,6 +1,8 @@
 {
   "dependencies": {
+    "axios": "^0.21.0",
     "date-fns": "^2.16.1",
+    "form": "^0.2.4",
     "regenerator-runtime": "^0.13.7"
   },
   "name": "birthday-app",
