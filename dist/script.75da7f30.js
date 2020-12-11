@@ -1928,21 +1928,23 @@ async function destroyPopup(popup) {
 
 const fetchPeople = async () => {
   _axios.default.get(endPoint).then(response => {
-    let people = response.data; //add to local storage
+    let people = []; //add to local storage
 
     const initlocalStorage = () => {
-      localStorage.setItem("persons", JSON.stringify(people));
+      localStorage.setItem("people", JSON.stringify(people));
     }; //restore form local storage
 
 
     const restoreFromLocalStorage = () => {
-      let listOfOeople = JSON.parse(localStorage.getItem('people'));
+      let listOfPeople = JSON.parse(localStorage.getItem("people"));
+      console.log(listOfPeople.length);
 
-      if (!people.length) {
-        people = listOfOeople;
+      if (listOfPeople.length) {
+        people = listOfPeople;
+      } else {
+        people = response.data;
       }
 
-      people = response.data;
       container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
     };
 
@@ -1972,7 +1974,7 @@ const fetchPeople = async () => {
         const month = currentDate.getMonth();
         const year = currentDate.getFullYear();
         const fullDate = "".concat(currentDay).concat(nthDate(currentDay), " / ").concat(month + 1, " / ").concat(year);
-        const futureAge = today.getFullYear() - year;
+        const futureAge = today.getFullYear() - year + 1;
         const momentYear = today.getFullYear();
         const birthDayDate = new Date(momentYear, month, currentDay);
         let oneDay = 1000 * 60 * 60 * 24;
@@ -1982,7 +1984,7 @@ const fetchPeople = async () => {
           month: "long"
         }), "</b> \n                  the \n                  <b>\n                    <time datetime=\"").concat(fullDate, "\">\n                      ").concat(new Date(person.birthday).toLocaleString("en-US", {
           day: "numeric"
-        }), "<sup>").concat(nthDate(currentDay), "</sup>\n                    </time> \n                  </b>\n                </div>\n              </div>\n              <div class=\"col buttons-container\">\n                <div>\n                  ").concat(dayLeft < 0 ? dayLeft * -1 + " " + "days ago" : dayLeft === 0 ? "today" : dayLeft === 1 ? dayLeft + " " + "day" : dayLeft + " " + 'days', "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
+        }), "<sup>").concat(nthDate(currentDay), "</sup>\n                    </time> \n                  </b>\n                </div>\n              </div>\n              <div class=\"col buttons-container\">\n                <div>\n                  ").concat(dayLeft < 0 ? dayLeft * -1 + " " + "days ago" : dayLeft === 0 ? "today" : dayLeft === 1 ? "Tomorrow" : dayLeft + " " + 'days', "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
       }).join('');
     };
 
@@ -2044,9 +2046,13 @@ const fetchPeople = async () => {
         cancelBtn.textContent = 'cancel';
         formEl.appendChild(cancelBtn);
         document.body.appendChild(formEl);
+        cancelBtn.addEventListener("click", async () => {
+          await wait(1000);
+          destroyPopup(formEl);
+        });
         formEl.classList.add("open"); //listeners for the for elem
 
-        formEl.addEventListener("submit", e => {
+        formEl.addEventListener("submit", async e => {
           e.preventDefault();
           const form = e.currentTarget;
 
@@ -2072,7 +2078,8 @@ const fetchPeople = async () => {
           editedPerson.id = editedPerson.id; //uptdate the lsit
 
           container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
-          formEl.classList.remove("open");
+          await wait(1000);
+          destroyPopup(formEl);
         }, {
           once: true
         });
@@ -2111,19 +2118,18 @@ const fetchPeople = async () => {
 
       document.body.appendChild(btnPopup); //open the popup by adding classlist of "open"
 
-      btnPopup.classList.add("open"); //function to delete popup 
+      btnPopup.classList.add("open"); //if no gets clicked delete the popup
 
-      const deletePopup = () => {
-        btnPopup.classList.remove("open");
-      }; //if no gets clicked delete the popup
+      noBtn.addEventListener("click", async () => {
+        await wait(500);
+        destroyPopup(btnPopup);
+      }); //if yes button gets clicked delete the pers and ddestroy the popup
 
-
-      noBtn.addEventListener("click", async e => await deletePopup()); //if yes button gets clicked delete the pers and ddestroy the popup
-
-      yesBtn.addEventListener("click", e => {
+      yesBtn.addEventListener("click", async e => {
         people = people.filter(person => person.id !== idOfPeopleToDelete);
         container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
-        deletePopup();
+        await wait(500);
+        destroyPopup(btnPopup);
       }, {
         once: true
       });
@@ -2197,7 +2203,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51058" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59551" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

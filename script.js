@@ -21,19 +21,21 @@ async function destroyPopup(popup) {
 const fetchPeople = async () => {
   axios.get(endPoint)
     .then(response => {
-      let people = response.data
+      let people = []
       //add to local storage
       const initlocalStorage = () => {
-        localStorage.setItem("persons", JSON.stringify(people));
+        localStorage.setItem("people", JSON.stringify(people));
       }
 
       //restore form local storage
       const restoreFromLocalStorage = () => {
-        let listOfOeople = JSON.parse(localStorage.getItem('people'));
-        if (!people.length) {
-          people = listOfOeople;
-        }
+        let listOfPeople = JSON.parse(localStorage.getItem("people"));
+        console.log(listOfPeople.length);
+        if (listOfPeople.length) {
+          people = listOfPeople;
+        } else {
           people = response.data
+        }
           container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
       };
 
@@ -56,7 +58,7 @@ const fetchPeople = async () => {
             const month = currentDate.getMonth();
             const year = currentDate.getFullYear();
             const fullDate = `${currentDay}${nthDate(currentDay)} / ${month + 1} / ${year}`;
-            const futureAge = today.getFullYear() - year;
+            const futureAge = today.getFullYear() - year + 1;
             const momentYear = today.getFullYear();
             const birthDayDate = new Date(momentYear, month, currentDay );
             let oneDay = 1000 * 60 * 60 * 24;
@@ -88,7 +90,7 @@ const fetchPeople = async () => {
                 <div>
                   ${dayLeft < 0 ? dayLeft * -1 + " " + "days ago" :
                   dayLeft === 0 ? "today" :
-                  dayLeft === 1 ? dayLeft + " " + "day" :
+                  dayLeft === 1 ?  "Tomorrow" :
                   dayLeft + " " + 'days'}
                 </div>
                 <div>
@@ -182,19 +184,27 @@ const fetchPeople = async () => {
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           `);
+
           const cancelBtn = document.createElement('button')
           cancelBtn.type = 'button';
           cancelBtn.textContent = 'cancel'
           formEl.appendChild(cancelBtn)
           document.body.appendChild(formEl);
+
+          cancelBtn.addEventListener("click", async () => {
+            await wait(1000)
+            destroyPopup(formEl)
+          })
+
           formEl.classList.add("open");
           //listeners for the for elem
-          formEl.addEventListener("submit", e => {
+          formEl.addEventListener("submit", async (e) => {
             e.preventDefault();
             const form = e.currentTarget;
             if (!form.birthday.value) {
               alert("Hey, what's your birthday")
             }
+
             const birthDate = new Date(form.birthday.value);
             const birthDateMiliseconds = birthDate.getTime();
             //create an obj for the edited pers
@@ -214,7 +224,8 @@ const fetchPeople = async () => {
             editedPerson.id = editedPerson.id;
             //uptdate the lsit
             container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
-            formEl.classList.remove("open");
+            await wait(1000)
+            destroyPopup(formEl)
           }, {once: true});
         })
       }
@@ -232,39 +243,41 @@ const fetchPeople = async () => {
       //delete person popup
         const deletePersonPupup = async (idOfPeopleToDelete) => {
         //find the id of the pers to delete
-          const peopleToDelete = people.find(person => person.id === idOfPeopleToDelete);
+        const peopleToDelete = people.find(person => person.id === idOfPeopleToDelete);
         //create buttons "yes"
         const yesBtn = document.createElement("button");
-        yesBtn.type = "button";
-        yesBtn.textContent = "Yes";
+          yesBtn.type = "button";
+          yesBtn.textContent = "Yes";
         //create "no" button
         const noBtn = document.createElement("button");
-        noBtn.type = "button";
-        noBtn.textContent = "No";
+          noBtn.type = "button";
+          noBtn.textContent = "No";
+          
+          
         const btnPopup = document.createElement('div');
-        btnPopup.classList.add('div');
-        btnPopup.textContent = `Are you sure you want to delete ${peopleToDelete.firstName} ${peopleToDelete.lastName}`
+          btnPopup.classList.add('div');
+          btnPopup.textContent = `Are you sure you want to delete ${peopleToDelete.firstName} ${peopleToDelete.lastName}`
+          
         //add both "yes" and "no" button to the container
-        btnPopup.appendChild(yesBtn);
-        btnPopup.appendChild(noBtn);
+          btnPopup.appendChild(yesBtn);
+          btnPopup.appendChild(noBtn);
         //add the container to the DOM
-        document.body.appendChild(btnPopup);
+          document.body.appendChild(btnPopup);
         //open the popup by adding classlist of "open"
-        btnPopup.classList.add("open");
-
-        //function to delete popup 
-        const deletePopup = () => {
-          btnPopup.classList.remove("open");
-        }
+          btnPopup.classList.add("open");
 
         //if no gets clicked delete the popup
-        noBtn.addEventListener("click", async (e) => await deletePopup());
+          noBtn.addEventListener("click", async () => {
+            await wait(500)
+            destroyPopup(btnPopup)
+        });
 
         //if yes button gets clicked delete the pers and ddestroy the popup
-        yesBtn.addEventListener("click", e => {
+        yesBtn.addEventListener("click", async e => {
           people = people.filter(person => person.id !== idOfPeopleToDelete);
           container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
-          deletePopup();
+          await wait(500)
+          destroyPopup(btnPopup)
         }, {once: true})
       };
 
