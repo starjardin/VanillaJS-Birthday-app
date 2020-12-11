@@ -1990,12 +1990,7 @@ const fetchPeople = async () => {
       e.preventDefault();
       const form = e.currentTarget;
       const birthDate = form.birthday.value;
-      const dateTime = Date.parse(birthDate);
-
-      if (!birthDate || !form.firstName.value || form.lastName.value || form.id.value || form.picture.value) {
-        alert("Please fill all of the fields");
-      } //create an obj for the new pers
-
+      const dateTime = Date.parse(birthDate); //create an obj for the new pers
 
       const newPerson = {
         firstName: form.firstName.value,
@@ -2043,7 +2038,11 @@ const fetchPeople = async () => {
         //create a new form elem
         const formEl = document.createElement('form');
         formEl.classList.add("form");
-        formEl.insertAdjacentHTML("afterbegin", "\n            <div class=\"form-group\">\n              <label for=\"lastName\">".concat(personToEdit.lastName, "</label>\n              <input type=\"text\" class=\"form-control\" id=\"").concat(personToEdit.id, "\" name=\"lastName\" value=\"").concat(personToEdit.lastName, "\"> \n            </div>\n            <div class=\"form-group\">\n              <label for=\"firstName\">").concat(personToEdit.firstName, "</label>\n              <input type=\"text\" class=\"form-control\" name=\"firstName\" id=\"").concat(personToEdit.id, "\" value=\"").concat(personToEdit.firstName, "\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"birthday\">Birthday</label>\n              <input type=\"date\" id=\"birthday\" class=\"form-control\" name=\"birthday\" id=\"").concat(personToEdit.birthday, "\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n          "));
+        formEl.insertAdjacentHTML("afterbegin", "\n            <h1>\n              <strong>Edit ".concat(personToEdit.firstName, " ").concat(personToEdit.lastName, "</strong>\n            </h1>\n            <div class=\"form-group\">\n              <label for=\"firstName\">Frist Name</label>\n              <input type=\"text\" class=\"form-control\" name=\"firstName\" id=\"").concat(personToEdit.id, "\" value=\"").concat(personToEdit.firstName, "\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"lastName\">Last Name</label>\n              <input type=\"text\" class=\"form-control\" id=\"").concat(personToEdit.id, "\" name=\"lastName\" value=\"").concat(personToEdit.lastName, "\"> \n            </div>\n            <div class=\"form-group\">\n              <label for=\"birthday\">Birthday</label>\n              <input type=\"date\" id=\"birthday\" class=\"form-control\" name=\"birthday\" id=\"").concat(personToEdit.birthday, "\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n          "));
+        const cancelBtn = document.createElement('button');
+        cancelBtn.type = 'button';
+        cancelBtn.textContent = 'cancel';
+        formEl.appendChild(cancelBtn);
         document.body.appendChild(formEl);
         formEl.classList.add("open"); //listeners for the for elem
 
@@ -2164,6 +2163,8 @@ const fetchPeople = async () => {
     formEl.addEventListener("submit", addNewPerson);
     searchByName.addEventListener("keyup", searchPeopleByName);
     searchByMonth.addEventListener("change", filterPersonMonth);
+  }).catch(error => {
+    container.innerHTML = error;
   });
 };
 
@@ -2196,7 +2197,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64728" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49970" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

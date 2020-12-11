@@ -116,9 +116,6 @@ const fetchPeople = async () => {
         const form = e.currentTarget;
         const birthDate = form.birthday.value;
         const dateTime = Date.parse(birthDate);
-        if (!birthDate || !form.firstName.value || form.lastName.value || form.id.value || form.picture.value) {
-          alert("Please fill all of the fields")
-        }
         //create an obj for the new pers
         const newPerson = {
           firstName : form.firstName.value,
@@ -167,13 +164,16 @@ const fetchPeople = async () => {
           const formEl = document.createElement('form');
           formEl.classList.add("form");
           formEl.insertAdjacentHTML("afterbegin", `
+            <h1>
+              <strong>Edit ${personToEdit.firstName} ${personToEdit.lastName}</strong>
+            </h1>
             <div class="form-group">
-              <label for="lastName">${personToEdit.lastName}</label>
-              <input type="text" class="form-control" id="${personToEdit.id}" name="lastName" value="${personToEdit.lastName}"> 
+              <label for="firstName">Frist Name</label>
+              <input type="text" class="form-control" name="firstName" id="${personToEdit.id}" value="${personToEdit.firstName}">
             </div>
             <div class="form-group">
-              <label for="firstName">${personToEdit.firstName}</label>
-              <input type="text" class="form-control" name="firstName" id="${personToEdit.id}" value="${personToEdit.firstName}">
+              <label for="lastName">Last Name</label>
+              <input type="text" class="form-control" id="${personToEdit.id}" name="lastName" value="${personToEdit.lastName}"> 
             </div>
             <div class="form-group">
               <label for="birthday">Birthday</label>
@@ -181,6 +181,10 @@ const fetchPeople = async () => {
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           `);
+          const cancelBtn = document.createElement('button')
+          cancelBtn.type = 'button';
+          cancelBtn.textContent = 'cancel'
+          formEl.appendChild(cancelBtn)
           document.body.appendChild(formEl);
           formEl.classList.add("open");
           //listeners for the for elem
@@ -299,6 +303,8 @@ const fetchPeople = async () => {
       formEl.addEventListener("submit", addNewPerson);
       searchByName.addEventListener("keyup", searchPeopleByName);
       searchByMonth.addEventListener("change", filterPersonMonth);
+    }).catch(error => {
+      container.innerHTML = error
   })
 }
 
