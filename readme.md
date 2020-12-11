@@ -28,7 +28,7 @@
 
 ## Overview
 
--   You can see your demo in this following link 
+-   You can see my demo and code in these following links 
   <a href="https://tantley-birthday-app.netlify.app/">
     Demo
   </a> and 
