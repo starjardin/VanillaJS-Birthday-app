@@ -1,5 +1,5 @@
 body {
-  background-color: #e3f6f5;
+  background-color: #D8EEFE;
 }
 
 h2 {
@@ -106,9 +106,16 @@ button {
   background-color: #fffffe;
 }
 
+.add {
+  background-color: #EF4565;
+  border-radius: 5px;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  border: none;
+}
+
 .add:hover {
   background-color: #272343;
-  color: #ffffff;
   cursor: pointer;
   transform: scale(1.1);
 }
@@ -167,9 +174,17 @@ button {
 }
 
 .col-wrapper {
+  flex-direction: row-reverse;
   margin: 2rem;
   align-items: flex-end;
   justify-content: space-around;
+}
+.col-wrapper input, .col-wrapper select {
+  padding: 0.5rem;
+  margin: 0;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 1px 1px #333333;
 }
 
 button span {
