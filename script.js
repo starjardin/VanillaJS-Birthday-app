@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const container = document.querySelector(".container");
+const container = document.querySelector("#container");
 const addBtn = document.querySelector(".add");
 const formEl = document.querySelector(".formSubmit");
 const searchByName = document.querySelector('[name="search"]');
@@ -67,26 +67,22 @@ const fetchPeople = async () => {
             return `
             <div class="row mt-3" data-id="${person.id}">
               <div class="col">
-                <img src="${person.picture}" class="rounded-circle">
+                <img src="${person.picture}" class="rounded">
               </div>
               <div class="col">
                 <div>
-                  ${person.firstName} ${person.lastName} 
-                  ${dayLeft < 0 ? "was" : "is"} turning 
-                  <b>${futureAge <= 1 ? futureAge + ` year` : futureAge + ` years`}</b> 
-                  on
-                  <b>${new Date(person.birthday).toLocaleString("en-US", { month : "long"})}</b> 
-                  the 
-                  <b>
+                  <h4>${person.firstName} ${person.lastName}</h4>
+                  ${dayLeft < 0 ? "Turned" : "Turns"}
+                  <strong>${futureAge}</strong> on ${new Date(person.birthday).toLocaleString("en-US", { month: "long" })}
                     <time datetime="${fullDate}">
-                      ${new Date(person.birthday)
-                      .toLocaleString("en-US", 
-                      { day: "numeric" })}<sup>${nthDate(currentDay)}</sup>
-                    </time> 
-                  </b>
+                    ${new Date(person.birthday)
+                    .toLocaleString("en-US", 
+                    { day: "numeric" })}<sup>${nthDate(currentDay)}</sup>
+                  </time> 
                 </div>
               </div>
-              <div class="col buttons-container">
+
+              <div class="col btn-container buttons-container">
                 <div>
                   ${dayLeft < 0 ? dayLeft * -1 + " " + "days ago" :
                   dayLeft === 0 ? "today" :

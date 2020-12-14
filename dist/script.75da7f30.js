@@ -1908,7 +1908,7 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const container = document.querySelector(".container");
+const container = document.querySelector("#container");
 const addBtn = document.querySelector(".add");
 const formEl = document.querySelector(".formSubmit");
 const searchByName = document.querySelector('[name="search"]');
@@ -1980,11 +1980,11 @@ const fetchPeople = async () => {
         let oneDay = 1000 * 60 * 60 * 24;
         const getTheDate = birthDayDate.getTime() - today.getTime();
         const dayLeft = Math.ceil(getTheDate / oneDay);
-        return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col\">\n                <img src=\"").concat(person.picture, "\" class=\"rounded-circle\">\n              </div>\n              <div class=\"col\">\n                <div>\n                  ").concat(person.firstName, " ").concat(person.lastName, " \n                  ").concat(dayLeft < 0 ? "was" : "is", " turning \n                  <b>").concat(futureAge <= 1 ? futureAge + " year" : futureAge + " years", "</b> \n                  on\n                  <b>").concat(new Date(person.birthday).toLocaleString("en-US", {
+        return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col\">\n                <img src=\"").concat(person.picture, "\" class=\"rounded\">\n              </div>\n              <div class=\"col\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
           month: "long"
-        }), "</b> \n                  the \n                  <b>\n                    <time datetime=\"").concat(fullDate, "\">\n                      ").concat(new Date(person.birthday).toLocaleString("en-US", {
+        }), "\n                    <time datetime=\"").concat(fullDate, "\">\n                    ").concat(new Date(person.birthday).toLocaleString("en-US", {
           day: "numeric"
-        }), "<sup>").concat(nthDate(currentDay), "</sup>\n                    </time> \n                  </b>\n                </div>\n              </div>\n              <div class=\"col buttons-container\">\n                <div>\n                  ").concat(dayLeft < 0 ? dayLeft * -1 + " " + "days ago" : dayLeft === 0 ? "today" : dayLeft === 1 ? "Tomorrow" : dayLeft + " " + 'days', "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
+        }), "<sup>").concat(nthDate(currentDay), "</sup>\n                  </time> \n                </div>\n              </div>\n\n              <div class=\"col btn-container buttons-container\">\n                <div>\n                  ").concat(dayLeft < 0 ? dayLeft * -1 + " " + "days ago" : dayLeft === 0 ? "today" : dayLeft === 1 ? "Tomorrow" : dayLeft + " " + 'days', "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
       }).join('');
     };
 
@@ -2203,7 +2203,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59551" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58147" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

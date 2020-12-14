@@ -11,18 +11,17 @@
     <link rel="stylesheet" href="./style.scss">
 	</head>
 	<body>
-    <header class="header">
-      <h2 class="col text-center font-weight-bold font-italic">
-        Birthday
-      </h2>
+    <header class="header container">
+      <div class="row">
+        <div class="col">
+          <h2 class="font-weight-bold">
+            Birthday app
+          </h2>
+        </div>
+      </div>
     </header>
 
     <main>
-      <header class="col text-center font-weight-bold font-italic">
-        <h3>
-          Happy Birthday.
-        </h3>
-      </header>
       <form action="#" hidden class="formSubmit">
         <fieldset>
           <div class="form-group">
@@ -49,14 +48,16 @@
         </fieldset>
       </form>
 
-      <div class="wrapper">
-        <div class="col col-wrapper">
-          <button type="button" class="add">Add People</button>
-          <fieldset class="search-field">
-            <label for="search">Search</label>
-            <input type="text" id="search" name="search" placeholder="search by name">
+      <div class="container"> 
+        <div class="row mt-3" id="wrapper">
+          <div class="col">
+            <label for="search">Filter by name</label>
+            <input type="text" id="search" name="search" placeholder="Type a name">
+          </div>
+          <div class="col">
+            <label for="month">Filter by month</label>
             <select name="month" id="month">
-              <option value="">---search by months----</option>
+              <option value="">select a month</option>
               <option value="january">January</option>
               <option value="february">February</option>
               <option value="march">March</option>
@@ -70,11 +71,14 @@
               <option value="november">November</option>
               <option value="december">December</option>
             </select>
-          </fieldset>
+          </div>
+          <div class="col btn-container">
+            <button type="button" class="add">Add People</button>
+          </div>
         </div>
       </div>
 
-      <div class="container">
+      <div class="container" id="container">
       
       </div>
       </div>

@@ -1,33 +1,29 @@
+@import "fonts";
+
 body {
   background-color: #D8EEFE;
+  font-family: "Rubik", apple-system, BlinkMacSystemFont, Helvetica Neue, Arial, sans-serif;
 }
 
 h2 {
   margin-block: 2rem;
-  color: #272343;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 76px;
+  color: #094067;
 }
 
-h2::before,
-h3::before,
-h2::after, 
-h3::after {
-  content: " ";
-  display: inline-block;
-  width: 2rem;
-  height: 2rem;
-  margin-inline: 1rem;
+.header {
+   .row {
+    background-color: #D8EEFE;
+    padding-inline: 0;
+   }
+   .col {
+     padding-inline: 0;
+   }
 }
-
-h2::before,
-h2::after {
-  background-image: url(./icons/cake.svg);
-}
-
-h3::after,
-h3::before {
-  background-image: url(./icons/heart.svg);
-}
-
 .form, .div {
 	position: absolute;
 	transition: all 0.25s;
@@ -98,8 +94,8 @@ label {
 
 button {
   color: #111111;
-  margin-inline: 1rem;
   padding: .5rem;
+  margin-inline: 2px;
   border-radius: 5px;
   transition: .3s;
   background-color: #fffffe;
@@ -109,7 +105,7 @@ button {
   background-color: #EF4565;
   border-radius: 5px;
   color: #ffffff;
-  margin-bottom: .5rem;
+  margin: 0 0 .5rem 0;
   border: none;
 }
 
@@ -119,20 +115,7 @@ button {
   transform: scale(1.1);
 }
 
-.wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  border-bottom: #cccccc solid 1px;
-  padding-bottom: 1rem;
-}
-
-#month {
-  margin: .5rem;
-}
-
-[for="search"] {
+[for="search"], [for="month"] {
   font-size: 21px;
 }
 
@@ -170,21 +153,7 @@ button {
 .col {
   display: flex;
   align-items: center;
-  justify-content: center;
-}
-
-.col-wrapper {
-  flex-direction: row-reverse;
-  margin: 2rem;
-  align-items: flex-end;
-  justify-content: space-around;
-  input, select  {
-    padding : .5rem;
-    margin: 0;
-    border: none;
-    border-radius: 5px;
-    box-shadow: 1px 1px 1px 1px #333333;
-  }
+  justify-content: flex-start;
 }
 
 button span {
@@ -198,6 +167,41 @@ button {
 .buttons-container {
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 1rem;
 }
 
+.col > input, select {
+  padding : .7rem;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+}
+
+#wrapper {
+  background-color: #D8EEFE;
+  padding-inline: 0;
+  .col {
+    flex-direction: column;
+    padding-left: 0;
+    justify-content: flex-end;
+    align-items: flex-start;
+    font-family: Rubik;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    color: #5F6C7B;
+    button {
+      margin: 0;
+    }
+  }
+  .col.btn-container {
+    padding-inline: 0;
+    align-items: flex-end;
+  }
+}
+
+strong {
+  color: #EF4565;
+}
