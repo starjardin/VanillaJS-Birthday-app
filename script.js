@@ -5,7 +5,9 @@ const addBtn = document.querySelector(".add");
 const formEl = document.querySelector(".formSubmit");
 const searchByName = document.querySelector('[name="search"]');
 const searchByMonth = document.querySelector('[name="month"]');
-const endPoint = 'https://gist.githubusercontent.com/Pinois/e1c72b75917985dc77f5c808e876b67f/raw/93debb7463fbaaec29622221b8f9e719bd5b119f/birthdayPeople.json'
+const endPoint = 'https://gist.githubusercontent.com/Pinois/e1c72b75917985dc77f5c808e876b67f/raw/93debb7463fbaaec29622221b8f9e719bd5b119f/birthdayPeople.json';
+const year = document.querySelector(".year")
+year.innerHTML = new Date().getFullYear()
 
 function wait(ms = 0) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -30,7 +32,6 @@ const fetchPeople = async () => {
       //restore form local storage
       const restoreFromLocalStorage = () => {
         let listOfPeople = JSON.parse(localStorage.getItem("people"));
-        console.log(listOfPeople.length);
         if (listOfPeople.length) {
           people = listOfPeople;
         } else {

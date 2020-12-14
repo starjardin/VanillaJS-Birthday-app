@@ -24,6 +24,7 @@ h2 {
      padding-inline: 0;
    }
 }
+
 .form, .div {
 	position: absolute;
 	transition: all 0.25s;
@@ -68,10 +69,6 @@ h2 {
     background-color: #272343;
     color: #ffffff;
   }
-}
-
-label {
-  display: block;
 }
 
 .formSubmit {

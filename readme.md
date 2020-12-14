@@ -36,17 +36,16 @@
       Code
   </a>
 
-1. If you had more time, I would probably work on the filter and cleaning up the code. At the moment, there is still no style, so styling the app is what I would do at the end of the day, it has bad a very looking. Finally, I would work out what is snaging me wiht the filter.
+1. I learned something while I was doing this project, It was tough but the most important thing is that I learned a lot of subjects, methode about time especially. I am not sure but It seems that we can not assign (default export) variable to an imported file. I imported a globale variable by default but it gives bugs, so I needed change that into a name-export variable. We need to be carefull to choose very well when to use that.
 
-1. Yes, I learned something while I was doing this project, It was tough but the most important thing is that I learned a lot of subjects, methode about time especially. I am not sure but It seems that we can not assign (default export) variable to an imported file. I imported a globale variable by default but it gives bugs, so I needed change that into a name-export variable. We need to be carefull to choose very well when to use that.
+1. Well, this one was not that easy but if I had to say a thing, the most challenging part was to deal with the dates, tranforming time stamps into a real readable human date and then sorting it from to the nearest date, nightmare, although I liked it. It seemed as if I was playing puzzles.
 
-1. Well, this one was not that easy but if I had to say a thing, the most challenging part was to deal with the dates, tranforming time stamps into a real readable human date and then sorting it from to the nearest date, nightmare, although I like it. It seems as if I was playing puzzles.
-
-1. Nothing much to say, the project was challenging which is pretty nice training, I liked it.
+1. Nothing much to say, the project was challenging which is pretty nice for training, I liked it.
 
 ### Built With
 
 -   [Vanilla javascript](https://javascript.org/)
+-   [Bootstrap](https://https://getbootstrap.com/docs/4.5/getting-started/introduction/)
 
 ## Features
 
@@ -76,4 +75,6 @@ $ npm start
 
 1. One major point of doing this app was to endure and familiarize myself with array methodes such as `map` `filter` and `find`
 
-1. After just having learned `fetch`, we did this app and it was a big opportunity to practice fetch as weell.
+1. After just having learned `fetch`, we did this app and it was a very nice opportunity to practice fetch.
+
+1. Some styles are buit off bootsrap, Sometimes bootsrap is very nice because it is very responsive, that is why I used it here. I am style practicing using it as well and it never is a bad idea to try new things, at least for me. 
