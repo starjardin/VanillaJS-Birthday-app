@@ -1913,7 +1913,7 @@ const addBtn = document.querySelector(".add");
 const formEl = document.querySelector(".formSubmit");
 const searchByName = document.querySelector('[name="search"]');
 const searchByMonth = document.querySelector('[name="month"]');
-const endPoint = 'https://gist.githubusercontent.com/Pinois/e1c72b75917985dc77f5c808e876b67f/raw/93debb7463fbaaec29622221b8f9e719bd5b119f/birthdayPeople.json';
+const endPoint = 'https://gist.githubusercontent.com/Pinois/e1c72b75917985dc77f5c808e876b67f/raw/b17e08696906abeaac8bc260f57738eaa3f6abb1/birthdayPeople.json';
 const year = document.querySelector(".year");
 year.innerHTML = new Date().getFullYear();
 
@@ -1930,7 +1930,7 @@ async function destroyPopup(popup) {
 
 const fetchPeople = async () => {
   _axios.default.get(endPoint).then(response => {
-    let people = []; //add to local storage
+    let people = response.data; //add to local storage
 
     const initlocalStorage = () => {
       localStorage.setItem("people", JSON.stringify(people));
@@ -1940,7 +1940,7 @@ const fetchPeople = async () => {
     const restoreFromLocalStorage = () => {
       let listOfPeople = JSON.parse(localStorage.getItem("people"));
 
-      if (listOfPeople.length) {
+      if (listOfPeople !== null) {
         people = listOfPeople;
       } else {
         people = response.data;
@@ -1981,11 +1981,11 @@ const fetchPeople = async () => {
         let oneDay = 1000 * 60 * 60 * 24;
         const getTheDate = birthDayDate.getTime() - today.getTime();
         const dayLeft = Math.ceil(getTheDate / oneDay);
-        return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col-2\">\n                <img src=\"").concat(person.picture, "\" class=\"rounded\">\n              </div>\n              <div class=\"col\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
+        return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col-sm\">\n                <img src=\"").concat(person.picture, "\" class=\"rounded\">\n              </div>\n              <div class=\"col-md\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
           month: "long"
         }), "\n                    <time datetime=\"").concat(fullDate, "\">\n                    ").concat(new Date(person.birthday).toLocaleString("en-US", {
           day: "numeric"
-        }), "<sup>").concat(nthDate(currentDay), "</sup>\n                  </time> \n                </div>\n              </div>\n\n              <div class=\"col btn-container buttons-container\">\n                <div>\n                  ").concat(dayLeft < 0 ? dayLeft * -1 + " " + "days ago" : dayLeft === 0 ? "today" : dayLeft === 1 ? "Tomorrow" : dayLeft + " " + 'days', "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
+        }), "<sup>").concat(nthDate(currentDay), "</sup>\n                  </time> \n                </div>\n              </div>\n\n              <div class=\"col-sm btn-container buttons-container\">\n                <div>\n                  ").concat(dayLeft < 0 ? dayLeft * -1 + " " + "days ago" : dayLeft === 0 ? "today" : dayLeft === 1 ? "Tomorrow" : dayLeft + " " + 'days', "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
       }).join('');
     };
 
@@ -2173,6 +2173,7 @@ const fetchPeople = async () => {
     searchByName.addEventListener("keyup", searchPeopleByName);
     searchByMonth.addEventListener("change", filterPersonMonth);
   }).catch(error => {
+    console.log(error);
     container.innerHTML = error;
   });
 };
@@ -2206,7 +2207,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49346" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54122" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

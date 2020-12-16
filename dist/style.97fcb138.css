@@ -104,15 +104,13 @@ h4 {
 
 .form.open {
   --opacity: 1;
-  top: 0%;
-  left: 0%;
+  top: 50%;
+  left: 50%;
   transform: none;
   background-color: #ffffff;
   border: none;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  width: 80vw;
+  transform: translate(-50%, -50%);
 }
 .form.open input {
   background-color: #D8EEFE;

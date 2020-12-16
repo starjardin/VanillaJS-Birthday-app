@@ -5,7 +5,7 @@ const addBtn = document.querySelector(".add");
 const formEl = document.querySelector(".formSubmit");
 const searchByName = document.querySelector('[name="search"]');
 const searchByMonth = document.querySelector('[name="month"]');
-const endPoint = 'https://gist.githubusercontent.com/Pinois/e1c72b75917985dc77f5c808e876b67f/raw/93debb7463fbaaec29622221b8f9e719bd5b119f/birthdayPeople.json';
+const endPoint = 'https://gist.githubusercontent.com/Pinois/e1c72b75917985dc77f5c808e876b67f/raw/b17e08696906abeaac8bc260f57738eaa3f6abb1/birthdayPeople.json';
 const year = document.querySelector(".year")
 year.innerHTML = new Date().getFullYear()
 
@@ -23,7 +23,7 @@ async function destroyPopup(popup) {
 const fetchPeople = async () => {
   axios.get(endPoint)
     .then(response => {
-      let people = []
+      let people = response.data
       //add to local storage
       const initlocalStorage = () => {
         localStorage.setItem("people", JSON.stringify(people));
@@ -32,7 +32,7 @@ const fetchPeople = async () => {
       //restore form local storage
       const restoreFromLocalStorage = () => {
         let listOfPeople = JSON.parse(localStorage.getItem("people"));
-        if (listOfPeople.length) {
+        if (listOfPeople !== null) {
           people = listOfPeople;
         } else {
           people = response.data
@@ -67,10 +67,10 @@ const fetchPeople = async () => {
             const dayLeft = Math.ceil(getTheDate / oneDay);
             return `
             <div class="row mt-3" data-id="${person.id}">
-              <div class="col-2">
+              <div class="col-sm">
                 <img src="${person.picture}" class="rounded">
               </div>
-              <div class="col">
+              <div class="col-md">
                 <div>
                   <h4>${person.firstName} ${person.lastName}</h4>
                   ${dayLeft < 0 ? "Turned" : "Turns"}
@@ -83,7 +83,7 @@ const fetchPeople = async () => {
                 </div>
               </div>
 
-              <div class="col btn-container buttons-container">
+              <div class="col-sm btn-container buttons-container">
                 <div>
                   ${dayLeft < 0 ? dayLeft * -1 + " " + "days ago" :
                   dayLeft === 0 ? "today" :
@@ -317,6 +317,7 @@ const fetchPeople = async () => {
       searchByName.addEventListener("keyup", searchPeopleByName);
       searchByMonth.addEventListener("change", filterPersonMonth);
     }).catch(error => {
+      console.log(error);
       container.innerHTML = error
   })
 }
