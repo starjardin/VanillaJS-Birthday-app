@@ -44,7 +44,6 @@
 
 ### Built With
 
--   [Vanilla javascript](https://javascript.org/)
 -   [Bootstrap](https://https://getbootstrap.com/docs/4.5/getting-started/introduction/)
 
 ## Features

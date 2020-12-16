@@ -33,6 +33,15 @@ h2 {
   color: #094067;
 }
 
+h4 {
+  color: #000000;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 43px;
+}
+
 .header .row {
   background-color: #D8EEFE;
   padding-inline: 0;
@@ -215,6 +224,15 @@ button {
 #wrapper .col.btn-container {
   padding-inline: 0;
   align-items: flex-end;
+}
+
+.col {
+  color: #5F6C7B;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
 }
 
 strong {

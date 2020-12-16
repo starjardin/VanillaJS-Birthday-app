@@ -1981,7 +1981,7 @@ const fetchPeople = async () => {
         let oneDay = 1000 * 60 * 60 * 24;
         const getTheDate = birthDayDate.getTime() - today.getTime();
         const dayLeft = Math.ceil(getTheDate / oneDay);
-        return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col\">\n                <img src=\"").concat(person.picture, "\" class=\"rounded\">\n              </div>\n              <div class=\"col\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
+        return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col-2\">\n                <img src=\"").concat(person.picture, "\" class=\"rounded\">\n              </div>\n              <div class=\"col\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
           month: "long"
         }), "\n                    <time datetime=\"").concat(fullDate, "\">\n                    ").concat(new Date(person.birthday).toLocaleString("en-US", {
           day: "numeric"
@@ -2204,7 +2204,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58147" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49346" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

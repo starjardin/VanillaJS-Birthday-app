@@ -67,7 +67,7 @@ const fetchPeople = async () => {
             const dayLeft = Math.ceil(getTheDate / oneDay);
             return `
             <div class="row mt-3" data-id="${person.id}">
-              <div class="col">
+              <div class="col-2">
                 <img src="${person.picture}" class="rounded">
               </div>
               <div class="col">
