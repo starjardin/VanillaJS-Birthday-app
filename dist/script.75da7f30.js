@@ -2041,10 +2041,11 @@ const fetchPeople = async () => {
         //create a new form elem
         const formEl = document.createElement('form');
         formEl.classList.add("form");
-        formEl.insertAdjacentHTML("afterbegin", "\n            <h1>\n              <strong>Edit ".concat(personToEdit.firstName, " ").concat(personToEdit.lastName, "</strong>\n            </h1>\n            <div class=\"form-group\">\n              <label for=\"firstName\">Frist Name</label>\n              <input type=\"text\" class=\"form-control\" name=\"firstName\" id=\"").concat(personToEdit.id, "\" value=\"").concat(personToEdit.firstName, "\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"lastName\">Last Name</label>\n              <input type=\"text\" class=\"form-control\" id=\"").concat(personToEdit.id, "\" name=\"lastName\" value=\"").concat(personToEdit.lastName, "\"> \n            </div>\n            <div class=\"form-group\">\n              <label for=\"birthday\">Birthday</label>\n              <input type=\"date\" id=\"birthday\" class=\"form-control\" name=\"birthday\" id=\"").concat(personToEdit.birthday, "\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\">Submit</button>\n          "));
+        formEl.insertAdjacentHTML("afterbegin", "\n            <h1>\n              <b>Edit ".concat(personToEdit.firstName, " ").concat(personToEdit.lastName, "</b>\n            </h1>\n            <div class=\"form-group\">\n              <label for=\"firstName\">Frist Name</label>\n              <input type=\"text\" class=\"form-control\" name=\"firstName\" id=\"").concat(personToEdit.id, "\" value=\"").concat(personToEdit.firstName, "\">\n            </div>\n            <div class=\"form-group\">\n              <label for=\"lastName\">Last Name</label>\n              <input type=\"text\" class=\"form-control\" id=\"").concat(personToEdit.id, "\" name=\"lastName\" value=\"").concat(personToEdit.lastName, "\"> \n            </div>\n            <div class=\"form-group\">\n              <label for=\"birthday\">Birthday</label>\n              <input type=\"date\" id=\"birthday\" class=\"form-control\" name=\"birthday\" id=\"").concat(personToEdit.birthday, "\">\n            </div>\n            <button type=\"submit\" class=\"btn btn-danger\">Save changes</button>\n          "));
         const cancelBtn = document.createElement('button');
         cancelBtn.type = 'button';
         cancelBtn.textContent = 'cancel';
+        cancelBtn.classList.add("btn-cancel");
         formEl.appendChild(cancelBtn);
         document.body.appendChild(formEl);
         cancelBtn.addEventListener("click", async () => {
@@ -2059,6 +2060,7 @@ const fetchPeople = async () => {
 
           if (!form.birthday.value) {
             alert("Hey, what's your birthday");
+            return;
           }
 
           const birthDate = new Date(form.birthday.value);

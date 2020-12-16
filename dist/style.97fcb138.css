@@ -23,6 +23,11 @@ body {
   font-family: "Rubik", apple-system, BlinkMacSystemFont, Helvetica Neue, Arial, sans-serif;
 }
 
+button {
+  cursor: pointer;
+  color: #000000;
+}
+
 h2 {
   margin-block: 2rem;
   font-family: Rubik;
@@ -94,16 +99,47 @@ h4 {
 .div.open button,
 .formSubmit button {
   margin: 0.5rem 0;
-  background-color: #272343;
-  color: #ffffff;
+  display: inline-block;
+}
+
+.form.open {
+  --opacity: 1;
+  top: 0%;
+  left: 0%;
+  transform: none;
+  background-color: #ffffff;
+  border: none;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.form.open input {
+  background-color: #D8EEFE;
+  border: none;
+  padding: 2rem 1rem;
+}
+.form.open button {
+  padding: 1rem 0;
+  width: 40%;
+}
+.form.open .btn-cancel {
+  background: #FFFFFF;
+  border: 2px solid #5F6C7B;
+  box-sizing: border-box;
+  border-radius: 5px;
+  color: black;
+  transform: translate(150%, -140%);
 }
 
 .formSubmit {
-  text-align: center;
   padding: 2rem 5rem;
   z-index: 5;
   box-shadow: 1px 1px 3px 3px #333333;
   border-radius: 5px;
+}
+.formSubmit label {
+  display: block;
 }
 .formSubmit input {
   padding: 0.5rem;
@@ -182,10 +218,6 @@ button {
 
 button span {
   visibility: hidden;
-}
-
-button {
-  cursor: pointer;
 }
 
 .buttons-container {

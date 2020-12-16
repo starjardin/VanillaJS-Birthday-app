@@ -165,7 +165,7 @@ const fetchPeople = async () => {
           formEl.classList.add("form");
           formEl.insertAdjacentHTML("afterbegin", `
             <h1>
-              <strong>Edit ${personToEdit.firstName} ${personToEdit.lastName}</strong>
+              <b>Edit ${personToEdit.firstName} ${personToEdit.lastName}</b>
             </h1>
             <div class="form-group">
               <label for="firstName">Frist Name</label>
@@ -179,12 +179,13 @@ const fetchPeople = async () => {
               <label for="birthday">Birthday</label>
               <input type="date" id="birthday" class="form-control" name="birthday" id="${personToEdit.birthday}">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-danger">Save changes</button>
           `);
 
           const cancelBtn = document.createElement('button')
           cancelBtn.type = 'button';
           cancelBtn.textContent = 'cancel'
+          cancelBtn.classList.add("btn-cancel")
           formEl.appendChild(cancelBtn)
           document.body.appendChild(formEl);
 
@@ -200,6 +201,7 @@ const fetchPeople = async () => {
             const form = e.currentTarget;
             if (!form.birthday.value) {
               alert("Hey, what's your birthday")
+              return
             }
 
             const birthDate = new Date(form.birthday.value);
