@@ -85,10 +85,10 @@ const fetchPeople = async () => {
 
               <div class="col-sm btn-container buttons-container">
                 <div>
-                  ${dayLeft < 0 ? dayLeft * -1 + " " + "days ago" :
+                  ${dayLeft < 0 ? dayLeft + 360 + " " + "In days" :
                   dayLeft === 0 ? "today" :
                   dayLeft === 1 ?  "Tomorrow" :
-                  dayLeft + " " + 'days'}
+                  dayLeft + " " + 'In days'}
                 </div>
                 <div>
                   <button 

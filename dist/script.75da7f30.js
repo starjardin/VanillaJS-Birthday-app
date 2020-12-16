@@ -1985,7 +1985,7 @@ const fetchPeople = async () => {
           month: "long"
         }), "\n                    <time datetime=\"").concat(fullDate, "\">\n                    ").concat(new Date(person.birthday).toLocaleString("en-US", {
           day: "numeric"
-        }), "<sup>").concat(nthDate(currentDay), "</sup>\n                  </time> \n                </div>\n              </div>\n\n              <div class=\"col-sm btn-container buttons-container\">\n                <div>\n                  ").concat(dayLeft < 0 ? dayLeft * -1 + " " + "days ago" : dayLeft === 0 ? "today" : dayLeft === 1 ? "Tomorrow" : dayLeft + " " + 'days', "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
+        }), "<sup>").concat(nthDate(currentDay), "</sup>\n                  </time> \n                </div>\n              </div>\n\n              <div class=\"col-sm btn-container buttons-container\">\n                <div>\n                  ").concat(dayLeft < 0 ? dayLeft + 360 + " " + "In days" : dayLeft === 0 ? "today" : dayLeft === 1 ? "Tomorrow" : dayLeft + " " + 'In days', "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
       }).join('');
     };
 
@@ -2207,7 +2207,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54122" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56087" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
