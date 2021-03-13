@@ -98,7 +98,7 @@ h4 {
 .form.open button,
 .div.open button,
 .formSubmit button {
-  margin: 0.5rem 0;
+  margin-top: 1.5rem;
   display: inline-block;
 }
 
@@ -163,6 +163,7 @@ button {
   background-color: #EF4565;
   border-radius: 5px;
   color: #ffffff;
+  padding: 0.8rem;
   margin: 0 0 0.5rem 0;
   border: none;
 }
@@ -195,6 +196,13 @@ button {
 .delete:hover,
 .edit:hover {
   transform: scale(1.1);
+}
+
+.delete:focus,
+.delete:active,
+.edit:focus,
+.edit:active {
+  outline: none;
 }
 
 .edit {

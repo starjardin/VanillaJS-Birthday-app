@@ -1,10 +1,14 @@
 import axios from 'axios'
+import format from 'date-fns/format'
 
+//? This are block hmtl elements
 const container = document.querySelector("#container");
 const addBtn = document.querySelector(".add");
 const formEl = document.querySelector(".formSubmit");
 const searchByName = document.querySelector('[name="search"]');
 const searchByMonth = document.querySelector('[name="month"]');
+
+//? This is the api url
 const endPoint = 'https://gist.githubusercontent.com/Pinois/e1c72b75917985dc77f5c808e876b67f/raw/b17e08696906abeaac8bc260f57738eaa3f6abb1/birthdayPeople.json';
 const year = document.querySelector(".year")
 year.innerHTML = new Date().getFullYear()
@@ -42,26 +46,19 @@ const fetchPeople = async () => {
 
       const generatePeopleList = (people) => {
         return people
-          .sort((a, b) => new Date(a.birthday).getMonth() - new Date(b.birthday).getMonth())
+          .sort((a, b) => {
+            return new Date(a.birthday).getMonth() - new Date(b.birthday).getMonth()
+          })
           .map(person => {
-            function nthDate(day) {
-              if (day > 3 && day < 21) return "th";
-              switch (day % 10) {
-                case 1: return "st";
-                case 2: return "nd";
-                case 3: return "rd";
-                default: return "th"; 
-              }
-            }
             const today = new Date()
             const currentDate = new Date(person.birthday);
             const currentDay = currentDate.getDate();
             const month = currentDate.getMonth();
             const year = currentDate.getFullYear();
-            const fullDate = `${currentDay}${nthDate(currentDay)} / ${month + 1} / ${year}`;
+            const fullDate = `${ format(person.birthday, "ko") } / ${ month + 1 } / ${ year }`;
             const futureAge = today.getFullYear() - year + 1;
             const momentYear = today.getFullYear();
-            const birthDayDate = new Date(momentYear, month, currentDay );
+            const birthDayDate = new Date(momentYear, month, currentDay);
             let oneDay = 1000 * 60 * 60 * 24;
             const getTheDate = birthDayDate.getTime() - today.getTime();
             const dayLeft = Math.ceil(getTheDate / oneDay);
@@ -75,20 +72,21 @@ const fetchPeople = async () => {
                   <h4>${person.firstName} ${person.lastName}</h4>
                   ${dayLeft < 0 ? "Turned" : "Turns"}
                   <strong>${futureAge}</strong> on ${new Date(person.birthday).toLocaleString("en-US", { month: "long" })}
-                    <time datetime="${fullDate}">
+                  <time datetime="${fullDate}">
                     ${new Date(person.birthday)
                     .toLocaleString("en-US", 
-                    { day: "numeric" })}<sup>${nthDate(currentDay)}</sup>
+                    { day: "numeric" })}<sup>${format(person.birthday, "ko")}</sup>
                   </time> 
                 </div>
               </div>
 
               <div class="col-sm btn-container buttons-container">
                 <div>
-                  ${dayLeft < 0 ? dayLeft + 360 + " " + "In days" :
-                  dayLeft === 0 ? "today" :
+                  ${dayLeft < 0 ? `In ${dayLeft + 360} days` :
+                  dayLeft === 0 ? "Today" :
                   dayLeft === 1 ?  "Tomorrow" :
-                  dayLeft + " " + 'In days'}
+                  `In ${dayLeft} days`
+                  }
                 </div>
                 <div>
                   <button 
