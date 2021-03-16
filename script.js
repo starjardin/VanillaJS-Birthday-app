@@ -45,24 +45,32 @@ const fetchPeople = async () => {
       };
 
       const generatePeopleList = (people) => {
-        return people
-          .sort((a, b) => {
-            return new Date(a.birthday).getMonth() - new Date(b.birthday).getMonth()
-          })
+        const today = new Date()
+        const newPeopleArr = people.map(person => {
+          const currentDate = new Date(person.birthday);
+          const currentDay = currentDate.getDate();
+          const month = currentDate.getMonth();
+          const momentYear = today.getFullYear();
+          const birthDayDate = new Date(momentYear, month, currentDay);
+          let oneDay = 1000 * 60 * 60 * 24;
+          const getTheDate = birthDayDate.getTime() - today.getTime();
+          const dayLeft = Math.ceil(getTheDate / oneDay);
+          return {
+              ...person,
+              dayLeft: dayLeft < 0 ? dayLeft + 360 : dayLeft
+            }
+          }
+        )
+        
+        return newPeopleArr
+          .sort((a, b) => (a.dayLeft - b.dayLeft))
           .map(person => {
-            const today = new Date()
-            const currentDate = new Date(person.birthday);
-            const currentDay = currentDate.getDate();
-            const month = currentDate.getMonth();
-            const year = currentDate.getFullYear();
-            const fullDate = `${ format(person.birthday, "ko") } / ${ month + 1 } / ${ year }`;
-            const futureAge = today.getFullYear() - year + 1;
-            const momentYear = today.getFullYear();
-            const birthDayDate = new Date(momentYear, month, currentDay);
-            let oneDay = 1000 * 60 * 60 * 24;
-            const getTheDate = birthDayDate.getTime() - today.getTime();
-            const dayLeft = Math.ceil(getTheDate / oneDay);
-            return `
+          const currentDate = new Date(person.birthday);
+          const month = currentDate.getMonth();
+          const year = currentDate.getFullYear();
+          const fullDate = `${ format(person.birthday, "ko") } / ${ month + 1 } / ${ year }`;
+          const futureAge = today.getFullYear() - year + 1;
+         return `
             <div class="row mt-3" data-id="${person.id}">
               <div class="col-sm">
                 <img src="${person.picture}" class="rounded">
@@ -70,7 +78,7 @@ const fetchPeople = async () => {
               <div class="col-md">
                 <div>
                   <h4>${person.firstName} ${person.lastName}</h4>
-                  ${dayLeft < 0 ? "Turned" : "Turns"}
+                  ${person.dayLeft < 0 ? "Turned" : "Turns"}
                   <strong>${futureAge}</strong> on ${new Date(person.birthday).toLocaleString("en-US", { month: "long" })}
                   <time datetime="${fullDate}">
                     ${new Date(person.birthday)
@@ -82,10 +90,10 @@ const fetchPeople = async () => {
 
               <div class="col-sm btn-container buttons-container">
                 <div>
-                  ${dayLeft < 0 ? `In ${dayLeft + 360} days` :
-                  dayLeft === 0 ? "Today" :
-                  dayLeft === 1 ?  "Tomorrow" :
-                  `In ${dayLeft} days`
+                  ${person.dayLeft < 0 ? `In ${person.dayLeft + 360} days` :
+                  person.dayLeft === 0 ? "Today" :
+                  person.dayLeft === 1 ?  "Tomorrow" :
+                  `In ${person.dayLeft} days`
                   }
                 </div>
                 <div>
@@ -105,8 +113,7 @@ const fetchPeople = async () => {
                 </div>
               </div>
             </div>`
-          }
-        ).join('');
+        }).join("")
       }
 
       const addNewPerson = (e) => {

@@ -4731,27 +4731,32 @@ const fetchPeople = async () => {
     };
 
     const generatePeopleList = people => {
-      return people.sort((a, b) => {
-        return new Date(a.birthday).getMonth() - new Date(b.birthday).getMonth();
-      }).map(person => {
-        const today = new Date();
+      const today = new Date();
+      const newPeopleArr = people.map(person => {
         const currentDate = new Date(person.birthday);
         const currentDay = currentDate.getDate();
         const month = currentDate.getMonth();
-        const year = currentDate.getFullYear();
-        const fullDate = "".concat((0, _format.default)(person.birthday, "ko"), " / ").concat(month + 1, " / ").concat(year);
-        const futureAge = today.getFullYear() - year + 1;
         const momentYear = today.getFullYear();
         const birthDayDate = new Date(momentYear, month, currentDay);
         let oneDay = 1000 * 60 * 60 * 24;
         const getTheDate = birthDayDate.getTime() - today.getTime();
         const dayLeft = Math.ceil(getTheDate / oneDay);
-        return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col-sm\">\n                <img src=\"").concat(person.picture, "\" class=\"rounded\">\n              </div>\n              <div class=\"col-md\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
+        return { ...person,
+          dayLeft: dayLeft < 0 ? dayLeft + 360 : dayLeft
+        };
+      });
+      return newPeopleArr.sort((a, b) => a.dayLeft - b.dayLeft).map(person => {
+        const currentDate = new Date(person.birthday);
+        const month = currentDate.getMonth();
+        const year = currentDate.getFullYear();
+        const fullDate = "".concat((0, _format.default)(person.birthday, "ko"), " / ").concat(month + 1, " / ").concat(year);
+        const futureAge = today.getFullYear() - year + 1;
+        return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col-sm\">\n                <img src=\"").concat(person.picture, "\" class=\"rounded\">\n              </div>\n              <div class=\"col-md\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(person.dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
           month: "long"
         }), "\n                  <time datetime=\"").concat(fullDate, "\">\n                    ").concat(new Date(person.birthday).toLocaleString("en-US", {
           day: "numeric"
-        }), "<sup>").concat((0, _format.default)(person.birthday, "ko"), "</sup>\n                  </time> \n                </div>\n              </div>\n\n              <div class=\"col-sm btn-container buttons-container\">\n                <div>\n                  ").concat(dayLeft < 0 ? "In ".concat(dayLeft + 360, " days") : dayLeft === 0 ? "Today" : dayLeft === 1 ? "Tomorrow" : "In ".concat(dayLeft, " days"), "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
-      }).join('');
+        }), "<sup>").concat((0, _format.default)(person.birthday, "ko"), "</sup>\n                  </time> \n                </div>\n              </div>\n\n              <div class=\"col-sm btn-container buttons-container\">\n                <div>\n                  ").concat(person.dayLeft < 0 ? "In ".concat(person.dayLeft + 360, " days") : person.dayLeft === 0 ? "Today" : person.dayLeft === 1 ? "Tomorrow" : "In ".concat(person.dayLeft, " days"), "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
+      }).join("");
     };
 
     const addNewPerson = e => {
@@ -4972,7 +4977,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51684" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59607" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
