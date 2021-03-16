@@ -1,0 +1,142 @@
+@import "fonts";
+
+.header {
+   .row {
+    background-color: #D8EEFE;
+    padding-inline: 0;
+   }
+   .col {
+     padding-inline: 0;
+   }
+}
+
+.add {
+  background-color: #EF4565;
+  border-radius: 5px;
+  color: #ffffff;
+  padding: .8rem;
+  margin: 0 0 .5rem 0;
+  border: none;
+  width: 100%;
+}
+
+.add:hover {
+  background-color: #272343;
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+[for="search"], [for="month"] {
+  font-size: 21px;
+}
+
+.delete,
+.edit {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain;
+  border: none;
+  cursor: pointer;
+  transition: .3s;
+  width: 2rem;
+}
+
+.delete {
+  background-image: url("../icons/trash.svg");
+}
+
+.delete:hover,
+.edit:hover {
+  transform: scale(1.1);
+}
+
+.delete:focus,
+.delete:active,
+.edit:focus,
+.edit:active {
+  outline: none;
+}
+
+.edit {
+  background-image: url("../icons/edit.svg");
+}
+
+.row {
+  background-color: #fffffe;
+  border-radius: 5px;
+  padding: 1rem;
+  vertical-align: middle;
+  max-width: 80vw;
+  margin: auto;
+}
+
+.col {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+button span {
+  visibility: hidden;
+}
+
+.buttons-container {
+  color : #5F6C7B;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.col > input, select {
+  padding : .7rem;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+}
+
+#wrapper {
+  background-color: #D8EEFE;
+  padding-inline: 0;
+  .col {
+    flex-direction: column;
+    padding-left: 0;
+    justify-content: flex-end;
+    align-items: flex-start;
+    font-family: Rubik;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    color: #5F6C7B;
+    button {
+      margin: 0;
+    }
+  }
+  .col.btn-container {
+    padding-inline: 0;
+    align-items: flex-end;
+  }
+}
+
+.col {
+  color: #5F6C7B;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+strong {
+  color: #EF4565;
+  font-family: Rubik;
+  font-weight: 500;
+}
+
+@media (max-width: 740px) {
+  .btn-container {
+    align-items: flex-start;
+    margin-top: 1rem;
+  }
+}

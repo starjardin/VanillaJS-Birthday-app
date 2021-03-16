@@ -73,7 +73,7 @@ const fetchPeople = async () => {
          return `
             <div class="row mt-3" data-id="${person.id}">
               <div class="col-sm">
-                <img src="${person.picture}" class="rounded">
+                <img src="${person.picture}">
               </div>
               <div class="col-md">
                 <div>
@@ -193,9 +193,20 @@ const fetchPeople = async () => {
           cancelBtn.classList.add("btn-cancel")
           formEl.appendChild(cancelBtn)
           document.body.appendChild(formEl);
+          
+          const closeFormBtn = document.createElement('button')
+          closeFormBtn.type = 'button';
+          closeFormBtn.textContent = `x`
+          closeFormBtn.classList.add("close-form")
+          formEl.appendChild(closeFormBtn)
+          document.body.appendChild(formEl);
 
           cancelBtn.addEventListener("click", async () => {
-            await wait(1000)
+            await wait(300)
+            destroyPopup(formEl)
+          })
+          closeFormBtn.addEventListener("click", async () => {
+            await wait(300)
             destroyPopup(formEl)
           })
 

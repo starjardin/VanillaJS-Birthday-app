@@ -1,0 +1,52 @@
+body {
+  background-color: #D8EEFE;
+  font-family: "Rubik", apple-system, BlinkMacSystemFont, Helvetica Neue, Arial, sans-serif;
+}
+
+button {
+  padding: .5rem;
+  margin-inline: 2px;
+  border-radius: 5px;
+  transition: .3s;
+  background-color: #fffffe;
+  cursor: pointer;
+  color: #000000;
+}
+
+h2 {
+  margin-block: 2rem;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 76px;
+  color: #094067;
+}
+
+h4 {
+  color: #000000;
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 43px;
+}
+
+
+.col-md {
+  font-family: Rubik;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 26px;
+  line-height: 30px;
+  color : #5F6C7B;
+}
+
+img {
+  width: 120px;
+  border-radius: 5px;
+}
+
+label {
+  color: #094067;
+}

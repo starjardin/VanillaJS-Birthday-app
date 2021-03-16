@@ -4751,7 +4751,7 @@ const fetchPeople = async () => {
         const year = currentDate.getFullYear();
         const fullDate = "".concat((0, _format.default)(person.birthday, "ko"), " / ").concat(month + 1, " / ").concat(year);
         const futureAge = today.getFullYear() - year + 1;
-        return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col-sm\">\n                <img src=\"").concat(person.picture, "\" class=\"rounded\">\n              </div>\n              <div class=\"col-md\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(person.dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
+        return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col-sm\">\n                <img src=\"").concat(person.picture, "\">\n              </div>\n              <div class=\"col-md\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(person.dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
           month: "long"
         }), "\n                  <time datetime=\"").concat(fullDate, "\">\n                    ").concat(new Date(person.birthday).toLocaleString("en-US", {
           day: "numeric"
@@ -4818,8 +4818,18 @@ const fetchPeople = async () => {
         cancelBtn.classList.add("btn-cancel");
         formEl.appendChild(cancelBtn);
         document.body.appendChild(formEl);
+        const closeFormBtn = document.createElement('button');
+        closeFormBtn.type = 'button';
+        closeFormBtn.textContent = "x";
+        closeFormBtn.classList.add("close-form");
+        formEl.appendChild(closeFormBtn);
+        document.body.appendChild(formEl);
         cancelBtn.addEventListener("click", async () => {
-          await wait(1000);
+          await wait(300);
+          destroyPopup(formEl);
+        });
+        closeFormBtn.addEventListener("click", async () => {
+          await wait(300);
           destroyPopup(formEl);
         });
         formEl.classList.add("open"); //listeners for the for elem
@@ -4977,7 +4987,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59607" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62696" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
