@@ -329,8 +329,8 @@ strong {
 .formSubmit {
   padding: 2rem 5rem;
   width: 80vw;
+  text-align: center;
   z-index: 5;
-  box-shadow: 1px 1px 3px 3px #333333;
   border-radius: 5px;
 }
 .formSubmit label {
