@@ -77,6 +77,8 @@
     top: 0%;
     border: none;
     width: 1rem;
+    line-height: 40px;
+    font-size: 30px;
   }
   
   .close-form:hover {
@@ -92,6 +94,7 @@
 
 .formSubmit {
   padding: 2rem 5rem;
+  width: 80vw;
   label {
     display: block;
   }

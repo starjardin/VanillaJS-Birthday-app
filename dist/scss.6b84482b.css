@@ -70,6 +70,10 @@ label {
   color: #094067;
 }
 
+select {
+  color: #757575;
+}
+
 @font-face {
   font-family: "Rubik";
   font-weight: 700;
@@ -310,6 +314,8 @@ strong {
   top: 0%;
   border: none;
   width: 1rem;
+  line-height: 40px;
+  font-size: 30px;
 }
 .form.open .close-form:hover {
   transform: scale(1.5);
@@ -322,6 +328,7 @@ strong {
 
 .formSubmit {
   padding: 2rem 5rem;
+  width: 80vw;
   z-index: 5;
   box-shadow: 1px 1px 3px 3px #333333;
   border-radius: 5px;
