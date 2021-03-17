@@ -119,6 +119,19 @@ button span {
   }
 }
 
+@media (max-width: 870px) {
+  #wrapper {
+    display: block;
+    .add.btn-submit, .col {
+      margin-top: 1rem;
+      margin-top: 1rem;
+    }
+    .add.btn-submit {
+      transform: scale(1);
+    }
+  }
+}
+
 .col {
   color: #5F6C7B;
   font-family: Rubik;

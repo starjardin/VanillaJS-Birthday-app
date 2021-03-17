@@ -4,6 +4,7 @@ import format from 'date-fns/format'
 //? This are block hmtl elements
 const container = document.querySelector("#container");
 const addBtn = document.querySelector(".add");
+const cancelButton = document.querySelector(".cancelButton");
 const formEl = document.querySelector(".formSubmit");
 const searchByName = document.querySelector('[name="search"]');
 const searchByMonth = document.querySelector('[name="month"]');
@@ -81,9 +82,7 @@ const fetchPeople = async () => {
                   ${person.dayLeft < 0 ? "Turned" : "Turns"}
                   <strong>${futureAge}</strong> on ${new Date(person.birthday).toLocaleString("en-US", { month: "long" })}
                   <time datetime="${fullDate}">
-                    ${new Date(person.birthday)
-                    .toLocaleString("en-US", 
-                    { day: "numeric" })}<sup>${format(person.birthday, "ko")}</sup>
+                    <span>${format(person.birthday, "ko")}</span>
                   </time> 
                 </div>
               </div>
@@ -125,17 +124,17 @@ const fetchPeople = async () => {
         const newPerson = {
           firstName : form.firstName.value,
           lastName : form.lastName.value,
-          id : form.id.value,
+          id : Date.now(),
           picture : form.picture.value,
           birthday : dateTime,
         }
+        
         //push the new pers to the persons array.
         people = [...people, newPerson]
         container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
         formEl.hidden = true;
         form.reset();
       };
-
       //function display list of people
       const displayPeopleList = () => {
         const html = generatePeopleList(people)
@@ -329,6 +328,9 @@ const fetchPeople = async () => {
       container.addEventListener("listOfPeopleUpdated", initlocalStorage);
       restoreFromLocalStorage();
       addBtn.addEventListener("click", showForm);
+      cancelButton.addEventListener("click", (e) => {
+        (e.currentTarget.closest(".formSubmit")).hidden = true;
+      })
       formEl.addEventListener("submit", addNewPerson);
       searchByName.addEventListener("keyup", searchPeopleByName);
       searchByMonth.addEventListener("change", filterPersonMonth);

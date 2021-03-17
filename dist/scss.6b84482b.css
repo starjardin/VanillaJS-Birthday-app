@@ -211,6 +211,18 @@ button span {
   align-items: flex-end;
 }
 
+@media (max-width: 870px) {
+  #wrapper {
+    display: block;
+  }
+  #wrapper .add.btn-submit, #wrapper .col {
+    margin-top: 1rem;
+    margin-top: 1rem;
+  }
+  #wrapper .add.btn-submit {
+    transform: scale(1);
+  }
+}
 .col {
   color: #5F6C7B;
   font-family: Rubik;
