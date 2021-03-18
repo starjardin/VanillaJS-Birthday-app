@@ -175,21 +175,43 @@ const fetchPeople = async () => {
           //create a new form elem
           const formEl = document.createElement('form');
           formEl.classList.add("form");
+          const personToEditBirthYear = format(personToEdit.birthday, "yyyy");
+          const personToEditBirthMonth = format(personToEdit.birthday, "MM");
+          const personToEditBrithDate = format(personToEdit.birthday, "LL");
+          const personToEditBirthDay = `${personToEditBirthYear}-${personToEditBirthMonth}-${personToEditBrithDate}`
           formEl.insertAdjacentHTML("afterbegin", `
             <h1>
               <b>Edit ${personToEdit.firstName} ${personToEdit.lastName}</b>
             </h1>
             <div class="form-group">
               <label for="firstName">Frist Name</label>
-              <input type="text" class="form-control" name="firstName" id="${personToEdit.id}" value="${personToEdit.firstName}">
+              <input
+                type="text"
+                class="form-control"
+                name="firstName"
+                id="${personToEdit.id }" 
+                value="${ personToEdit.firstName}"
+              >
             </div>
             <div class="form-group">
               <label for="lastName">Last Name</label>
-              <input type="text" class="form-control" id="${personToEdit.id}" name="lastName" value="${personToEdit.lastName}"> 
+              <input 
+                type="text"
+                class="form-control"
+                id="${personToEdit.id }" 
+                name="lastName"
+                value="${ personToEdit.lastName}"
+              >
             </div>
             <div class="form-group">
               <label for="birthday">Birthday</label>
-              <input type="date" id="birthday" class="form-control" name="birthday" id="${personToEdit.birthday}">
+              <input
+                type="date" id="birthday"
+                class="form-control"
+                name="birthday"
+                id="${personToEdit.birthday}"
+                value=${personToEditBirthDay}
+              >
             </div>
             <button type="submit" class="btn btn-danger">Save</button>
           `);
