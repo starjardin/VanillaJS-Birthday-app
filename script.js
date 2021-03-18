@@ -8,6 +8,11 @@ const cancelButton = document.querySelector(".cancelButton");
 const formEl = document.querySelector(".formSubmit");
 const searchByName = document.querySelector('[name="search"]');
 const searchByMonth = document.querySelector('[name="month"]');
+const birthdayInput = document.querySelector('#birthday')
+
+const date = new Date().toISOString().slice(0, 10)
+birthdayInput.max = date
+
 
 //? This is the api url
 const endPoint = 'https://gist.githubusercontent.com/Pinois/e1c72b75917985dc77f5c808e876b67f/raw/b17e08696906abeaac8bc260f57738eaa3f6abb1/birthdayPeople.json';
@@ -120,7 +125,7 @@ const fetchPeople = async () => {
         const form = e.currentTarget;
         const birthDate = form.birthday.value;
         const dateTime = Date.parse(birthDate);
-        //create an obj for the new pers
+        //create an object for the new person
         const newPerson = {
           firstName : form.firstName.value,
           lastName : form.lastName.value,
@@ -130,7 +135,7 @@ const fetchPeople = async () => {
         }
         
         //push the new pers to the persons array.
-        people = [...people, newPerson]
+        people = [ ...people, newPerson ]
         container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
         formEl.hidden = true;
         form.reset();
@@ -147,7 +152,6 @@ const fetchPeople = async () => {
 
       // Reset the list
       const resteInputSearch = e => {
-        formSearch.reset();
         // displayList();
       }
 
@@ -162,7 +166,7 @@ const fetchPeople = async () => {
 
       //edit person popup
       const editPersonPopup = async (id) => {
-        const personToEdit = people.find(person => person.id === id);
+        const personToEdit = people.find(person => person.id == id);
         return new Promise(async function(resolve) {
           //create a new form elem
           const formEl = document.createElement('form');
@@ -183,8 +187,11 @@ const fetchPeople = async () => {
               <label for="birthday">Birthday</label>
               <input type="date" id="birthday" class="form-control" name="birthday" id="${personToEdit.birthday}">
             </div>
-            <button type="submit" class="btn btn-danger">Save changes</button>
+            <button type="submit" class="btn btn-danger">Save</button>
           `);
+          
+          const editBirtdayInput = formEl.querySelector("#birthday")
+          editBirtdayInput.max = date
 
           const cancelBtn = document.createElement('button')
           cancelBtn.type = 'button';
@@ -231,7 +238,7 @@ const fetchPeople = async () => {
             }
 
             //reasign the value of the pers to the value of the new pers
-            const editedPerson = people.find(person => person.id === newPerson.id);
+            const editedPerson = people.find(person => person.id == newPerson.id);
             editedPerson.firstName = newPerson.firstName;
             editedPerson.lastName = newPerson.lastName;
             editedPerson.birthday = newPerson.birthday;
@@ -243,7 +250,6 @@ const fetchPeople = async () => {
           }, {once: true});
         })
       }
-
       //delete person function
       const deletePerson = (e) => {
         const deleteBtn = e.target.matches(".delete");
@@ -257,7 +263,7 @@ const fetchPeople = async () => {
       //delete person popup
         const deletePersonPupup = async (idOfPeopleToDelete) => {
         //find the id of the pers to delete
-        const peopleToDelete = people.find(person => person.id === idOfPeopleToDelete);
+          const peopleToDelete = people.find(person => person.id == idOfPeopleToDelete);
         //create buttons "yes"
         const yesBtn = document.createElement("button");
           yesBtn.type = "button";
@@ -266,8 +272,6 @@ const fetchPeople = async () => {
         const noBtn = document.createElement("button");
           noBtn.type = "button";
           noBtn.textContent = "No";
-          
-          
         const btnPopup = document.createElement('div');
           btnPopup.classList.add('div');
           btnPopup.textContent = `Are you sure you want to delete ${peopleToDelete.firstName} ${peopleToDelete.lastName}`
@@ -288,7 +292,7 @@ const fetchPeople = async () => {
 
         //if yes button gets clicked delete the pers and ddestroy the popup
         yesBtn.addEventListener("click", async e => {
-          people = people.filter(person => person.id !== idOfPeopleToDelete);
+          people = people.filter(person => person.id != idOfPeopleToDelete);
           container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
           await wait(500)
           destroyPopup(btnPopup)
@@ -305,7 +309,7 @@ const fetchPeople = async () => {
         container.innerHTML = myHTML;
       }
 
-      const filterPersonMonth = () => {
+      const filterPersonMonth = (e) => {
         // Get the value of the select input
         const select = searchByMonth.value;
         const filterPerson = people.filter(person => {
@@ -313,7 +317,6 @@ const fetchPeople = async () => {
           const getMonthOfBirth = new Date(person.birthday)
           .toLocaleString("en-US", 
           { month: "long" }); 
-
           // Filter the list by the month of birth
           return getMonthOfBirth.toLowerCase().includes(select.toLowerCase());
         });
