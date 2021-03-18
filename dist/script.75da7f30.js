@@ -4930,19 +4930,13 @@ const fetchPeople = async () => {
       });
     };
 
-    const searchPeopleByName = () => {
+    const filterPeople = () => {
       const input = searchByName.value;
+      const select = searchByMonth.value;
       const inputSearch = input.toLowerCase().trim(); // Filter the list by the firstname or lastname
 
       const searchPerson = people.filter(person => person.lastName.toLowerCase().trim().includes(inputSearch) || person.firstName.toLowerCase().trim().includes(inputSearch));
-      const myHTML = generatePeopleList(searchPerson);
-      container.innerHTML = myHTML;
-    };
-
-    const filterPersonMonth = e => {
-      // Get the value of the select input
-      const select = searchByMonth.value;
-      const filterPerson = people.filter(person => {
+      const filterPerson = searchPerson.filter(person => {
         // Change the month of birth into string
         const getMonthOfBirth = new Date(person.birthday).toLocaleString("en-US", {
           month: "long"
@@ -4965,8 +4959,8 @@ const fetchPeople = async () => {
       e.currentTarget.closest(".formSubmit").hidden = true;
     });
     formEl.addEventListener("submit", addNewPerson);
-    searchByName.addEventListener("keyup", searchPeopleByName);
-    searchByMonth.addEventListener("change", filterPersonMonth);
+    searchByName.addEventListener("keyup", filterPeople);
+    searchByMonth.addEventListener("change", filterPeople);
   }).catch(error => {
     console.log(error);
     container.innerHTML = error;
