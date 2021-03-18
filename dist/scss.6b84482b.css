@@ -340,19 +340,28 @@ strong {
 
 .formSubmit {
   padding: 2rem 5rem;
-  width: 80vw;
+  width: 85vw;
   text-align: center;
+  height: 90vh;
   z-index: 5;
   border-radius: 5px;
 }
 .formSubmit label {
   display: block;
+  text-align: start;
+  text-transform: capitalize;
+  margin-inline: auto;
+  width: 80%;
 }
 .formSubmit input {
-  padding: 0.5rem;
+  padding: 0.7rem;
+  margin-inline: auto;
   border: none;
   box-shadow: 1px 1px 1px 1px #333333;
   border-radius: 5px;
+  text-align: start;
+  display: block;
+  width: 80%;
 }
 .formSubmit button {
   padding: 0.75rem 2rem;

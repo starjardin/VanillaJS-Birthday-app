@@ -4784,7 +4784,12 @@ const fetchPeople = async () => {
 
     const displayPeopleList = () => {
       const html = generatePeopleList(people);
-      container.innerHTML = html;
+
+      if (people) {
+        container.innerHTML = html;
+      } else if (!people) {
+        container.innerHTML = "Loading.....";
+      }
     };
 
     const showForm = () => {
