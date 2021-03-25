@@ -13,7 +13,6 @@
 .form, .div {
 	background: var(--grey);
 	padding: 2rem;
-	border: 3px solid var(--pink);
 	border-radius: 5px;
 	box-shadow: var(--box-shadow);
 	transition: all 0.2s;
@@ -25,6 +24,22 @@
   font-size: large;
   font-weight: bold;
   line-height: 23px;
+  display: flex;
+  background-color: #ffffff;
+  width: 80vw;
+  height: 80vh;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 1;
+  p {
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 40px;
+  }
+  button {
+    padding: 1rem 3.7rem;
+    margin-inline: 1rem;
+  }
 }
 
 .form.open,
@@ -53,7 +68,7 @@
   border: none;
   width: 80vw;
   transform: translate(-50%, -50%);
-  padding-top: 2rem;
+  padding-top: 6rem;
   input {
     background-color: #D8EEFE;
     border: none;
@@ -78,11 +93,8 @@
     border: none;
     width: 1rem;
     line-height: 40px;
-    font-size: 30px;
-  }
-  
-  .close-form:hover {
-    transform: scale(1.5);
+    font-size: 50px;
+    font-weight: 600;
   }
   
   .close-form:active,

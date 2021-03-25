@@ -60,7 +60,7 @@ const fetchPeople = async () => {
           const birthDayDate = new Date(momentYear, month, currentDay);
           let oneDay = 1000 * 60 * 60 * 24;
           const getTheDate = birthDayDate.getTime() - today.getTime();
-          const dayLeft = Math.ceil(getTheDate / oneDay);
+          const dayLeft = Math.floor(getTheDate / oneDay);
           return {
               ...person,
               dayLeft: dayLeft < 0 ? dayLeft + 360 : dayLeft
@@ -164,6 +164,8 @@ const fetchPeople = async () => {
         if (editButton) {
           const button = e.target.closest(".edit");
           const id = button.dataset.id;
+          document.body.style.overflow = "hidden";
+          document.body.style.backgroundColor = "#F7FCFF";
           editPersonPopup(id);
         }
       }
@@ -235,11 +237,15 @@ const fetchPeople = async () => {
 
           cancelBtn.addEventListener("click", async () => {
             await wait(300)
-            destroyPopup(formEl)
+            destroyPopup(formEl);
+            document.body.style.overflow = "scroll";
+            document.body.style.backgroundColor = "#D8EEFE";
           })
           closeFormBtn.addEventListener("click", async () => {
             await wait(300)
-            destroyPopup(formEl)
+            destroyPopup(formEl);
+            document.body.style.overflow = "scroll";
+            document.body.style.backgroundColor = "#D8EEFE";
           })
 
           formEl.classList.add("open");
@@ -251,6 +257,8 @@ const fetchPeople = async () => {
               alert("Hey, what's your birthday")
               return
             }
+            document.body.style.overflow = "scroll";
+            document.body.style.backgroundColor = "#D8EEFE";
 
             const birthDate = new Date(form.birthday.value);
             const birthDateMiliseconds = birthDate.getTime();
@@ -283,6 +291,8 @@ const fetchPeople = async () => {
           //find the id of the pers to delete
           const idOfPeopleToDelete = e.target.closest('.delete').dataset.id;
           deletePersonPupup(idOfPeopleToDelete);
+          document.body.style.overflow = "hidden";
+          document.body.style.backgroundColor = "#F7FCFF";
         }
       };
 
@@ -300,11 +310,14 @@ const fetchPeople = async () => {
           noBtn.textContent = "No";
         const btnPopup = document.createElement('div');
           btnPopup.classList.add('div');
-          btnPopup.textContent = `Are you sure you want to delete ${peopleToDelete.firstName} ${peopleToDelete.lastName}`
-          
+          const text = document.createElement("p");
+          text.textContent = `Are you sure you want to delete ${ peopleToDelete.firstName } ${ peopleToDelete.lastName }`
+          const buttoncontainer = document.createElement("div");
+          buttoncontainer.appendChild(yesBtn);
+          buttoncontainer.appendChild(noBtn);
         //add both "yes" and "no" button to the container
-          btnPopup.appendChild(yesBtn);
-          btnPopup.appendChild(noBtn);
+          btnPopup.appendChild(text);
+          btnPopup.appendChild(buttoncontainer);
         //add the container to the DOM
           document.body.appendChild(btnPopup);
         //open the popup by adding classlist of "open"
@@ -314,6 +327,8 @@ const fetchPeople = async () => {
           noBtn.addEventListener("click", async () => {
             await wait(500)
             destroyPopup(btnPopup)
+            document.body.style.overflow = "scroll";
+            document.body.style.backgroundColor = "#D8EEFE";
         });
 
         //if yes button gets clicked delete the pers and ddestroy the popup
@@ -322,6 +337,8 @@ const fetchPeople = async () => {
           container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
           await wait(500)
           destroyPopup(btnPopup)
+          document.body.style.overflow = "scroll";
+          document.body.style.backgroundColor = "#D8EEFE";
         }, {once: true})
       };
 

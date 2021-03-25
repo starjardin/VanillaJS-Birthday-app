@@ -39,6 +39,9 @@
   cursor: pointer;
   transition: .3s;
   width: 2rem;
+  display: inline-block;
+  width: 28px;
+  height: 20px;
 }
 
 .delete {
@@ -66,8 +69,11 @@
   border-radius: 5px;
   padding: 1rem;
   vertical-align: middle;
-  max-width: 80vw;
+  max-width: 779px;
+  min-height: 139px;
   margin: auto;
+  position: relative;
+  margin-top: 31px !important;
 }
 
 .col {
@@ -85,7 +91,11 @@ button span {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: space-between;
   gap: 1rem;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
 }
 
 .col > input, select {
@@ -95,50 +105,26 @@ button span {
   width: 100%;
 }
 
+.col {
+  color: #5F6C7B;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+}
+
 #wrapper {
   background-color: #D8EEFE;
   padding-inline: 0;
+  padding-bottom: calc(47px - 31px);
   .col {
     flex-direction: column;
-    padding-left: 0;
     justify-content: flex-end;
     align-items: flex-start;
-    font-family: Rubik;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 28px;
-    color: #5F6C7B;
+    padding-left: 0;
     button {
       margin: 0;
     }
   }
-  .col.btn-container {
-    padding-inline: 0;
-    align-items: flex-end;
-  }
-}
-
-@media (max-width: 870px) {
-  #wrapper {
-    display: block;
-    .add.btn-submit, .col {
-      margin-top: 1rem;
-      margin-top: 1rem;
-    }
-    .add.btn-submit {
-      transform: scale(1);
-    }
-  }
-}
-
-.col {
-  color: #5F6C7B;
-  font-family: Rubik;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 28px;
 }
 
 strong {
@@ -147,9 +133,19 @@ strong {
   font-weight: 500;
 }
 
-@media (max-width: 740px) {
+@media (max-width: 779px) {
   .btn-container {
     align-items: flex-start;
     margin-top: 1rem;
+  }
+
+  #wrapper {
+    display: block;
+    .add.btn-submit, .col {
+      margin-top: 1rem;
+    }
+    .add.btn-submit {
+      transform: scale(1);
+    }
   }
 }

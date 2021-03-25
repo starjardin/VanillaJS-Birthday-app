@@ -13,11 +13,14 @@ button {
   color: #000000;
 }
 
-h2 {
-  margin-block: 2rem;
+h2, h4, .col-md, select, input {
   font-family: Rubik;
   font-style: normal;
-  font-weight: bold;
+}
+
+h2 {
+  margin-bottom: 42px;
+  margin-top: calc(63px - 16px);
   font-size: 64px;
   line-height: 76px;
   color: #094067;
@@ -25,8 +28,6 @@ h2 {
 
 h4 {
   color: #000000;
-  font-family: Rubik;
-  font-style: normal;
   font-weight: 500;
   font-size: 36px;
   line-height: 43px;
@@ -34,11 +35,9 @@ h4 {
 
 
 .col-md {
-  font-family: Rubik;
-  font-style: normal;
   font-weight: 500;
-  font-size: 26px;
-  line-height: 30px;
+  font-size: 24px;
+  line-height: 28px;
   color : #5F6C7B;
 }
 
@@ -51,6 +50,19 @@ label {
   color: #094067;
 }
 
-select {
+select, input {
   color:#757575;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+@media (min-width: 779px) {
+  .col-md {
+    position: absolute;
+    left: calc(174px);
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
