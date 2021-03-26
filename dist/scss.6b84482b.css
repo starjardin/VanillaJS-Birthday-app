@@ -75,6 +75,15 @@ select, input {
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
+  -webkit-appearance: none;
+}
+
+select {
+  background-image: url("/chevron-down.c9da7b99.svg");
+  background-position-y: center;
+  background-position-x: 80%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 @media (min-width: 779px) {
@@ -141,7 +150,6 @@ select, input {
   border: none;
   cursor: pointer;
   transition: 0.3s;
-  width: 2rem;
   display: inline-block;
   width: 28px;
   height: 20px;
@@ -170,10 +178,11 @@ select, input {
 .row {
   background-color: #fffffe;
   border-radius: 5px;
-  padding: 1rem;
+  padding-inline-start: 43px;
+  padding-block: 22px;
   vertical-align: middle;
-  max-width: 779px;
   min-height: 139px;
+  margin-inline: 0;
   margin: auto;
   position: relative;
   margin-top: 31px !important;
@@ -250,6 +259,15 @@ strong {
   }
   #wrapper .add.btn-submit {
     transform: scale(1);
+  }
+
+  .col-sm.picture {
+    padding-block-start: 43px;
+  }
+}
+@media (min-width: 779px) {
+  .row {
+    width: 779px;
   }
 }
 .form, .div {

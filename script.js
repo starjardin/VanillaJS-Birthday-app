@@ -78,7 +78,7 @@ const fetchPeople = async () => {
           const futureAge = today.getFullYear() - year + 1;
          return `
             <div class="row mt-3" data-id="${person.id}">
-              <div class="col-sm">
+              <div class="col-sm picture">
                 <img src="${person.picture}">
               </div>
               <div class="col-md">

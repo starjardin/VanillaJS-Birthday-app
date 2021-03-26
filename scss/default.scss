@@ -56,6 +56,15 @@ select, input {
   font-weight: 500;
   font-size: 18px;
   line-height: 21px;
+  -webkit-appearance: none;
+}
+
+select {
+  background-image: url('../icons/chevron-down.svg');
+  background-position-y: center;
+  background-position-x: 80%;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 @media (min-width: 779px) {
