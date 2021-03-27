@@ -4695,6 +4695,7 @@ const formEl = document.querySelector(".formSubmit");
 const searchByName = document.querySelector('[name="search"]');
 const searchByMonth = document.querySelector('[name="month"]');
 const birthdayInput = document.querySelector('#birthday');
+const cancelAddPerson = document.querySelector(".close-form");
 const date = new Date().toISOString().slice(0, 10);
 birthdayInput.max = date; //? This is the api url
 
@@ -4794,10 +4795,6 @@ const fetchPeople = async () => {
 
     const showForm = () => {
       formEl.removeAttribute("hidden");
-    }; // Reset the list
-
-
-    const resteInputSearch = e => {// displayList();
     };
 
     const editPerson = e => {
@@ -4834,7 +4831,7 @@ const fetchPeople = async () => {
         document.body.appendChild(formEl);
         const closeFormBtn = document.createElement('button');
         closeFormBtn.type = 'button';
-        closeFormBtn.textContent = "x";
+        closeFormBtn.textContent = "";
         closeFormBtn.classList.add("close-form");
         formEl.appendChild(closeFormBtn);
         document.body.appendChild(formEl);
@@ -4972,13 +4969,21 @@ const fetchPeople = async () => {
     container.addEventListener("listOfPeopleUpdated", displayPeopleList);
     container.addEventListener("listOfPeopleUpdated", initlocalStorage);
     restoreFromLocalStorage();
-    addBtn.addEventListener("click", showForm);
+    addBtn.addEventListener("click", () => {
+      document.body.style.overflow = "hidden";
+      showForm();
+    });
     cancelButton.addEventListener("click", e => {
       e.currentTarget.closest(".formSubmit").hidden = true;
+      document.body.style.overflow = "scroll";
     });
     formEl.addEventListener("submit", addNewPerson);
     searchByName.addEventListener("keyup", filterPeople);
     searchByMonth.addEventListener("change", filterPeople);
+    cancelAddPerson.addEventListener("click", () => {
+      formEl.hidden = true;
+      document.body.style.overflow = "scroll";
+    });
   }).catch(error => {
     console.log(error);
     container.innerHTML = error;
@@ -5014,7 +5019,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53803" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58434" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

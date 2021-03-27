@@ -1,23 +1,32 @@
 @import "fonts";
 
 .header {
-   .row {
+  .row {
     background-color: #D8EEFE;
+    padding: 0;
+    margin: 0;
+  }
+  .col {
     padding-inline: 0;
-   }
-   .col {
-     padding-inline: 0;
-   }
+  }
+}
+
+.btn-add-container {
+  margin: 0;
+  padding-inline-end: 0;
 }
 
 .add {
+  width: 100%;
+}
+
+.add, .btn-submit {
   background-color: #EF4565;
   border-radius: 5px;
   color: #ffffff;
   padding: .8rem;
   margin: 0 0 .5rem 0;
   border: none;
-  width: 100%;
 }
 
 .add:hover {
@@ -34,7 +43,7 @@
 .edit {
   background-repeat: no-repeat;
   background-position: center center;
-  background-size: contain;
+  background-size: cover;
   border: none;
   cursor: pointer;
   transition: .3s;
@@ -69,8 +78,6 @@
   padding-inline-start: 43px;
   padding-block: 22px;
   vertical-align: middle;
-  min-height: 139px;
-  margin-inline: 0;
   margin: auto;
   position: relative;
   margin-top: 31px !important;
@@ -87,35 +94,36 @@ button span {
 }
 
 .buttons-container {
-  color : #5F6C7B;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 28px;
 }
 
-.col > input, select {
-  padding : .7rem;
-  border: none;
-  border-radius: 5px;
-  width: 100%;
+.col-md {
+  width: auto;
 }
 
-.col {
+.col, .buttons-container, .col-md {
   color: #5F6C7B;
   font-weight: 500;
   font-size: 24px;
   line-height: 28px;
 }
 
+.col > input, select {
+  padding: 15px 5px 15px 20px;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+}
+
 #wrapper {
   background-color: #D8EEFE;
   padding-inline: 0;
   padding-bottom: calc(47px - 31px);
+  margin-top: 0 !important;
   .col {
     flex-direction: column;
     justify-content: flex-end;
@@ -148,14 +156,15 @@ strong {
       transform: scale(1);
     }
   }
-  
-  .col-sm.picture {
-    padding-block-start: 43px;
-  }
 }
 
 @media (min-width: 779px) {
-  .row {
-    width: 779px;
+  div.row {
+    padding-block: 26px;
+  }
+  
+  .btn-container {
+    padding-inline-end: 0;
+    margin-inline-end: 27px;
   }
 }

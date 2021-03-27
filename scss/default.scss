@@ -18,12 +18,15 @@ h2, h4, .col-md, select, input {
   font-style: normal;
 }
 
+h2, label {
+  color: #094067;
+}
+
 h2 {
   margin-bottom: 42px;
   margin-top: calc(63px - 16px);
   font-size: 64px;
   line-height: 76px;
-  color: #094067;
 }
 
 h4 {
@@ -33,21 +36,9 @@ h4 {
   line-height: 43px;
 }
 
-
-.col-md {
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 28px;
-  color : #5F6C7B;
-}
-
 img {
   width: 120px;
   border-radius: 5px;
-}
-
-label {
-  color: #094067;
 }
 
 select, input {
@@ -61,17 +52,23 @@ select, input {
 
 select {
   background-image: url('../icons/chevron-down.svg');
-  background-position-y: center;
-  background-position-x: 80%;
-  background-position: center;
   background-repeat: no-repeat;
+  background-position-x: calc(100% - 23px);
+  background-position-y: center;
+  background-size: 8%;
 }
 
 @media (min-width: 779px) {
   .col-md {
+    display: inline-block;
     position: absolute;
-    left: calc(174px);
+    left: 174px;
     top: 50%;
     transform: translateY(-50%);
+    margin-left: 39px;
+  }
+  body {
+    max-width: 779px;
+    margin: auto;
   }
 }
