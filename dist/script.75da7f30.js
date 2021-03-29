@@ -4745,7 +4745,7 @@ const fetchPeople = async () => {
         const getTheDate = birthDayDate.getTime() - today.getTime();
         const dayLeft = Math.floor(getTheDate / oneDay);
         return { ...person,
-          dayLeft: dayLeft < 0 ? dayLeft + 360 : dayLeft
+          dayLeft: dayLeft < 0 ? dayLeft + 365 : dayLeft
         };
       });
       return newPeopleArr.sort((a, b) => a.dayLeft - b.dayLeft).map(person => {
@@ -4756,7 +4756,7 @@ const fetchPeople = async () => {
         const futureAge = today.getFullYear() - year + 1;
         return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col-sm picture\">\n                <img src=\"").concat(person.picture, "\">\n              </div>\n              <div class=\"col-md\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(person.dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
           month: "long"
-        }), "\n                  <time datetime=\"").concat(fullDate, "\">\n                    <span>").concat((0, _format.default)(person.birthday, "do"), "</span>\n                  </time> \n                </div>\n              </div>\n\n              <div class=\"col-sm btn-container buttons-container\">\n                <div>\n                  ").concat(person.dayLeft < 0 ? "In ".concat(person.dayLeft + 360, " days") : person.dayLeft === 0 ? "Today" : person.dayLeft === 1 ? "Tomorrow" : "In ".concat(person.dayLeft, " days"), "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
+        }), "\n                  <time datetime=\"").concat(fullDate, "\">\n                    <span>").concat((0, _format.default)(person.birthday, "do"), "</span>\n                  </time> \n                </div>\n              </div>\n\n              <div class=\"col-sm btn-container buttons-container\">\n                <div>\n                  ").concat(person.dayLeft < 0 ? "In ".concat(person.dayLeft + 365, " days") : person.dayLeft === 0 ? "Today" : person.dayLeft === 1 ? "Tomorrow" : "In ".concat(person.dayLeft, " days"), "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
       }).join("");
     };
 

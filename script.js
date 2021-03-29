@@ -62,7 +62,7 @@ const fetchPeople = async () => {
           const dayLeft = Math.floor(getTheDate / oneDay);
           return {
               ...person,
-              dayLeft: dayLeft < 0 ? dayLeft + 360 : dayLeft
+              dayLeft: dayLeft < 0 ? dayLeft + 365 : dayLeft
             }
           }
         )
@@ -93,7 +93,7 @@ const fetchPeople = async () => {
 
               <div class="col-sm btn-container buttons-container">
                 <div>
-                  ${person.dayLeft < 0 ? `In ${person.dayLeft + 360} days` :
+                  ${person.dayLeft < 0 ? `In ${person.dayLeft + 365} days` :
                   person.dayLeft === 0 ? "Today" :
                   person.dayLeft === 1 ?  "Tomorrow" :
                   `In ${person.dayLeft} days`
