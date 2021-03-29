@@ -57,7 +57,8 @@ h4 {
 }
 
 img {
-  width: 120px;
+  width: 92px;
+  height: 94px;
   border-radius: 5px;
 }
 
@@ -82,15 +83,15 @@ select {
   .col-md {
     display: inline-block;
     position: absolute;
-    left: 174px;
+    left: calc(47px + 92px - 15px);
     top: 50%;
     transform: translateY(-50%);
     margin-left: 39px;
   }
 
-  body {
+  .container {
     max-width: 779px;
-    margin: auto;
+    padding: 0;
   }
 }
 @font-face {
@@ -129,13 +130,17 @@ select {
 
 .add {
   width: 100%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
 }
 
 .add, .btn-submit {
   background-color: #EF4565;
   border-radius: 5px;
   color: #ffffff;
-  padding: 0.8rem;
+  padding: 15px;
   margin: 0 0 0.5rem 0;
   border: none;
 }
@@ -143,7 +148,6 @@ select {
 .add:hover {
   background-color: #272343;
   cursor: pointer;
-  transform: scale(1.1);
 }
 
 [for=search], [for=month] {
@@ -270,12 +274,16 @@ strong {
 }
 @media (min-width: 779px) {
   div.row {
-    padding-block: 26px;
+    padding-block: 23px;
   }
 
   .btn-container {
     padding-inline-end: 0;
     margin-inline-end: 27px;
+  }
+
+  .picture {
+    padding-left: 0;
   }
 }
 .form, .div {
@@ -348,7 +356,7 @@ strong {
   transform: none;
   background-color: #ffffff;
   border: none;
-  width: 80vw;
+  width: 90vw;
   transform: translate(-50%, -50%);
   padding-top: 6rem;
 }
@@ -458,6 +466,11 @@ strong {
     right: 63px;
     top: 54px;
     margin: 0;
+  }
+}
+@media (min-width: 980px) {
+  .form.open {
+    width: 80vw;
   }
 }
 

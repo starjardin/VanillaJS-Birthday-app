@@ -37,7 +37,8 @@ h4 {
 }
 
 img {
-  width: 120px;
+  width: 92px;
+  height: 94px;
   border-radius: 5px;
 }
 
@@ -62,13 +63,14 @@ select {
   .col-md {
     display: inline-block;
     position: absolute;
-    left: 174px;
+    left: calc(47px + 92px - 15px);
     top: 50%;
     transform: translateY(-50%);
     margin-left: 39px;
   }
-  body {
+  
+  .container {
     max-width: 779px;
-    margin: auto;
+    padding: 0;
   }
 }

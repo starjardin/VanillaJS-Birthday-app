@@ -18,13 +18,17 @@
 
 .add {
   width: 100%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21px;
 }
 
 .add, .btn-submit {
   background-color: #EF4565;
   border-radius: 5px;
   color: #ffffff;
-  padding: .8rem;
+  padding: 15px;
   margin: 0 0 .5rem 0;
   border: none;
 }
@@ -32,7 +36,6 @@
 .add:hover {
   background-color: #272343;
   cursor: pointer;
-  transform: scale(1.1);
 }
 
 [for="search"], [for="month"] {
@@ -160,11 +163,15 @@ strong {
 
 @media (min-width: 779px) {
   div.row {
-    padding-block: 26px;
+    padding-block: 23px;
   }
   
   .btn-container {
     padding-inline-end: 0;
     margin-inline-end: 27px;
+  }
+  
+  .picture {
+    padding-left: 0;
   }
 }

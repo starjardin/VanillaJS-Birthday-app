@@ -66,7 +66,7 @@
   transform: none;
   background-color: #ffffff;
   border: none;
-  width: 80vw;
+  width: 90vw;
   transform: translate(-50%, -50%);
   padding-top: 6rem;
   input, label {
@@ -183,5 +183,11 @@
     right: 63px;
     top: 54px;
     margin: 0;
+  }
+}
+
+@media (min-width: 980px) {
+  .form.open {
+    width: 80vw;
   }
 }

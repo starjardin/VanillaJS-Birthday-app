@@ -4700,8 +4700,6 @@ const date = new Date().toISOString().slice(0, 10);
 birthdayInput.max = date; //? This is the api url
 
 const endPoint = 'https://gist.githubusercontent.com/Pinois/e1c72b75917985dc77f5c808e876b67f/raw/b17e08696906abeaac8bc260f57738eaa3f6abb1/birthdayPeople.json';
-const year = document.querySelector(".year");
-year.innerHTML = new Date().getFullYear();
 
 function wait(ms = 0) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -4983,7 +4981,8 @@ const fetchPeople = async () => {
     cancelAddPerson.addEventListener("click", () => {
       formEl.hidden = true;
       document.body.style.overflow = "scroll";
-    });
+    }); //window.addEventListener("keyup", () => {
+    //})
   }).catch(error => {
     console.log(error);
     container.innerHTML = error;
@@ -5019,7 +5018,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58434" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51128" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
