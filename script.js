@@ -137,6 +137,7 @@ const fetchPeople = async () => {
         people = [ ...people, newPerson ]
         container.dispatchEvent(new CustomEvent('listOfPeopleUpdated'));
         formEl.hidden = true;
+        document.body.style.overflow = "scroll"
         form.reset();
       };
       //function display list of people
