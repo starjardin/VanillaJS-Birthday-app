@@ -52,9 +52,8 @@ const fetchPeople = async () => {
       const generatePeopleList = (people) => {
         const today = new Date()
         const newPeopleArr = people.map(person => {
-          const currentDate = new Date(person.birthday);
-          const currentDay = currentDate.getDate();
-          const month = currentDate.getMonth();
+          const currentDay = format((person.birthday), "dd");
+          const month = format((person.birthday), "LL");
           const momentYear = today.getFullYear();
           const birthDayDate = new Date(momentYear, month, currentDay);
           let oneDay = 1000 * 60 * 60 * 24;
@@ -71,9 +70,9 @@ const fetchPeople = async () => {
           .sort((a, b) => (a.dayLeft - b.dayLeft))
           .map(person => {
           const currentDate = new Date(person.birthday);
-          const month = currentDate.getMonth();
+          const month = format((person.birthday), "LL");
           const year = currentDate.getFullYear();
-          const fullDate = `${ format(person.birthday, "ko") } / ${ month + 1 } / ${ year }`;
+          const fullDate = `${ format(person.birthday, "do") } / ${ month + 1 } / ${ year }`;
           const futureAge = today.getFullYear() - year + 1;
          return `
             <div class="row mt-3" data-id="${person.id}">

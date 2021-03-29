@@ -4736,9 +4736,8 @@ const fetchPeople = async () => {
     const generatePeopleList = people => {
       const today = new Date();
       const newPeopleArr = people.map(person => {
-        const currentDate = new Date(person.birthday);
-        const currentDay = currentDate.getDate();
-        const month = currentDate.getMonth();
+        const currentDay = (0, _format.default)(person.birthday, "dd");
+        const month = (0, _format.default)(person.birthday, "LL");
         const momentYear = today.getFullYear();
         const birthDayDate = new Date(momentYear, month, currentDay);
         let oneDay = 1000 * 60 * 60 * 24;
@@ -4750,9 +4749,9 @@ const fetchPeople = async () => {
       });
       return newPeopleArr.sort((a, b) => a.dayLeft - b.dayLeft).map(person => {
         const currentDate = new Date(person.birthday);
-        const month = currentDate.getMonth();
+        const month = (0, _format.default)(person.birthday, "LL");
         const year = currentDate.getFullYear();
-        const fullDate = "".concat((0, _format.default)(person.birthday, "ko"), " / ").concat(month + 1, " / ").concat(year);
+        const fullDate = "".concat((0, _format.default)(person.birthday, "do"), " / ").concat(month + 1, " / ").concat(year);
         const futureAge = today.getFullYear() - year + 1;
         return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col-sm picture\">\n                <img src=\"").concat(person.picture, "\">\n              </div>\n              <div class=\"col-md\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(person.dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
           month: "long"
@@ -5021,7 +5020,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51128" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57725" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
