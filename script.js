@@ -86,7 +86,7 @@ const fetchPeople = async () => {
                   ${person.dayLeft < 0 ? "Turned" : "Turns"}
                   <strong>${futureAge}</strong> on ${new Date(person.birthday).toLocaleString("en-US", { month: "long" })}
                   <time datetime="${fullDate}">
-                    <span>${format(person.birthday, "ko")}</span>
+                    <span>${format(person.birthday, "do")}</span>
                   </time> 
                 </div>
               </div>
@@ -174,8 +174,13 @@ const fetchPeople = async () => {
           formEl.classList.add("form");
           const personToEditBirthYear = format(personToEdit.birthday, "yyyy");
           const personToEditBirthMonth = format(personToEdit.birthday, "MM");
-          const personToEditBrithDate = format(personToEdit.birthday, "LL");
-          const personToEditBirthDay = `${personToEditBirthYear}-${personToEditBirthMonth}-${personToEditBrithDate}`
+          const personToEditBrithDate = format(personToEdit.birthday, "dd");
+          const personToEditBirthDay = `${ personToEditBirthYear }-${ personToEditBirthMonth }-${ personToEditBrithDate }`
+          
+          console.log(personToEditBirthDay);
+          console.log(personToEditBirthMonth);
+          console.log(personToEditBrithDate);
+          
           formEl.insertAdjacentHTML("afterbegin", `
             <h1>
               <b>Edit ${personToEdit.firstName} ${personToEdit.lastName}</b>
@@ -377,10 +382,6 @@ const fetchPeople = async () => {
         formEl.hidden = true;
         document.body.style.overflow = "scroll"
       })
-      
-      //window.addEventListener("keyup", () => {
-        
-      //})
       
     }).catch(error => {
       console.log(error);
