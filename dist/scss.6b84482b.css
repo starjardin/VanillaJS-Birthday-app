@@ -47,6 +47,7 @@ h2 {
   margin-top: calc(63px - 16px);
   font-size: 64px;
   line-height: 76px;
+  text-transform: capitalize;
 }
 
 h4 {
@@ -457,7 +458,6 @@ strong {
     display: block;
     text-align: start;
     text-transform: capitalize;
-    margin-inline: auto;
     width: 264px;
     box-sizing: border-box;
   }

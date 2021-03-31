@@ -4696,6 +4696,8 @@ const searchByName = document.querySelector('[name="search"]');
 const searchByMonth = document.querySelector('[name="month"]');
 const birthdayInput = document.querySelector('#birthday');
 const cancelAddPerson = document.querySelector(".close-form");
+const header = document.querySelector(".header");
+const headerText = header.querySelector(".row");
 const date = new Date().toISOString().slice(0, 10);
 birthdayInput.max = date; //? This is the api url
 
@@ -4751,8 +4753,8 @@ const fetchPeople = async () => {
         const currentDate = new Date(person.birthday);
         const month = (0, _format.default)(person.birthday, "LL");
         const year = currentDate.getFullYear();
-        const fullDate = "".concat((0, _format.default)(person.birthday, "do"), " / ").concat(month + 1, " / ").concat(year);
-        const futureAge = today.getFullYear() - year + 1;
+        const fullDate = "".concat((0, _format.default)(person.birthday, "do"), " / ").concat(month, " / ").concat(year);
+        const futureAge = today.getFullYear() - year;
         return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col-sm picture\">\n                <img src=\"").concat(person.picture, "\">\n              </div>\n              <div class=\"col-md\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(person.dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
           month: "long"
         }), "\n                  <time datetime=\"").concat(fullDate, "\">\n                    <span>").concat((0, _format.default)(person.birthday, "do"), "</span>\n                  </time> \n                </div>\n              </div>\n\n              <div class=\"col-sm btn-container buttons-container\">\n                <div>\n                  ").concat(person.dayLeft < 0 ? "In ".concat(person.dayLeft + 365, " days") : person.dayLeft === 0 ? "Today" : person.dayLeft === 1 ? "Tomorrow" : "In ".concat(person.dayLeft, " days"), "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
@@ -4801,6 +4803,7 @@ const fetchPeople = async () => {
       if (editButton) {
         const button = e.target.closest(".edit");
         const id = button.dataset.id;
+        headerText.style.backgroundColor = "#F7FCFF";
         document.body.style.overflow = "hidden";
         document.body.style.backgroundColor = "#F7FCFF";
         editPersonPopup(id);
@@ -4818,10 +4821,7 @@ const fetchPeople = async () => {
         const personToEditBirthMonth = (0, _format.default)(personToEdit.birthday, "MM");
         const personToEditBrithDate = (0, _format.default)(personToEdit.birthday, "dd");
         const personToEditBirthDay = "".concat(personToEditBirthYear, "-").concat(personToEditBirthMonth, "-").concat(personToEditBrithDate);
-        console.log(personToEditBirthDay);
-        console.log(personToEditBirthMonth);
-        console.log(personToEditBrithDate);
-        formEl.insertAdjacentHTML("afterbegin", "\n            <h1>\n              <b>Edit ".concat(personToEdit.firstName, " ").concat(personToEdit.lastName, "</b>\n            </h1>\n            <div class=\"form-group\">\n              <label for=\"firstName\">Frist Name</label>\n              <input\n                type=\"text\"\n                class=\"form-control\"\n                name=\"firstName\"\n                id=\"").concat(personToEdit.id, "\" \n                value=\"").concat(personToEdit.firstName, "\"\n              >\n            </div>\n            <div class=\"form-group\">\n              <label for=\"lastName\">Last Name</label>\n              <input \n                type=\"text\"\n                class=\"form-control\"\n                id=\"").concat(personToEdit.id, "\" \n                name=\"lastName\"\n                value=\"").concat(personToEdit.lastName, "\"\n              >\n            </div>\n            <div class=\"form-group\">\n              <label for=\"birthday\">Birthday</label>\n              <input\n                type=\"date\" id=\"birthday\"\n                class=\"form-control\"\n                name=\"birthday\"\n                id=\"").concat(personToEdit.birthday, "\"\n                value=").concat(personToEditBirthDay, "\n              >\n            </div>\n            <button type=\"submit\" class=\"btn btn-danger\">Save</button>\n          "));
+        formEl.insertAdjacentHTML("afterbegin", "\n            <h1>\n              <b>Edit ".concat(personToEdit.firstName, " ").concat(personToEdit.lastName, "</b>\n            </h1>\n            <div class=\"form-group\">\n              <label for=\"firstName\">Frist Name</label>\n              <input\n                type=\"text\"\n                class=\"form-control\"\n                name=\"firstName\"\n                id=\"").concat(personToEdit.id, "\" \n                value=\"").concat(personToEdit.firstName, "\"\n              >\n            </div>\n            <div class=\"form-group\">\n              <label for=\"lastName\">Last Name</label>\n              <input \n                type=\"text\"\n                class=\"form-control\"\n                id=\"").concat(personToEdit.id, "\" \n                name=\"lastName\"\n                value=\"").concat(personToEdit.lastName, "\"\n              >\n            </div>\n            <div class=\"form-group\">\n              <label for=\"birthday\">Birthday</label>\n              <input\n                type=\"date\" id=\"birthday\"\n                class=\"form-control\"\n                name=\"birthday\"\n                id=\"").concat(personToEdit.birthday, "\"\n                value=").concat(personToEditBirthDay, "\n              >\n            </div>\n            <button type=\"submit\" class=\"btn btn-danger\">Save changes</button>\n          "));
         const editBirtdayInput = formEl.querySelector("#birthday");
         editBirtdayInput.max = date;
         const cancelBtn = document.createElement('button');
@@ -4841,12 +4841,14 @@ const fetchPeople = async () => {
           destroyPopup(formEl);
           document.body.style.overflow = "scroll";
           document.body.style.backgroundColor = "#D8EEFE";
+          headerText.style.backgroundColor = "#D8EEFE";
         });
         closeFormBtn.addEventListener("click", async () => {
           await wait(300);
           destroyPopup(formEl);
           document.body.style.overflow = "scroll";
           document.body.style.backgroundColor = "#D8EEFE";
+          headerText.style.backgroundColor = "#D8EEFE";
         });
         formEl.classList.add("open"); //listeners for the for elem
 
@@ -4897,6 +4899,7 @@ const fetchPeople = async () => {
         deletePersonPupup(idOfPeopleToDelete);
         document.body.style.overflow = "hidden";
         document.body.style.backgroundColor = "#F7FCFF";
+        headerText.style.backgroundColor = "#F7FCFF";
       }
     }; //delete person popup
 
@@ -4931,6 +4934,7 @@ const fetchPeople = async () => {
         await wait(500);
         destroyPopup(btnPopup);
         document.body.style.overflow = "scroll";
+        headerText.style.backgroundColor = "#D8EEFE";
         document.body.style.backgroundColor = "#D8EEFE";
       }); //if yes button gets clicked delete the pers and ddestroy the popup
 
@@ -4940,6 +4944,7 @@ const fetchPeople = async () => {
         await wait(500);
         destroyPopup(btnPopup);
         document.body.style.overflow = "scroll";
+        headerText.style.backgroundColor = "#D8EEFE";
         document.body.style.backgroundColor = "#D8EEFE";
       }, {
         once: true
@@ -5020,7 +5025,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57725" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54487" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

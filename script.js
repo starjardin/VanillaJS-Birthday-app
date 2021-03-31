@@ -9,7 +9,9 @@ const formEl = document.querySelector(".formSubmit");
 const searchByName = document.querySelector('[name="search"]');
 const searchByMonth = document.querySelector('[name="month"]');
 const birthdayInput = document.querySelector('#birthday')
-const cancelAddPerson = document.querySelector(".close-form")
+const cancelAddPerson = document.querySelector(".close-form");
+const header = document.querySelector(".header");
+const headerText = header.querySelector(".row");
 
 const date = new Date().toISOString().slice(0, 10)
 birthdayInput.max = date
@@ -72,8 +74,8 @@ const fetchPeople = async () => {
           const currentDate = new Date(person.birthday);
           const month = format((person.birthday), "LL");
           const year = currentDate.getFullYear();
-          const fullDate = `${ format(person.birthday, "do") } / ${ month + 1 } / ${ year }`;
-          const futureAge = today.getFullYear() - year + 1;
+          const fullDate = `${ format(person.birthday, "do") } / ${ month } / ${ year }`;
+          const futureAge = today.getFullYear() - year;
          return `
             <div class="row mt-3" data-id="${person.id}">
               <div class="col-sm picture">
@@ -158,6 +160,7 @@ const fetchPeople = async () => {
         if (editButton) {
           const button = e.target.closest(".edit");
           const id = button.dataset.id;
+          headerText.style.backgroundColor = "#F7FCFF"
           document.body.style.overflow = "hidden";
           document.body.style.backgroundColor = "#F7FCFF";
           editPersonPopup(id);
@@ -175,11 +178,6 @@ const fetchPeople = async () => {
           const personToEditBirthMonth = format(personToEdit.birthday, "MM");
           const personToEditBrithDate = format(personToEdit.birthday, "dd");
           const personToEditBirthDay = `${ personToEditBirthYear }-${ personToEditBirthMonth }-${ personToEditBrithDate }`
-          
-          console.log(personToEditBirthDay);
-          console.log(personToEditBirthMonth);
-          console.log(personToEditBrithDate);
-          
           formEl.insertAdjacentHTML("afterbegin", `
             <h1>
               <b>Edit ${personToEdit.firstName} ${personToEdit.lastName}</b>
@@ -214,7 +212,7 @@ const fetchPeople = async () => {
                 value=${personToEditBirthDay}
               >
             </div>
-            <button type="submit" class="btn btn-danger">Save</button>
+            <button type="submit" class="btn btn-danger">Save changes</button>
           `);
           
           const editBirtdayInput = formEl.querySelector("#birthday")
@@ -239,12 +237,14 @@ const fetchPeople = async () => {
             destroyPopup(formEl);
             document.body.style.overflow = "scroll";
             document.body.style.backgroundColor = "#D8EEFE";
+            headerText.style.backgroundColor = "#D8EEFE"
           })
           closeFormBtn.addEventListener("click", async () => {
             await wait(300)
             destroyPopup(formEl);
             document.body.style.overflow = "scroll";
             document.body.style.backgroundColor = "#D8EEFE";
+            headerText.style.backgroundColor = "#D8EEFE"
           })
 
           formEl.classList.add("open");
@@ -292,6 +292,7 @@ const fetchPeople = async () => {
           deletePersonPupup(idOfPeopleToDelete);
           document.body.style.overflow = "hidden";
           document.body.style.backgroundColor = "#F7FCFF";
+          headerText.style.backgroundColor = "#F7FCFF"
         }
       };
 
@@ -327,6 +328,7 @@ const fetchPeople = async () => {
             await wait(500)
             destroyPopup(btnPopup)
             document.body.style.overflow = "scroll";
+            headerText.style.backgroundColor = "#D8EEFE"
             document.body.style.backgroundColor = "#D8EEFE";
         });
 
@@ -337,6 +339,7 @@ const fetchPeople = async () => {
           await wait(500)
           destroyPopup(btnPopup)
           document.body.style.overflow = "scroll";
+          headerText.style.backgroundColor = "#D8EEFE"
           document.body.style.backgroundColor = "#D8EEFE";
         }, {once: true})
       };

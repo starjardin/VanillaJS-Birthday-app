@@ -37,13 +37,6 @@
   <a href="https://github.com/starjardin/birthday-app">
       Code
   </a>
-
-1. I learned something while I was doing this project, It was tough but the most important thing is that I learned a lot of subjects, methode about time especially. I am not sure but It seems that we can not assign (default export) variable to an imported file. I imported a globale variable by default but it gives bugs, so I needed change that into a name-export variable. We need to be carefull to choose very well when to use that.
-
-1. Well, this one was not that easy but if I had to say a thing, the most challenging part was to deal with the dates, tranforming time stamps into a real readable human date and then sorting it from to the nearest date, nightmare, although I liked it. It seemed as if I was playing puzzles.
-
-1. Nothing much to say, the project was challenging which is pretty nice for training, I liked it.
-
 ### Built With
 
 -   [Bootstrap](https://https://getbootstrap.com/docs/4.5/getting-started/introduction/)
