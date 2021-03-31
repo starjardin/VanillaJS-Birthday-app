@@ -4744,9 +4744,11 @@ const fetchPeople = async () => {
         const birthDayDate = new Date(momentYear, month, currentDay);
         let oneDay = 1000 * 60 * 60 * 24;
         const getTheDate = birthDayDate.getTime() - today.getTime();
-        const dayLeft = Math.floor(getTheDate / oneDay);
+        const dayLeft = Math.floor(getTheDate / oneDay) - 30;
+        console.log();
         return { ...person,
-          dayLeft: dayLeft < 0 ? dayLeft + 365 : dayLeft
+          dayLeft: dayLeft < 0 ? dayLeft + 365 : dayLeft,
+          getTheDate: dayLeft
         };
       });
       return newPeopleArr.sort((a, b) => a.dayLeft - b.dayLeft).map(person => {
@@ -4755,7 +4757,7 @@ const fetchPeople = async () => {
         const year = currentDate.getFullYear();
         const fullDate = "".concat((0, _format.default)(person.birthday, "do"), " / ").concat(month, " / ").concat(year);
         const futureAge = today.getFullYear() - year;
-        return "\n            <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n              <div class=\"col-sm picture\">\n                <img src=\"").concat(person.picture, "\">\n              </div>\n              <div class=\"col-md\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(person.dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>").concat(futureAge, "</strong> on ").concat(new Date(person.birthday).toLocaleString("en-US", {
+        return "\n              <div class=\"row mt-3\" data-id=\"".concat(person.id, "\">\n                <div class=\"col-sm picture\">\n                  <img src=\"").concat(person.picture, "\">\n                </div>\n              <div class=\"col-md\">\n                <div>\n                  <h4>").concat(person.firstName, " ").concat(person.lastName, "</h4>\n                  ").concat(person.dayLeft < 0 ? "Turned" : "Turns", "\n                  <strong>\n                    ").concat(person.getTheDate < 0 ? futureAge + 1 : futureAge, "\n                  </strong> on\n                    ").concat(new Date(person.birthday).toLocaleString("en-US", {
           month: "long"
         }), "\n                  <time datetime=\"").concat(fullDate, "\">\n                    <span>").concat((0, _format.default)(person.birthday, "do"), "</span>\n                  </time> \n                </div>\n              </div>\n\n              <div class=\"col-sm btn-container buttons-container\">\n                <div>\n                  ").concat(person.dayLeft < 0 ? "In ".concat(person.dayLeft + 365, " days") : person.dayLeft === 0 ? "Today" : person.dayLeft === 1 ? "Tomorrow" : "In ".concat(person.dayLeft, " days"), "\n                </div>\n                <div>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    data-id=\"").concat(person.id, "\" \n                    class=\"edit\">\n                    <span>edit</span>\n                  </button>\n                  <button \n                    type=\"button\" \n                    value=\"").concat(person.id, "\" \n                    class=\"delete\" data-id=\"").concat(person.id, "\">\n                    <span>delete</span>\n                  </button>\n                </div>\n              </div>\n            </div>");
       }).join("");
@@ -4863,6 +4865,7 @@ const fetchPeople = async () => {
 
           document.body.style.overflow = "scroll";
           document.body.style.backgroundColor = "#D8EEFE";
+          headerText.style.backgroundColor = "#D8EEFE";
           const birthDate = new Date(form.birthday.value);
           const birthDateMiliseconds = birthDate.getTime(); //create an obj for the edited pers
 
@@ -5025,7 +5028,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54487" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52744" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

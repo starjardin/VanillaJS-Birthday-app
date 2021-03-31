@@ -342,6 +342,7 @@ strong {
   transform: translateY(-50%) translateX(-50%);
   pointer-events: all;
   background-color: #FFFFFF;
+  max-width: 1079px;
 }
 .form.open .btn-cancel,
 .div.open .btn-cancel,
@@ -406,8 +407,8 @@ strong {
   top: 6%;
   border: none;
   background-image: url("/x-icon.00c68098.svg");
-  width: 29px;
-  height: 29px;
+  width: 29px !important;
+  height: 29px !important;
   padding: 0;
   margin: 0;
   background-position: center;
@@ -421,17 +422,18 @@ strong {
 }
 
 .formSubmit {
-  padding: 2rem 5rem;
-  width: 85vw;
-  text-align: center;
-  height: 90vh;
+  opacity: 1;
+  top: 50%;
+  left: 50%;
+  background-color: #ffffff;
+  border: none;
+  width: 90vw;
+  transform: translate(-50%, -50%);
+  padding-top: 6rem;
+  padding-bottom: 3rem;
   border-radius: 5px;
   z-index: 5;
   color: #094067;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
 }
 .formSubmit label, .formSubmit input {
   display: block;
@@ -453,6 +455,9 @@ strong {
 @media (min-width: 779px) {
   .formSubmit button {
     width: 158px;
+  }
+  .formSubmit button:nth-of-type(2) {
+    margin-inline-start: 20px;
   }
   .formSubmit label, .formSubmit input {
     display: block;

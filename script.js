@@ -60,32 +60,36 @@ const fetchPeople = async () => {
           const birthDayDate = new Date(momentYear, month, currentDay);
           let oneDay = 1000 * 60 * 60 * 24;
           const getTheDate = birthDayDate.getTime() - today.getTime();
-          const dayLeft = Math.floor(getTheDate / oneDay);
+          const dayLeft = Math.floor(getTheDate / oneDay) - 30;
+          console.log();
           return {
-              ...person,
-              dayLeft: dayLeft < 0 ? dayLeft + 365 : dayLeft
-            }
+            ...person,
+            dayLeft: dayLeft < 0 ? dayLeft + 365 : dayLeft,
+            getTheDate: dayLeft 
           }
-        )
+        })
         
         return newPeopleArr
           .sort((a, b) => (a.dayLeft - b.dayLeft))
           .map(person => {
-          const currentDate = new Date(person.birthday);
-          const month = format((person.birthday), "LL");
-          const year = currentDate.getFullYear();
-          const fullDate = `${ format(person.birthday, "do") } / ${ month } / ${ year }`;
-          const futureAge = today.getFullYear() - year;
-         return `
-            <div class="row mt-3" data-id="${person.id}">
-              <div class="col-sm picture">
-                <img src="${person.picture}">
-              </div>
+            const currentDate = new Date(person.birthday);
+            const month = format((person.birthday), "LL");
+            const year = currentDate.getFullYear();
+            const fullDate = `${ format(person.birthday, "do") } / ${ month } / ${ year }`;
+            const futureAge = today.getFullYear() - year;
+            return `
+              <div class="row mt-3" data-id="${person.id}">
+                <div class="col-sm picture">
+                  <img src="${person.picture}">
+                </div>
               <div class="col-md">
                 <div>
                   <h4>${person.firstName} ${person.lastName}</h4>
                   ${person.dayLeft < 0 ? "Turned" : "Turns"}
-                  <strong>${futureAge}</strong> on ${new Date(person.birthday).toLocaleString("en-US", { month: "long" })}
+                  <strong>
+                    ${person.getTheDate < 0 ? futureAge + 1 : futureAge }
+                  </strong> on
+                    ${ new Date(person.birthday).toLocaleString("en-US", { month: "long" })}
                   <time datetime="${fullDate}">
                     <span>${format(person.birthday, "do")}</span>
                   </time> 
@@ -258,6 +262,7 @@ const fetchPeople = async () => {
             }
             document.body.style.overflow = "scroll";
             document.body.style.backgroundColor = "#D8EEFE";
+            headerText.style.backgroundColor = "#D8EEFE"
 
             const birthDate = new Date(form.birthday.value);
             const birthDateMiliseconds = birthDate.getTime();
