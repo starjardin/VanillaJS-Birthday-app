@@ -1,7 +1,8 @@
 <h1 align="center">Birthday app</h1>
 
 **Figam design** : <a href="https://www.figma.com/file/bb1Mie5R3mUhR77PtGG8bJ/Birthday-App?node-id=0%3A1">Figma design</a>
-**live app** : https://tantley-birthday-app.netlify.app/
+
+**Live app** : https://tantley-birthday-app.netlify.app/
 
 <div align="center">
   <h3>
