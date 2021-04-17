@@ -41,7 +41,7 @@
 ### Built With
 
 -   [Bootstrap](https://https://getbootstrap.com/docs/4.5/getting-started/introduction/)
--   [Vanilla-Javascript]
+-   [Vanilla-Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 -   [axios](https://www.npmjs.com/package/axios)
 -   [date-fns](date-fns.orog)
 
