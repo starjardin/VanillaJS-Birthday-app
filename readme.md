@@ -41,8 +41,7 @@
 
 ### Built With
 
--   [Bootstrap](https://https://getbootstrap.com/docs/4.5/getting-started/introduction/)
--   [Vanilla-Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+-   [Vanilla JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 -   [axios](https://www.npmjs.com/package/axios)
 -   [date-fns](date-fns.orog)
 
@@ -52,7 +51,7 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/your-user-name/your-project-name
+$ git clone https://github.com/starjardin/VanillaJS-Birthday-app.git
 
 # Install dependencies
 $ npm install
@@ -66,14 +65,13 @@ $ npm start
 
 # Birthday app description
 
-1. This is a **CRUD**(Create Read Update and Delete) app practice in vanilla javascript.
+1. This is a **CRUD** (Create Read Update and Delete) app practice in vanilla JavaScript.
 
 1. One major point of doing this app was to endure and familiarize myself with array methodes such as `map` `filter` and `find`
 
 1. After just having learned `fetch`, we did this app and it was a very nice opportunity to practice fetch.
 
-1. Some styles are buit with bootsrap. I think it never is a bad idea to try new things bootsrap.
 
 ## Experiments
 
-During coding this app, I learned to `create`, `read`, `update`, and `delete` specific elements in an html document by using vanila javascript. Ohter than that, I learned nice features of `ES6`in javascript such as `map`, `filter`,`find`and `distructuring` in javascript.
+During coding this app, I learned to `create`, `read`, `update`, and `delete` specific elements in an html document by using vanila JavaScript. Ohter than that, I learned nice features of `ES6`in JavaScript such as `map`, `filter`,`find`and `distructuring` in JavaScript.
