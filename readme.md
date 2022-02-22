@@ -74,4 +74,4 @@ $ npm start
 
 ## Experiments
 
-During coding this app, I learned to `create`, `read`, `update`, and `delete` specific elements in an html document by using vanila JavaScript. Ohter than that, I learned nice features of `ES6`in JavaScript such as `map`, `filter`,`find`and `distructuring` in JavaScript.
+While coding this app, I learned to `create`, `read`, `update`, and `delete` specific elements in an html document by using vanila JavaScript. Ohter than that, I learned nice features of `ES6`in JavaScript such as `map`, `filter`,`find`and `distructuring` in JavaScript.
